@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
+import 'styled-components/macro'
 
 import Ticket from 'Ticket'
 
@@ -47,39 +48,65 @@ const coordinates = {
   }
 }
 
-export default function Tickets({ direction }) {
+export default function Tickets({ direction, onDeflect }) {
   const [tickets, setTickets] = useState([])
+  const [doneTickets, setDoneTickets] = useState([])
 
   function createTicket() {
     const target = randomItem(Object.keys(coordinates))
+    const id = Date.now()
 
     return {
-      id: Date.now(),
+      id,
       target,
       x: coordinates[target].x(),
       y: coordinates[target].y(),
-      timeout: randomNumber(1000, 2000)
-    }
-  }
-
-  function handleTicketTimeout(id, target) {
-    // console.log('HIT', { id, target }, direction)
-    if (direction === target) {
-      console.warn('WE GOT HIM!', id)
-      setTickets(state => state.filter(ticket => ticket.id !== id))
+      timeout: randomNumber(1000, 2000),
+      onTimeout: () => setDoneTickets(state => [...state, { id, target }])
+      // onTimeout: () => setDoneTickets(state => [...state, `${id}_${target}])
     }
   }
 
   useEffect(() => {
     setInterval(() => {
       setTickets(state => [...state, createTicket()])
-    }, 1500)
+    }, 2000)
   }, [])
+
+  useEffect(() => {
+    console.log('...')
+    if (doneTickets.length) {
+      console.warn('XXX')
+      // const foo =
+      // setTickets(state =>
+      //   state.filter(({ target, done }) => done && target !== direction)
+      // )
+      onDeflect(10)
+    }
+  }, [direction, doneTickets]) // eslint-disable-line
 
   return (
     <Wrapper>
       {tickets.map(ticket => (
-        <Ticket key={ticket.id} {...ticket} onTimeout={handleTicketTimeout} />
+        <Ticket
+          key={ticket.id}
+          zIndex={ticket.id}
+          target={ticket.target}
+          css={`
+            @keyframes fly {
+              0% {
+                transform: translate(${ticket.x}vw, ${ticket.y}vh);
+              }
+              100% {
+                transform: translate(50vw, 50vh);
+              }
+            }
+            animation-name: fly;
+            animation-duration: ${ticket.timeout}ms;
+            animation-fill-mode: forwards;
+          `}
+          onAnimationEnd={ticket.onTimeout}
+        />
       ))}
     </Wrapper>
   )

@@ -21,24 +21,26 @@ export default function App() {
   const [left, setLeft] = useState(false)
   const [last, setLast] = useState(null)
 
-  const [score] = useState(0)
+  const [score, setScore] = useState(0)
 
   useEffect(() => {
-    document.addEventListener('keydown', ({ key }) => {
-      if (!arrowKeys.includes(key)) return
-      if (key === 'ArrowUp') setUp(true)
-      if (key === 'ArrowRight') setRight(true)
-      if (key === 'ArrowDown') setDown(true)
-      if (key === 'ArrowLeft') setLeft(true)
-      setLast(keyToDirectionMap[key])
+    document.addEventListener('keydown', event => {
+      if (!arrowKeys.includes(event.key)) return
+      event.preventDefault()
+      if (event.key === 'ArrowUp') setUp(true)
+      if (event.key === 'ArrowRight') setRight(true)
+      if (event.key === 'ArrowDown') setDown(true)
+      if (event.key === 'ArrowLeft') setLeft(true)
+      setLast(keyToDirectionMap[event.key])
     })
 
-    document.addEventListener('keyup', ({ key }) => {
-      if (!arrowKeys.includes(key)) return
-      if (key === 'ArrowUp') setUp(false)
-      if (key === 'ArrowRight') setRight(false)
-      if (key === 'ArrowDown') setDown(false)
-      if (key === 'ArrowLeft') setLeft(false)
+    document.addEventListener('keyup', event => {
+      if (!arrowKeys.includes(event.key)) return
+      event.preventDefault()
+      if (event.key === 'ArrowUp') setUp(false)
+      if (event.key === 'ArrowRight') setRight(false)
+      if (event.key === 'ArrowDown') setDown(false)
+      if (event.key === 'ArrowLeft') setLeft(false)
     })
   }, [])
 
@@ -59,7 +61,10 @@ export default function App() {
   return (
     <Wrapper>
       <Score>{score}</Score>
-      <Tickets direction={direction} />
+      <Tickets
+        direction={direction}
+        onDeflect={value => setScore(state => state + value)}
+      />
       <Player direction={direction} />
     </Wrapper>
   )
