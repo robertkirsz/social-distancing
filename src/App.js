@@ -59,9 +59,8 @@ export default function App() {
     !up && !right &&  down &&  left ? 'DOWN-LEFT' :
     !up && !right && !down &&  left ? 'LEFT' :
      up && !right && !down &&  left ? 'UP-LEFT' :
-     up && !right &&  down && !left ? last :
-    !up &&  right && !down &&  left ? last :
-    null
+    !up && !right && !down && !left ? null :
+    last
 
   return (
     <Wrapper>
@@ -72,6 +71,7 @@ export default function App() {
         <Tickets
           direction={direction}
           onDeflect={value => setScore(state => state + value)}
+          onHit={value => setLives(state => state - value)}
         />
       )}
 
