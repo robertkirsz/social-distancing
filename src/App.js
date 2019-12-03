@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
+import 'styled-components/macro'
 
 import Score from 'Score'
 import Tickets from 'Tickets'
@@ -22,6 +23,9 @@ export default function App() {
   const [last, setLast] = useState(null)
 
   const [score, setScore] = useState(0)
+  const [lives, setLives] = useState(3)
+
+  const [gameHasStarted, setGameHasStarted] = useState(false)
 
   useEffect(() => {
     document.addEventListener('keydown', event => {
@@ -61,11 +65,24 @@ export default function App() {
   return (
     <Wrapper>
       <Score>{score}</Score>
-      <Tickets
-        direction={direction}
-        onDeflect={value => setScore(state => state + value)}
-      />
+
+      {gameHasStarted && (
+        <Tickets
+          direction={direction}
+          onDeflect={value => setScore(state => state + value)}
+        />
+      )}
+
       <Player direction={direction} />
+
+      {!gameHasStarted && (
+        <button
+          onClick={() => setGameHasStarted(true)}
+          css="position: absolute; bottom: 200px; left: 50%; transform: translateX(-50%);"
+        >
+          Start
+        </button>
+      )}
     </Wrapper>
   )
 }

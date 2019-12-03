@@ -85,6 +85,8 @@ export default function Tickets({ direction, onDeflect }) {
     }
   }, [direction, doneTickets]) // eslint-disable-line
 
+  // TODO: pause when switching tabs
+
   return (
     <Wrapper>
       {tickets.map(ticket => (
