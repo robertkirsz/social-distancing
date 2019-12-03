@@ -15,7 +15,7 @@ function randomItem(array) {
 // prettier-ignore
 const coordinates = {
   UP: {
-    x: () => randomNumber(25, 75),
+    x: () => randomNumber(45, 55),
     y: () => 0
   },
   'UP-RIGHT': {
@@ -24,14 +24,14 @@ const coordinates = {
   },
   RIGHT: {
     x: () => 100,
-    y: () => randomNumber(25, 75)
+    y: () => randomNumber(45, 55)
   },
   'DOWN-RIGHT': {
     x: () => 100,
     y: () => 100
   },
   DOWN: {
-    x: () => randomNumber(25, 75),
+    x: () => randomNumber(45, 55),
     y: () => 100
   },
   'DOWN-LEFT': {
@@ -40,7 +40,7 @@ const coordinates = {
   },
   LEFT: {
     x: () => 0,
-    y: () => randomNumber(25, 75)
+    y: () => randomNumber(45, 55)
   },
   'UP-LEFT': {
     x: () => 0,
