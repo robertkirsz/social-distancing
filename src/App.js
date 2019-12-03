@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import 'styled-components/macro'
 
 import Score from 'Score'
+import Lives from 'Lives'
 import Tickets from 'Tickets'
 import Player from 'Player'
 
@@ -65,6 +66,7 @@ export default function App() {
   return (
     <Wrapper>
       <Score>{score}</Score>
+      <Lives>{lives}</Lives>
 
       {gameHasStarted && (
         <Tickets
