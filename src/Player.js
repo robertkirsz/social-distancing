@@ -1,6 +1,9 @@
 import React from 'react'
+import { useStoreState } from 'easy-peasy'
 import styled from 'styled-components'
 import 'styled-components/macro'
+
+import { avatars, hands } from 'stuff'
 
 // prettier-ignore
 const styles = {
@@ -14,16 +17,9 @@ const styles = {
   'UP-LEFT': 'top: -10px; left: -10px; transform: rotateZ(45deg) rotateY(0);'
 }
 
-// prettier-ignore
-const avatars = [
-  '👩‍💻', '👩🏻‍💻', '👩🏼‍💻', '👩🏽‍💻', '👩🏾‍💻', '👩🏿‍💻',
-  '🧑‍💻', '🧑🏻‍💻', '🧑🏼‍💻', '🧑🏽‍💻', '🧑🏾‍💻', '🧑🏿‍💻',
-  '👨‍💻', '👨🏻‍💻', '👨🏼‍💻', '👨🏽‍💻', '👨🏾‍💻', '👨🏿‍💻',
-]
+export default function Player() {
+  const direction = useStoreState(state => state.hand.direction)
 
-const hands = ['✋', '✋🏻', '✋🏼', '✋🏽', '✋🏾', '✋🏿']
-
-export default function Player({ direction }) {
   return (
     <Wrapper>
       <Hand css={styles[direction] || 'display: none;'}>{hands[0]}</Hand>

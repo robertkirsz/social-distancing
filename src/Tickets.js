@@ -1,12 +1,12 @@
 import React, { useEffect, useRef } from 'react'
-import { useStoreState, useStoreActions } from 'easy-peasy'
+import { useStoreState } from 'easy-peasy'
 import styled from 'styled-components'
 import 'styled-components/macro'
 
 import store from 'store'
 import Ticket from 'Ticket'
 
-export default function Tickets({ direction, onDeflect }) {
+export default function Tickets() {
   const interval = useRef()
   const gameIsLive = useStoreState(({ game }) => game.isLive)
 
