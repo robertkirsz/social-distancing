@@ -14,6 +14,10 @@ export default createStore({
     })
   },
   tickets: {
+    flying: [],
+    throw: action((state, payload) => {
+      state.flying.push(payload)
+    }),
     landed: [],
     land: action((state, payload) => {
       state.landed.push(payload)

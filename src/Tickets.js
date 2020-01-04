@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import { useStoreState, useStoreActions } from 'easy-peasy'
 import styled from 'styled-components'
 import 'styled-components/macro'
 
@@ -49,7 +50,9 @@ const coordinates = {
 }
 
 export default function Tickets({ direction, onDeflect }) {
-  const [tickets, setTickets] = useState([])
+  const tickets = useStoreState(({ tickets }) => tickets.flying)
+  const throwTicket = useStoreActions(({ tickets }) => tickets.throw)
+
   const [doneTickets, setDoneTickets] = useState([])
 
   function createTicket() {
@@ -69,9 +72,9 @@ export default function Tickets({ direction, onDeflect }) {
 
   useEffect(() => {
     setInterval(() => {
-      setTickets(state => [...state, createTicket()])
+      throwTicket(createTicket())
     }, 2000)
-  }, [])
+  }, [throwTicket])
 
   useEffect(() => {
     console.log('...')
