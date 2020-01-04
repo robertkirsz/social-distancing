@@ -1,4 +1,4 @@
-import { createStore, action, actionOn, computed } from 'easy-peasy'
+import { createStore, action, thunk, actionOn, computed } from 'easy-peasy'
 
 import { coordinates, randomItem, randomNumber, keyToDirectionMap } from 'stuff'
 
@@ -30,32 +30,13 @@ const store = createStore({
       state.value = 5
     })
   },
-  tickets: {
-    flying: [],
-    throw: action(state => {
-      state.flying.push(createTicket())
-    }),
-    landed: [],
-    land: action((state, payload) => {
-      state.landed.push(payload)
-    }),
-    onLand: actionOn(
-      actions => actions.land,
-      (state, target) => {
-        console.log('LANDED!', target.payload)
-      }
-    ),
-    reset: action(state => {
-      state.flying = []
-      state.landed = []
-    })
-  },
   hand: {
     up: false,
     right: false,
     down: false,
     left: false,
     last: null,
+    time: 0,
     putUp: action((state, payload) => {
       state[payload] = true
     }),
@@ -63,6 +44,7 @@ const store = createStore({
       actions => actions.putUp,
       (state, target) => {
         state.last = target.payload
+        state.time = Date.now()
       }
     ),
     putDown: action((state, payload) => {
@@ -79,6 +61,28 @@ const store = createStore({
       if (up && !right && !down && left) return 'UP-LEFT'
       if (!up && !right && !down && !left) return null
       return last
+    })
+  },
+  tickets: {
+    items: [],
+    throw: action(state => {
+      state.items.push(createTicket())
+    }),
+    remove: action((state, payload) => {
+      state.items = state.items.filter(ticket => ticket.id !== payload)
+    }),
+    land: thunk((actions, payload, { getStoreState, getStoreActions }) => {
+      if (payload.target === getStoreState().hand.direction) {
+        const time = Date.now() - getStoreState().hand.time
+        getStoreActions().score.update(time < 300 ? 25 : 10)
+      } else {
+        getStoreActions().lives.update(-1)
+      }
+
+      actions.remove(payload.id)
+    }),
+    reset: action(state => {
+      state.items = []
     })
   }
 })

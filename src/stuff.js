@@ -14,7 +14,7 @@ export const coordinates = {
   },
   'UP-RIGHT': {
     x: () => 100,
-    y: () => 100
+    y: () => 0
   },
   RIGHT: {
     x: () => 100,

@@ -19,8 +19,8 @@ export default function App() {
     <Wrapper>
       <Score />
       <Lives />
-      <Tickets />
       <Player />
+      <Tickets />
       <GameControllButton />
     </Wrapper>
   )

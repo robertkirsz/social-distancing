@@ -10,7 +10,7 @@ export default function Tickets() {
   const interval = useRef()
   const gameIsLive = useStoreState(({ game }) => game.isLive)
 
-  const tickets = useStoreState(({ tickets }) => tickets.flying)
+  const tickets = useStoreState(({ tickets }) => tickets.items)
 
   useEffect(() => {
     if (gameIsLive) {
@@ -26,8 +26,6 @@ export default function Tickets() {
       {tickets.map(ticket => (
         <Ticket
           key={ticket.id}
-          zIndex={ticket.id}
-          target={ticket.target}
           css={`
             @keyframes fly {
               0% {
@@ -39,7 +37,7 @@ export default function Tickets() {
             }
             animation-name: fly;
             animation-duration: ${ticket.timeout}ms;
-            animation-fill-mode: forwards;
+            animation-timing-function: linear;
           `}
           onAnimationEnd={ticket.land}
         />
