@@ -1,8 +1,9 @@
 import React from 'react'
+import { useStoreState } from 'easy-peasy'
 import styled from 'styled-components'
 
-export default function Score({ children }) {
-  return <Wrapper>{children}</Wrapper>
+export default function Score() {
+  return <Wrapper>{useStoreState(({ score }) => score.value)}</Wrapper>
 }
 
 const Wrapper = styled.div`

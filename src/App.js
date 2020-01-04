@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { useStoreState, useStoreActions } from 'easy-peasy'
+import { useStoreActions } from 'easy-peasy'
 import styled from 'styled-components'
 import 'styled-components/macro'
 
@@ -18,19 +18,13 @@ const keyToDirectionMap = {
 }
 
 export default function App() {
-  const todos = useStoreState(state => state.todos.items)
-  console.log('todos:', todos)
-  const add = useStoreActions(actions => actions.todos.add)
-  console.log('add:', add)
+  const updateScore = useStoreActions(({ score }) => score.update)
 
   const [up, setUp] = useState(false)
   const [right, setRight] = useState(false)
   const [down, setDown] = useState(false)
   const [left, setLeft] = useState(false)
   const [last, setLast] = useState(null)
-
-  const [score, setScore] = useState(0)
-  const [lives, setLives] = useState(3)
 
   const [gameHasStarted, setGameHasStarted] = useState(false)
 
@@ -70,15 +64,11 @@ export default function App() {
 
   return (
     <Wrapper>
-      <Score>{score}</Score>
-      <Lives>{lives}</Lives>
+      <Score />
+      <Lives />
 
       {gameHasStarted && (
-        <Tickets
-          direction={direction}
-          onDeflect={value => setScore(state => state + value)}
-          onHit={value => setLives(state => state - value)}
-        />
+        <Tickets direction={direction} onDeflect={updateScore} />
       )}
 
       <Player direction={direction} />

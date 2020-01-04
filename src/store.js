@@ -1,12 +1,22 @@
 import { createStore, action } from 'easy-peasy'
 
-const store = createStore({
-  todos: {
-    items: ['Create store', 'Wrap application', 'Use store'],
-    add: action((state, payload) => {
-      state.items.push(payload)
+export default createStore({
+  score: {
+    value: 0,
+    update: action((state, payload) => {
+      state.value += payload
+    })
+  },
+  lives: {
+    value: 5,
+    update: action((state, payload) => {
+      state.value += payload
+    })
+  },
+  tickets: {
+    landed: [],
+    land: action((state, payload) => {
+      state.landed.push(payload)
     })
   }
 })
-
-export default store

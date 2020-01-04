@@ -1,8 +1,10 @@
 import React from 'react'
+import { useStoreState } from 'easy-peasy'
 import styled from 'styled-components'
 
-export default function Lives({ children }) {
-  return <Wrapper>{Array(children < 0 ? 0 : children).fill('❤️')}</Wrapper>
+export default function Lives() {
+  const lives = useStoreState(({ lives }) => lives.value)
+  return <Wrapper>{Array(lives < 0 ? 0 : lives).fill('❤️')}</Wrapper>
 }
 
 const Wrapper = styled.div`
