@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import { useStoreState, useStoreActions } from 'easy-peasy'
 import styled from 'styled-components'
 import 'styled-components/macro'
 
@@ -17,6 +18,11 @@ const keyToDirectionMap = {
 }
 
 export default function App() {
+  const todos = useStoreState(state => state.todos.items)
+  console.log('todos:', todos)
+  const add = useStoreActions(actions => actions.todos.add)
+  console.log('add:', add)
+
   const [up, setUp] = useState(false)
   const [right, setRight] = useState(false)
   const [down, setDown] = useState(false)
