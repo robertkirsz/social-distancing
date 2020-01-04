@@ -1,94 +1,25 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect, useRef } from 'react'
 import { useStoreState, useStoreActions } from 'easy-peasy'
 import styled from 'styled-components'
 import 'styled-components/macro'
 
+import store from 'store'
 import Ticket from 'Ticket'
 
-function randomNumber(min, max) {
-  return Math.floor(Math.random() * (max - min + 1)) + min
-}
-
-function randomItem(array) {
-  return array[Math.floor(Math.random() * array.length)]
-}
-
-// prettier-ignore
-const coordinates = {
-  UP: {
-    x: () => randomNumber(45, 55),
-    y: () => 0
-  },
-  'UP-RIGHT': {
-    x: () => 100,
-    y: () => 100
-  },
-  RIGHT: {
-    x: () => 100,
-    y: () => randomNumber(45, 55)
-  },
-  'DOWN-RIGHT': {
-    x: () => 100,
-    y: () => 100
-  },
-  DOWN: {
-    x: () => randomNumber(45, 55),
-    y: () => 100
-  },
-  'DOWN-LEFT': {
-    x: () => 0,
-    y: () => 100
-  },
-  LEFT: {
-    x: () => 0,
-    y: () => randomNumber(45, 55)
-  },
-  'UP-LEFT': {
-    x: () => 0,
-    y: () => 0
-  }
-}
-
 export default function Tickets({ direction, onDeflect }) {
+  const interval = useRef()
+  const gameIsLive = useStoreState(({ game }) => game.isLive)
+
   const tickets = useStoreState(({ tickets }) => tickets.flying)
-  const throwTicket = useStoreActions(({ tickets }) => tickets.throw)
-
-  const [doneTickets, setDoneTickets] = useState([])
-
-  function createTicket() {
-    const target = randomItem(Object.keys(coordinates))
-    const id = Date.now()
-
-    return {
-      id,
-      target,
-      x: coordinates[target].x(),
-      y: coordinates[target].y(),
-      timeout: randomNumber(1000, 2000),
-      onTimeout: () => setDoneTickets(state => [...state, { id, target }])
-      // onTimeout: () => setDoneTickets(state => [...state, `${id}_${target}])
-    }
-  }
 
   useEffect(() => {
-    setInterval(() => {
-      throwTicket(createTicket())
-    }, 2000)
-  }, [throwTicket])
-
-  useEffect(() => {
-    console.log('...')
-    if (doneTickets.length) {
-      console.warn('XXX')
-      // const foo =
-      // setTickets(state =>
-      //   state.filter(({ target, done }) => done && target !== direction)
-      // )
-      onDeflect(10)
+    if (gameIsLive) {
+      interval.current = setInterval(store.getActions().tickets.throw, 2000)
+    } else {
+      clearInterval(interval.current)
+      store.getActions().tickets.reset()
     }
-  }, [direction, doneTickets]) // eslint-disable-line
-
-  // TODO: pause when switching tabs
+  }, [gameIsLive])
 
   return (
     <Wrapper>
@@ -110,7 +41,7 @@ export default function Tickets({ direction, onDeflect }) {
             animation-duration: ${ticket.timeout}ms;
             animation-fill-mode: forwards;
           `}
-          onAnimationEnd={ticket.onTimeout}
+          onAnimationEnd={ticket.land}
         />
       ))}
     </Wrapper>

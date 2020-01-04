@@ -7,6 +7,7 @@ import Score from 'Score'
 import Lives from 'Lives'
 import Tickets from 'Tickets'
 import Player from 'Player'
+import GameControllButton from 'GameControllButton'
 
 const arrowKeys = ['ArrowUp', 'ArrowRight', 'ArrowDown', 'ArrowLeft']
 
@@ -25,8 +26,6 @@ export default function App() {
   const [down, setDown] = useState(false)
   const [left, setLeft] = useState(false)
   const [last, setLast] = useState(null)
-
-  const [gameHasStarted, setGameHasStarted] = useState(false)
 
   useEffect(() => {
     document.addEventListener('keydown', event => {
@@ -66,21 +65,9 @@ export default function App() {
     <Wrapper>
       <Score />
       <Lives />
-
-      {gameHasStarted && (
-        <Tickets direction={direction} onDeflect={updateScore} />
-      )}
-
+      <Tickets direction={direction} onDeflect={updateScore} />
       <Player direction={direction} />
-
-      {!gameHasStarted && (
-        <button
-          onClick={() => setGameHasStarted(true)}
-          css="position: absolute; bottom: 200px; left: 50%; transform: translateX(-50%);"
-        >
-          Start
-        </button>
-      )}
+      <GameControllButton />
     </Wrapper>
   )
 }
