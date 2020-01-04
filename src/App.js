@@ -90,8 +90,7 @@ export default function App() {
 }
 
 const Wrapper = styled.div`
+  flex: 1;
   display: flex;
-  height: 100vh;
-  width: 100vw;
   overflow: hidden;
 `
