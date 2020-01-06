@@ -1,6 +1,25 @@
-import { createStore, action, thunk, actionOn, computed } from 'easy-peasy'
+import { createStore, action, thunk } from 'easy-peasy'
 
-import { coordinates, randomItem, randomNumber, keyToDirectionMap } from 'stuff'
+import { coordinates, randomItem, randomNumber } from 'stuff'
+
+// prettier-ignore
+const getHandDirection = ({
+  ArrowUp,
+  ArrowRight,
+  ArrowDown,
+  ArrowLeft,
+  lastPressedKey
+}) =>
+   ArrowUp && !ArrowRight && !ArrowDown && !ArrowLeft ? 'UP' :
+   ArrowUp &&  ArrowRight && !ArrowDown && !ArrowLeft ? 'UP-RIGHT' :
+  !ArrowUp &&  ArrowRight && !ArrowDown && !ArrowLeft ? 'RIGHT' :
+  !ArrowUp &&  ArrowRight &&  ArrowDown && !ArrowLeft ? 'DOWN-RIGHT' :
+  !ArrowUp && !ArrowRight &&  ArrowDown && !ArrowLeft ? 'DOWN' :
+  !ArrowUp && !ArrowRight &&  ArrowDown &&  ArrowLeft ? 'DOWN-LEFT' :
+  !ArrowUp && !ArrowRight && !ArrowDown &&  ArrowLeft ? 'LEFT' :
+   ArrowUp && !ArrowRight && !ArrowDown &&  ArrowLeft ? 'UP-LEFT' :
+  !ArrowUp && !ArrowRight && !ArrowDown && !ArrowLeft ? null :
+  lastPressedKey
 
 const store = createStore({
   game: {
@@ -31,36 +50,27 @@ const store = createStore({
     })
   },
   hand: {
-    up: false,
-    right: false,
-    down: false,
-    left: false,
-    last: null,
-    time: 0,
-    putUp: action((state, payload) => {
+    direction: null,
+    ArrowUp: false,
+    ArrowRight: false,
+    ArrowDown: false,
+    ArrowLeft: false,
+    lastPressedKey: null,
+    lastPressedTime: 0,
+    keydown: action((state, payload) => {
       state[payload] = true
+      const direction = getHandDirection(state)
+      state.direction = direction
+      state.lastPressedKey = direction
+      state.lastPressedTime = Date.now()
     }),
-    onPutUp: actionOn(
-      actions => actions.putUp,
-      (state, target) => {
-        state.last = target.payload
-        state.time = Date.now()
-      }
-    ),
-    putDown: action((state, payload) => {
+    keyup: action((state, payload) => {
       state[payload] = false
+      state.direction = getHandDirection(state)
     }),
-    direction: computed(({ up, right, down, left, last }) => {
-      if (up && !right && !down && !left) return 'UP'
-      if (up && right && !down && !left) return 'UP-RIGHT'
-      if (!up && right && !down && !left) return 'RIGHT'
-      if (!up && right && down && !left) return 'DOWN-RIGHT'
-      if (!up && !right && down && !left) return 'DOWN'
-      if (!up && !right && down && left) return 'DOWN-LEFT'
-      if (!up && !right && !down && left) return 'LEFT'
-      if (up && !right && !down && left) return 'UP-LEFT'
-      if (!up && !right && !down && !left) return null
-      return last
+    riseHand: action((state, payload) => {
+      state.direction = payload
+      state.lastPressedTime = Date.now()
     })
   },
   tickets: {
@@ -73,7 +83,7 @@ const store = createStore({
     }),
     land: thunk((actions, payload, { getStoreState, getStoreActions }) => {
       if (payload.target === getStoreState().hand.direction) {
-        const time = Date.now() - getStoreState().hand.time
+        const time = Date.now() - getStoreState().hand.lastPressedTime
         getStoreActions().score.update(time < 300 ? 25 : 10)
       } else {
         getStoreActions().lives.update(-1)
@@ -94,33 +104,27 @@ function createTicket() {
   return {
     id,
     target,
-    x: coordinates[target].x(),
-    y: coordinates[target].y(),
+    x: coordinates[target].x,
+    y: coordinates[target].y,
     timeout: randomNumber(1000, 2000),
     land: () => store.getActions().tickets.land({ id, target })
   }
 }
 
+// prettier-ignore
+function keyListener(method) {
+  return function(event) {
+    if (!['ArrowUp', 'ArrowRight', 'ArrowDown','ArrowLeft'].includes(event.key)) return
+    if (method === 'keydown' && store.getState().hand[event.key] === true) return
+    if (method === 'keyup' && store.getState().hand[event.key] === false) return
+    event.preventDefault()
+    store.getActions().hand[method](event.key)
+  }
+}
+
 export function attachKeyboardListeners() {
-  document.addEventListener('keydown', event => {
-    const currentDirection = keyToDirectionMap[event.key]
-    const alreadyUp = store.getState().hand[currentDirection] === true
-
-    if (!currentDirection || alreadyUp) return
-
-    event.preventDefault()
-    store.getActions().hand.putUp(currentDirection)
-  })
-
-  document.addEventListener('keyup', event => {
-    const currentDirection = keyToDirectionMap[event.key]
-    const alreadyDown = store.getState().hand[currentDirection] === false
-
-    if (!currentDirection || alreadyDown) return
-
-    event.preventDefault()
-    store.getActions().hand.putDown(currentDirection)
-  })
+  document.addEventListener('keydown', keyListener('keydown'))
+  document.addEventListener('keyup', keyListener('keyup'))
 }
 
 export default store

@@ -8,6 +8,7 @@ import Score from 'Score'
 import Lives from 'Lives'
 import Tickets from 'Tickets'
 import Player from 'Player'
+import TouchArea from 'TouchArea'
 import GameControllButton from 'GameControllButton'
 
 export default function App() {
@@ -21,6 +22,7 @@ export default function App() {
       <Lives />
       <Player />
       <Tickets />
+      <TouchArea />
       <GameControllButton />
     </Wrapper>
   )
@@ -29,5 +31,8 @@ export default function App() {
 const Wrapper = styled.div`
   flex: 1;
   display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   overflow: hidden;
 `

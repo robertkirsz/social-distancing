@@ -18,7 +18,7 @@ export default function GameControllerButton() {
 
 const Button = styled.button`
   position: absolute;
-  bottom: 200px;
+  bottom: 40px;
   left: 50%;
   transform: translateX(-50%);
 `
