@@ -10,6 +10,7 @@ import Tickets from 'Tickets'
 import Player from 'Player'
 import TouchArea from 'TouchArea'
 import GameControllButton from 'GameControllButton'
+import Settings from 'Settings'
 
 export default function App() {
   useEffect(() => {
@@ -24,6 +25,7 @@ export default function App() {
       <Tickets />
       <TouchArea />
       <GameControllButton />
+      <Settings />
     </Wrapper>
   )
 }
