@@ -1,0 +1,18 @@
+{
+  "rules": {
+    "characterTemplates": {
+      ".read": "auth.uid !== null",
+      ".write": "auth.uid === 'dgf7FGnak9UZHxSMjDS7FT0Fhp32'"
+    },
+    "players": {
+      ".read": "auth.uid !== null",
+      "$userId": {
+        ".write": "auth.uid === $userId || auth.uid === 'dgf7FGnak9UZHxSMjDS7FT0Fhp32'"
+      }
+    },
+    "messages": {
+      ".read": "auth.uid !== null",
+      ".write": "auth.uid !== null"
+    }
+  }
+}
