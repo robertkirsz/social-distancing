@@ -1,6 +1,6 @@
 <script>
   import { fade } from 'svelte/transition'
-  import { lives } from './stores.js'
+  import { lives } from '../stores.js'
 </script>
 
 <style>

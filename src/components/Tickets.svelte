@@ -1,26 +1,26 @@
 <script>
-  import { fly, fade } from "svelte/transition";
-  import { linear } from "svelte/easing";
-  import { gameIsRunning, tickets } from "./stores";
-  import { randomNumber } from "./stuff";
+  import { fly, fade } from 'svelte/transition'
+  import { linear } from 'svelte/easing'
+  import { gameIsRunning, tickets } from '../stores'
+  import { randomNumber } from '../stuff'
 
-  let timeout = null;
+  let timeout = null
 
   function throwTicket() {
     timeout = setTimeout(() => {
-      tickets.throw();
-      if ($gameIsRunning) throwTicket();
-    }, randomNumber(1000, 2000));
+      tickets.throw()
+      if ($gameIsRunning) throwTicket()
+    }, randomNumber(1000, 2000))
   }
 
   gameIsRunning.subscribe(isRunning => {
     if (isRunning) {
-      throwTicket();
+      throwTicket()
     } else {
-      clearTimeout(timeout);
-      tickets.reset();
+      clearTimeout(timeout)
+      tickets.reset()
     }
-  });
+  })
 </script>
 
 <style>

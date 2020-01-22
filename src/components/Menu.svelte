@@ -1,6 +1,6 @@
 <script>
   import { fade } from 'svelte/transition'
-  import { menu, session } from './stores.js'
+  import { menu, session } from '../stores.js'
 </script>
 
 <style>

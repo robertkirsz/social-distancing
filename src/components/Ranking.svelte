@@ -1,9 +1,7 @@
 <script>
   import { onMount } from 'svelte'
-
+  import { get } from '../database'
   import Modal from './Modal.svelte'
-
-  import { get } from './database'
 
   let players = null
 

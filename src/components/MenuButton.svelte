@@ -1,5 +1,5 @@
 <script>
-  import { menu } from './stores.js'
+  import { menu } from '../stores.js'
 </script>
 
 <style>
