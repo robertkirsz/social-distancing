@@ -14,7 +14,7 @@ import {
   INITIAL_LIVES
 } from './stuff'
 
-function createHand() {
+function createHand () {
   const { subscribe, update } = writable({
     direction: null,
     ArrowUp: false,
@@ -27,7 +27,7 @@ function createHand() {
 
   return {
     subscribe,
-    keydown(keyName) {
+    keydown (keyName) {
       update(state => {
         const updatedKeys = { ...state, [keyName]: true }
         return {
@@ -38,7 +38,7 @@ function createHand() {
         }
       })
     },
-    keyup(keyName) {
+    keyup (keyName) {
       update(state => {
         const updatedKeys = { ...state, [keyName]: false }
         return {
@@ -47,7 +47,7 @@ function createHand() {
         }
       })
     },
-    riseHand(direction) {
+    riseHand (direction) {
       update(state => ({
         ...state,
         direction,
@@ -57,28 +57,26 @@ function createHand() {
   }
 }
 
-function createTickets() {
+function createTickets () {
   const { subscribe, set, update } = writable([])
 
-  function createTicket() {
+  function createTicket () {
     const target = randomItem(Object.keys(coordinates))
     const id = Date.now()
 
     return {
       id,
       target,
-      x: coordinates[target].x,
-      y: coordinates[target].y,
       duration: randomNumber(1000, 2000)
     }
   }
 
   return {
     subscribe,
-    throw() {
+    throw () {
       update(state => [...state, createTicket()])
     },
-    land(id, target) {
+    land (id, target) {
       if (target === get(hand).direction) {
         const difference = Date.now() - get(hand).lastPressedTime
         score.update(state => state + (difference < 300 ? 25 : 10))
@@ -86,16 +84,16 @@ function createTickets() {
 
       tickets.remove(id)
     },
-    remove(id) {
+    remove (id) {
       update(state => state.filter(ticket => ticket.id !== id))
     },
-    reset() {
+    reset () {
       set([])
     }
   }
 }
 
-function createSession() {
+function createSession () {
   return {
     addAuthenticationListener: () => {
       firebase.auth().onAuthStateChanged(async authData => {
@@ -125,11 +123,11 @@ function createSession() {
 
           // Try to find user's data in the database
           let playerData = await database
-          .get(`players/${authData.uid}`)
+            .get(`players/${authData.uid}`)
           // TODO: I dont think i need this
-          .catch(() => {
-          //   errors.show('getUserData', error)
-          })
+            .catch(() => {
+              //   errors.show('getUserData', error)
+            })
 
           // If the data is not found, create it using data from the authentication object
           if (!playerData) {
@@ -211,7 +209,7 @@ function createSession() {
       if (!playerData || get(requests).signOut) return
 
       console.log('SIGN OUT')
-      menu.close()
+      screen.close('MENU')
       errors.hide('signOut')
       requests.start('signOut')
 
@@ -242,31 +240,29 @@ function createSession() {
       requests.stop('signOut')
       appIsReady.set(true)
       requests.stop('authenticationStateChange')
-      storage.clear
+      storage.clear()
     }
   }
 }
 
-function createMenu() {
-  const { subscribe, update } = writable({
-    isOpened: false
-  })
+function createScreen () {
+  const { subscribe, set, update } = writable(null)
 
   return {
     subscribe,
-    open() {
-      update(state => ({ ...state, isOpened: true }))
+    open (name) {
+      set(name)
     },
-    close() {
-      update(state => ({ ...state, isOpened: false }))
+    close () {
+      set(null)
     },
-    toggle() {
-      update(state => ({ ...state, isOpened: !state.isOpened }))
+    toggle (name) {
+      update(state => state === name ? null : name)
     }
   }
 }
 
-function createRequests() {
+function createRequests () {
   const { subscribe, update } = writable({
     authenticationStateChange: !!JSON.parse(
       localStorage.getItem('ticket-deflect_signedIn')
@@ -288,7 +284,7 @@ function createRequests() {
   }
 }
 
-function createErrors() {
+function createErrors () {
   const { subscribe, update } = writable([])
 
   return {
@@ -308,7 +304,7 @@ function createErrors() {
   }
 }
 
-function createStorage() {
+function createStorage () {
   const { subscribe, update } = writable({
     signedIn: !!JSON.parse(localStorage.getItem('ticket-deflect_signedIn'))
   })
@@ -343,13 +339,13 @@ export const players = readable([])
 export const appIsReady = writable(true) // false
 export const gameIsRunning = writable(false)
 export const gameIsOver = writable(false)
+export const screen = createScreen()
 export const hand = createHand()
 export const tickets = createTickets()
 export const requests = createRequests()
 export const errors = createErrors()
 export const session = createSession()
 export const storage = createStorage()
-export const menu = createMenu()
 
 lives.subscribe(value => {
   if (value <= 0) {
@@ -363,6 +359,5 @@ gameIsRunning.subscribe(isRunning => {
 })
 
 gameIsOver.subscribe(isOver => {
-  if (isOver) console.log('GAME OVER')
+  if (isOver) screen.open('GAME OVER')
 })
-

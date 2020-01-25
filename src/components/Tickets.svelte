@@ -1,8 +1,7 @@
 <script>
-  import { fly, fade } from 'svelte/transition'
   import { linear } from 'svelte/easing'
   import { gameIsRunning, tickets } from '../stores'
-  import { randomNumber } from '../stuff'
+  import { randomNumber, coordinates } from '../stuff'
 
   let timeout = null
 
@@ -43,23 +42,17 @@
     justify-content: center;
     align-items: center;
 
-    width: 50px;
-    height: 50px;
-
-    border: 1px solid red;
+    width: 5vw;
+    height: 5vw;
 
     position: absolute;
-    font-size: 12px;
+    background: rgba(42, 160, 140, 0.6);
   }
 </style>
 
 <div>
   {#each $tickets as { id, x, y, duration, target } (id)}
-    <span
-      in:fly={{ x, y, duration, easing: linear }}
-      out:fade
-      on:introend={() => tickets.land(id, target)}>
-      {target}
-    </span>
+    <span />
   {/each}
 </div>
+<!-- on:introend={() => tickets.land(id, target)} /> -->

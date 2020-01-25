@@ -8,9 +8,7 @@
     easing: cubicOut,
   })
 
-  score.subscribe(value => {
-    progress.set(value)
-  })
+  score.subscribe(progress.set)
 </script>
 
 <style>

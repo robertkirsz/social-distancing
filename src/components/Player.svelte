@@ -20,7 +20,7 @@
       opacity: 0;
     }
     100% {
-      transform: translateY(-60px);
+      transform: translateY(-8vw);
       opacity: 1;
     }
   }
@@ -30,6 +30,8 @@
     justify-content: center;
     align-items: center;
     position: relative;
+
+    background: rgba(255, 192, 203, 0.5);
   }
 
   .hand-wrapper {
@@ -44,10 +46,11 @@
     justify-content: center;
     align-items: center;
 
-    width: 70px;
-    height: 70px;
+    width: 8vw;
+    height: 8vw;
+    background: rgba(255, 192, 203, 0.5);
 
-    font-size: 50px;
+    font-size: 5vw;
     animation-duration: 0.1s;
     animation-fill-mode: forwards;
     opacity: 0;
@@ -59,8 +62,8 @@
 
   img {
     display: block;
-    width: 120px;
-    height: 120px;
+    width: 16vw;
+    height: 16vw;
     object-fit: cover;
     border-radius: 50%;
   }

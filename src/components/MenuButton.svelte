@@ -1,5 +1,5 @@
 <script>
-  import { menu } from '../stores.js'
+  import { screen, gameIsRunning } from '../stores.js'
 </script>
 
 <style>
@@ -7,6 +7,7 @@
     position: absolute;
     bottom: 8px;
     right: 8px;
+    z-index: 11;
 
     width: 40px;
     height: 40px;
@@ -52,7 +53,10 @@
   }
 </style>
 
-<button class:opened={$menu.isOpened} on:mouseup={menu.toggle}>
+<button
+  class:opened={$screen === 'MENU'}
+  on:mouseup={() => screen.toggle('MENU')}
+  disabled={$gameIsRunning}>
   <span />
   <span />
   <span />
