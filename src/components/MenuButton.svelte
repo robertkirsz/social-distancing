@@ -35,6 +35,7 @@
     height: 10%;
     margin: 15% 10%;
     transition: inherit;
+    pointer-events: none;
   }
 
   button.opened span:nth-child(1) {

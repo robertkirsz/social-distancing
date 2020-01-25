@@ -1,17 +1,17 @@
 <script>
   import { onMount } from 'svelte'
+  import initializeFirebase from 'database'
+  import { hand, requests, session, player } from 'stores'
 
-  import initializeFirebase from '../database.js'
-  import { hand, requests, session, player, screen } from '../stores.js'
-
-  import Score from './Score.svelte'
-  import Lives from './Lives.svelte'
-  import Player from './Player.svelte'
-  import Tickets from './Tickets.svelte'
-  import TouchArea from './TouchArea.svelte'
-  import MenuButton from './MenuButton.svelte'
-  import GameControlButton from './GameControlButton.svelte'
-  import Screens from './Screens.svelte'
+  import Score from 'components/Score'
+  import Intro from 'components/Intro'
+  import Lives from 'components/Lives'
+  import Player from 'components/Player'
+  import Tickets from 'components/Tickets'
+  import Screens from 'components/Screens'
+  import TouchArea from 'components/TouchArea'
+  import MenuButton from 'components/MenuButton'
+  import GameControlButton from 'components/GameControlButton'
 
   function keyListener(method) {
     return function(event) {
@@ -69,7 +69,7 @@
     <GameControlButton />
     <MenuButton />
   {:else}
-    <button on:click={session.signIn}>Log in</button>
+    <Intro />
   {/if}
 </main>
 

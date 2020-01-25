@@ -21,6 +21,7 @@
   ],
   "rules": {
     "semi": "warn",
-    "quotes": "warn"
+    "quotes": "warn",
+    "import/first": "off"
   }
 }

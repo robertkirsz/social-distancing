@@ -12,8 +12,10 @@
     "dev": "rollup -c -w",
     "build": "rollup -c",
     "clean": "rm -rf public/build",
-    "lint": "eslint './src/{**/*.js,*.js,**/*.svelte,*.svelte}' --fix",
-    "format": "prettier './src/{**/*.js,*.js,**/*.svelte,*.svelte}' --write --check"
+    "lint": "eslint './src/{**/*.js,*.js,**/*.svelte,*.svelte}'",
+    "lint:fix": "eslint './src/{**/*.js,*.js,**/*.svelte,*.svelte}' --fix",
+    "format": "prettier './src/{**/*.js,*.js,**/*.svelte,*.svelte}'",
+    "format:fix": "prettier './src/{**/*.js,*.js,**/*.svelte,*.svelte}' --write --check"
   },
   "dependencies": {
     "firebase": "7.7.0",
