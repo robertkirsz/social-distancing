@@ -2,8 +2,7 @@ import { writable, get, readable } from 'svelte/store'
 import moment from 'moment'
 import firebase from 'firebase/app'
 import 'firebase/auth'
-
-import * as database from './database'
+import * as database from 'database'
 
 import {
   coordinates,
@@ -12,7 +11,7 @@ import {
   getHandDirection,
   getError,
   INITIAL_LIVES
-} from './stuff'
+} from 'stuff'
 
 function createHand () {
   const { subscribe, update } = writable({
