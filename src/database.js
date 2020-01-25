@@ -26,7 +26,11 @@ export const get = path =>
       .database()
       .ref(path)
       .once('value')
-      .then(snapshot => (snapshot.val() ? resolve(snapshot.val()) : reject(new Error(`No data found for ${path}`))))
+      .then(snapshot =>
+        snapshot.val()
+          ? resolve(snapshot.val())
+          : reject(new Error(`No data found for ${path}`))
+      )
   })
 
 export const set = (path, data) =>
@@ -70,7 +74,9 @@ export const addChildAddedListener = (path, callback) =>
   firebase
     .database()
     .ref(path)
-    .on('child_added', snapshot => callback({ id: snapshot.key, ...snapshot.val() }))
+    .on('child_added', snapshot =>
+      callback({ id: snapshot.key, ...snapshot.val() })
+    )
 
 export const removeListener = (path, listener) =>
   firebase

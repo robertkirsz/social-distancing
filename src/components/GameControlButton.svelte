@@ -1,6 +1,6 @@
 <script>
   import { INITIAL_LIVES } from 'stuff'
-  import { lives, score, gameIsRunning, gameIsOver } from 'store';
+  import { lives, score, gameIsRunning, gameIsOver } from 'store'
 
   function handleClick() {
     if ($gameIsOver) {

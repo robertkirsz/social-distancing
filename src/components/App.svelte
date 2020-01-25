@@ -8,6 +8,7 @@
   import Lives from 'components/Lives'
   import Player from 'components/Player'
   import Tickets from 'components/Tickets'
+  import Ripples from 'components/Ripples'
   import Screens from 'components/Screens'
   import TouchArea from 'components/TouchArea'
   import MenuButton from 'components/MenuButton'
@@ -56,6 +57,8 @@
     overflow: hidden;
   }
 </style>
+
+<Ripples />
 
 <main>
   {#if $player}

@@ -5,7 +5,7 @@
 
   const progress = tweened($score, {
     duration: 400,
-    easing: cubicOut,
+    easing: cubicOut
   })
 
   score.subscribe(progress.set)

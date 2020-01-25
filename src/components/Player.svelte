@@ -9,7 +9,7 @@
     { direction: 'DOWN', rotation: 180, emoji: '✊', emojiRotation: 0 },
     { direction: 'DOWN-LEFT', rotation: -135, emoji: '🤛', emojiRotation: 90 },
     { direction: 'LEFT', rotation: -90, emoji: '🤛', emojiRotation: 90 },
-    { direction: 'UP-LEFT', rotation: -45, emoji: '🤛', emojiRotation: 90 },
+    { direction: 'UP-LEFT', rotation: -45, emoji: '🤛', emojiRotation: 90 }
   ]
 </script>
 

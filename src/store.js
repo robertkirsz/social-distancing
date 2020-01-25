@@ -3,7 +3,6 @@ import moment from 'moment'
 import firebase from 'firebase/app'
 import 'firebase/auth'
 import * as database from 'database'
-
 import {
   coordinates,
   randomItem,
@@ -13,7 +12,42 @@ import {
   INITIAL_LIVES
 } from 'stuff'
 
-function createHand () {
+const MINIMUM_RIPPLE_SIZE = 100
+
+function createRipples() {
+  const { subscribe, update } = writable([])
+
+  return {
+    subscribe,
+    show(event) {
+      const { left, top } = event.currentTarget.getBoundingClientRect()
+      const x = event.clientX - left
+      const y = event.clientY - top
+      const size = Math.min(
+        event.currentTarget.clientHeight,
+        event.currentTarget.clientWidth,
+        MINIMUM_RIPPLE_SIZE
+      )
+      const item = {
+        id: event.timeStamp,
+        style: `
+          width: ${size}px;
+          height: ${size}px;
+          left: ${x - size / 2}px;
+          top: ${y - size / 2}px;
+        `
+      }
+
+      update(state => [...state, item])
+    },
+    hide(id) {
+      console.log('hide:', id)
+      update(state => state.filter(item => item.id !== id))
+    }
+  }
+}
+
+function createHand() {
   const { subscribe, update } = writable({
     direction: null,
     ArrowUp: false,
@@ -26,9 +60,10 @@ function createHand () {
 
   return {
     subscribe,
-    keydown (keyName) {
+    keydown(keyName) {
       update(state => {
         const updatedKeys = { ...state, [keyName]: true }
+
         return {
           ...updatedKeys,
           direction: getHandDirection(updatedKeys),
@@ -37,16 +72,17 @@ function createHand () {
         }
       })
     },
-    keyup (keyName) {
+    keyup(keyName) {
       update(state => {
         const updatedKeys = { ...state, [keyName]: false }
+
         return {
           ...updatedKeys,
           direction: getHandDirection(updatedKeys)
         }
       })
     },
-    riseHand (direction) {
+    riseHand(direction) {
       update(state => ({
         ...state,
         direction,
@@ -56,10 +92,10 @@ function createHand () {
   }
 }
 
-function createTickets () {
+function createTickets() {
   const { subscribe, set, update } = writable([])
 
-  function createTicket () {
+  function createTicket() {
     const target = randomItem(Object.keys(coordinates))
     const id = Date.now()
 
@@ -72,10 +108,10 @@ function createTickets () {
 
   return {
     subscribe,
-    throw () {
+    throw() {
       update(state => [...state, createTicket()])
     },
-    land (id, target) {
+    land(id, target) {
       if (target === get(hand).direction) {
         const difference = Date.now() - get(hand).lastPressedTime
         score.update(state => state + (difference < 300 ? 25 : 10))
@@ -83,16 +119,16 @@ function createTickets () {
 
       tickets.remove(id)
     },
-    remove (id) {
+    remove(id) {
       update(state => state.filter(ticket => ticket.id !== id))
     },
-    reset () {
+    reset() {
       set([])
     }
   }
 }
 
-function createSession () {
+function createSession() {
   return {
     addAuthenticationListener: () => {
       firebase.auth().onAuthStateChanged(async authData => {
@@ -117,13 +153,14 @@ function createSession () {
             requests.stop('signIn')
             errors.show('wrongEmailDomain')
             appIsReady.set(true)
+
             return
           }
 
           // Try to find user's data in the database
           let playerData = await database
             .get(`players/${authData.uid}`)
-          // TODO: I dont think i need this
+            // TODO: I dont think i need this
             .catch(() => {
               //   errors.show('getUserData', error)
             })
@@ -152,12 +189,18 @@ function createSession () {
             }
           }
 
-          playerData = { ...playerData, isOnline: true, lastLogin: moment().format() }
+          playerData = {
+            ...playerData,
+            isOnline: true,
+            lastLogin: moment().format()
+          }
 
           // Save the user data in the database with updated last login date
-          await database.update(`players/${playerData.id}`, playerData).catch(error => {
-            errors.show('updateUserInAddAuthenticationListener', error)
-          })
+          await database
+            .update(`players/${playerData.id}`, playerData)
+            .catch(error => {
+              errors.show('updateUserInAddAuthenticationListener', error)
+            })
 
           storage.save('signedIn', true)
           player.set(playerData)
@@ -196,7 +239,8 @@ function createSession () {
         name: 'Robert Kirsz',
         email: 'robert.kirsz@gmail.com',
         emailSlug: 'robertkirsz',
-        photoUrl: 'https://lh3.googleusercontent.com/a-/AAuE7mAPnMxV4UEnKcDQ8I5JN8I3ScdvZEqEbZnp8Hta-Ig'
+        photoUrl:
+          'https://lh3.googleusercontent.com/a-/AAuE7mAPnMxV4UEnKcDQ8I5JN8I3ScdvZEqEbZnp8Hta-Ig'
       })
       requests.stop('signIn')
       appIsReady.set(true)
@@ -244,24 +288,24 @@ function createSession () {
   }
 }
 
-function createScreen () {
+function createScreen() {
   const { subscribe, set, update } = writable(null)
 
   return {
     subscribe,
-    open (name) {
+    open(name) {
       set(name)
     },
-    close () {
+    close() {
       set(null)
     },
-    toggle (name) {
-      update(state => state === name ? null : name)
+    toggle(name) {
+      update(state => (state === name ? null : name))
     }
   }
 }
 
-function createRequests () {
+function createRequests() {
   const { subscribe, update } = writable({
     authenticationStateChange: !!JSON.parse(
       localStorage.getItem('ticket-deflect_signedIn')
@@ -283,7 +327,7 @@ function createRequests () {
   }
 }
 
-function createErrors () {
+function createErrors() {
   const { subscribe, update } = writable([])
 
   return {
@@ -303,7 +347,7 @@ function createErrors () {
   }
 }
 
-function createStorage () {
+function createStorage() {
   const { subscribe, update } = writable({
     signedIn: !!JSON.parse(localStorage.getItem('ticket-deflect_signedIn'))
   })
@@ -345,6 +389,7 @@ export const requests = createRequests()
 export const errors = createErrors()
 export const session = createSession()
 export const storage = createStorage()
+export const ripples = createRipples()
 
 lives.subscribe(value => {
   if (value <= 0) {
