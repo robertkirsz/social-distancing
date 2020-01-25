@@ -1,5 +1,5 @@
 <script>
-  import { session } from 'stores'
+  import { session } from 'store'
 </script>
 
 <style>

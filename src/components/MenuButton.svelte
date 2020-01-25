@@ -1,5 +1,5 @@
 <script>
-  import { screen, gameIsRunning } from '../stores.js'
+  import { screen, gameIsRunning } from '../store.js'
 </script>
 
 <style>

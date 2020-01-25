@@ -1,7 +1,7 @@
 <script>
   import { onMount } from 'svelte'
   import initializeFirebase from 'database'
-  import { hand, requests, session, player } from 'stores'
+  import { hand, requests, session, player } from 'store'
 
   import Score from 'components/Score'
   import Intro from 'components/Intro'

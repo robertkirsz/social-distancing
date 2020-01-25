@@ -1,6 +1,6 @@
 <script>
   import { linear } from 'svelte/easing'
-  import { gameIsRunning, tickets } from '../stores'
+  import { gameIsRunning, tickets } from '../store'
   import { randomNumber, coordinates } from '../stuff'
 
   let timeout = null

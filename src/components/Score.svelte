@@ -1,7 +1,7 @@
 <script>
   import { tweened } from 'svelte/motion'
   import { cubicOut } from 'svelte/easing'
-  import { score } from '../stores.js'
+  import { score } from '../store.js'
 
   const progress = tweened($score, {
     duration: 400,

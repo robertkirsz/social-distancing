@@ -1,5 +1,5 @@
 <script>
-  import { hand } from '../stores'
+  import { hand } from '../store'
 
   const SIZE = 320
   const UNIT = SIZE / 3

@@ -1,5 +1,5 @@
 <script>
-  import { hand, player } from '../stores'
+  import { hand, player } from '../store'
 
   const stuff = [
     { direction: 'UP', rotation: 0, emoji: '✊', emojiRotation: 0 },
