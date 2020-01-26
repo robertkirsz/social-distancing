@@ -36,7 +36,7 @@ function createEffects() {
 
   return {
     subscribe,
-    activate(name, options) {
+    activate(name, options = {}) {
       const id = Date.now()
       update(state => [...state, { id, name, ...options }])
       if (options.duration)
@@ -154,7 +154,7 @@ function createTickets() {
       update(state => [...state, createTicket()])
     },
     land(id, target) {
-      console.warn('id, target:', id, target)
+      console.warn('LANDED', target)
       if (target === get(hand).direction) {
         const difference = Date.now() - get(hand).lastPressedTime
         score.update(state => state + (difference < 300 ? 25 : 10))
@@ -289,7 +289,7 @@ function createSession() {
       appIsReady.set(true)
       requests.stop('authStateChange')
     },
-    signOut: async () => {
+    signOut: async() => {
       const playerData = get(player)
 
       if (!playerData || get(requests).signOut) return

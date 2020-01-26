@@ -25,6 +25,15 @@
     }
   }
 
+  @keyframes invincibility {
+    0% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0.5;
+    }
+  }
+
   div {
     display: flex;
     justify-content: center;
@@ -34,7 +43,10 @@
   }
 
   .invincible {
-    opacity: 0.3;
+    animation-name: invincibility;
+    animation-duration: 0.1s;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
   }
 
   .hand-wrapper {

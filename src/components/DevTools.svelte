@@ -1,11 +1,5 @@
 <script>
-  import { effects, isInvincible } from 'store'
-
-  function toggleEffect() {
-    $isInvincible
-      ? effects.deactivate('Invincibility')
-      : effects.activate('Invincibility')
-  }
+  import { tickets, effects, isInvincible } from 'store'
 </script>
 
 <style>
@@ -27,5 +21,10 @@
 
 <aside>
   <pre>{JSON.stringify($effects, null, 2)}</pre>
-  <button on:click={toggleEffect}>Invincible</button>
+  <button
+    on:click={$isInvincible ? effects.deactivate('Invincibility') : effects.activate('Invincibility')}>
+    Invincible
+  </button>
+  <pre>{JSON.stringify($tickets, null, 2)}</pre>
+  <button on:click={tickets.throw}>Throw ticket</button>
 </aside>
