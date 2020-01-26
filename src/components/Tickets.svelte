@@ -40,7 +40,7 @@
 </style>
 
 <div>
-  {#each $tickets as { id, target, duration } (id)}
-    <Ticket {id} {target} {duration} />
+  {#each $tickets as ticket (ticket.id)}
+    <Ticket {...ticket} />
   {/each}
 </div>

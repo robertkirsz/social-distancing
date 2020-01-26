@@ -5,6 +5,7 @@
   export let id = null
   export let target = null
   export let duration = 0
+  export let animation = null
 
   const directions = {
     'UP-LEFT': { x: 0, y: 0 },
@@ -38,14 +39,39 @@
 
     width: 7vw;
     height: 7vw;
-    transform: translate(-50%, -50%);
-
-    transition-property: all;
-    transition-timing-function: linear;
+    margin: -3.5vw 0 0 -3.5vw;
 
     position: absolute;
     background: rgba(42, 160, 140, 0.8);
   }
+
+  @keyframes deflect {
+    0% {
+      transform: translate(0, 0) rotate(0);
+    }
+
+    50% {
+      transform: translate(-100%, -300%) rotate(500deg);
+    }
+
+    90% {
+      opacity: 1;
+    }
+
+    100% {
+      transform: translate(-200%, 800%) rotate(1000deg);
+      opacity: 0;
+    }
+  }
+
+  .deflect {
+    animation-name: deflect;
+    animation-duration: 1s;
+  }
+
+  .hit {
+    background: red;
+  }
 </style>
 
-<span in:fly on:introend={tickets.land(id, target)} />
+<span in:fly on:introend={tickets.land(id, target)} class={animation} />

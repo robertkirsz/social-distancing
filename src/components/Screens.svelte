@@ -19,6 +19,7 @@
     {/if}
 
     {#if $screen === 'MENU'}
+      <button>Ranking</button>
       <button on:click={session.signOut}>Log out</button>
     {/if}
   </div>

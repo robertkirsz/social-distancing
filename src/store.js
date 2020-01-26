@@ -178,12 +178,18 @@ function createTickets() {
         console.warn(target, '=> DEFLECTED')
         const difference = Date.now() - get(hand).lastPressedTime
         score.update(state => state + (difference < 300 ? 25 : 10))
+        tickets.animate(id, 'deflect')
       } else if (get(lives) > 0) {
         console.warn(target, '=> HIT')
         player.hit()
+        tickets.animate(id, 'hit')
       }
-
-      tickets.remove(id)
+    },
+    animate(id, animation) {
+      update(state =>
+        state.map(item => (item.id === id ? { ...item, animation } : item))
+      )
+      setTimeout(() => tickets.remove(id), 1000)
     },
     remove(id) {
       update(state => state.filter(ticket => ticket.id !== id))
@@ -312,7 +318,7 @@ function createSession() {
       appIsReady.set(true)
       requests.stop('authStateChange')
     },
-    signOut: async () => {
+    signOut: async() => {
       const playerData = get(player)
 
       if (!playerData || get(requests).signOut) return
