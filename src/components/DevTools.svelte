@@ -1,5 +1,5 @@
 <script>
-  import { tickets, effects, isInvincible } from 'store'
+  import { lives, effects, tickets, isInvincible } from 'store'
 </script>
 
 <style>
@@ -14,17 +14,23 @@
     font-size: 12px;
   }
 
-  aside > * {
+  aside > *, aside > div > * {
     margin: 4px;
   }
 </style>
 
 <aside>
-  <pre>{JSON.stringify($effects, null, 2)}</pre>
-  <button
-    on:click={$isInvincible ? effects.deactivate('Invincibility') : effects.activate('Invincibility')}>
-    Invincible
-  </button>
-  <pre>{JSON.stringify($tickets, null, 2)}</pre>
-  <button on:click={tickets.throw}>Throw ticket</button>
+  <pre>effects: {JSON.stringify($effects, null, 2)}</pre>
+  <pre>tickets: {JSON.stringify($tickets, null, 2)}</pre>
+
+  <div>
+    <button on:click={tickets.throw}>Throw ticket</button>
+    <button on:click={() => lives.update(v => v + 1)}>Life +1</button>
+    <button on:click={() => lives.update(v => v - 1)}>Life -1</button>
+
+    <button
+      on:click={$isInvincible ? effects.deactivate('Invincibility') : effects.activate('Invincibility')}>
+      Invincible
+    </button>
+  </div>
 </aside>

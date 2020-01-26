@@ -16,7 +16,7 @@ const MINIMUM_RIPPLE_SIZE = 100
 
 export const lives = writable(INITIAL_LIVES)
 export const score = writable(0)
-export const player = writable(null)
+export const player = createPlayer()
 export const players = readable([])
 export const appIsReady = writable(true) // TODO: false
 export const gameIsRunning = writable(false)
@@ -30,6 +30,20 @@ export const session = createSession()
 export const storage = createStorage()
 export const ripples = createRipples()
 export const effects = createEffects()
+
+function createPlayer() {
+  const { subscribe, set } = writable(null)
+
+  return {
+    subscribe,
+    set,
+    hit() {
+      if (get(lives) <= 0) return
+      lives.update(state => state - 1)
+      effects.activate('Invincibility', { duration: 1500 })
+    }
+  }
+}
 
 function createEffects() {
   const { subscribe, update } = writable([])
@@ -154,11 +168,20 @@ function createTickets() {
       update(state => [...state, createTicket()])
     },
     land(id, target) {
-      console.warn('LANDED', target)
+      if (get(isInvincible)) {
+        tickets.remove(id)
+        console.log(target, '=> IS INVISIBLE')
+        return
+      }
+
       if (target === get(hand).direction) {
+        console.warn(target, '=> DEFLECTED')
         const difference = Date.now() - get(hand).lastPressedTime
         score.update(state => state + (difference < 300 ? 25 : 10))
-      } else if (get(lives) > 0) lives.update(state => state - 1)
+      } else if (get(lives) > 0) {
+        console.warn(target, '=> HIT')
+        player.hit()
+      }
 
       tickets.remove(id)
     },
@@ -289,7 +312,7 @@ function createSession() {
       appIsReady.set(true)
       requests.stop('authStateChange')
     },
-    signOut: async() => {
+    signOut: async () => {
       const playerData = get(player)
 
       if (!playerData || get(requests).signOut) return

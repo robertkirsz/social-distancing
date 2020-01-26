@@ -19,7 +19,6 @@
     "semi": "warn",
     "quotes": "warn",
     "no-unused-vars": "warn",
-    "newline-before-return":"warn",
     "space-before-function-paren": ["warn", "never"],
     "space-before-blocks": "warn",
     "import/first": "off",
