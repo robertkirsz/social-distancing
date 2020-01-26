@@ -1,4 +1,4 @@
-import { writable, get, readable } from 'svelte/store'
+import { writable, derived, readable, get } from 'svelte/store'
 import moment from 'moment'
 import firebase from 'firebase/app'
 import 'firebase/auth'
@@ -13,6 +13,48 @@ import {
 } from 'stuff'
 
 const MINIMUM_RIPPLE_SIZE = 100
+
+export const lives = writable(INITIAL_LIVES)
+export const score = writable(0)
+export const player = writable(null)
+export const players = readable([])
+export const appIsReady = writable(true) // TODO: false
+export const gameIsRunning = writable(false)
+export const gameIsOver = writable(false)
+export const screen = createScreen()
+export const hand = createHand()
+export const tickets = createTickets()
+export const requests = createRequests()
+export const errors = createErrors()
+export const session = createSession()
+export const storage = createStorage()
+export const ripples = createRipples()
+export const effects = createEffects()
+
+function createEffects() {
+  const { subscribe, update } = writable([])
+
+  return {
+    subscribe,
+    activate(name, options) {
+      const id = Date.now()
+      update(state => [...state, { id, name, ...options }])
+      if (options.duration)
+        setTimeout(() => effects.deactivate(id), options.duration)
+
+      return id
+    },
+    deactivate(idOrName) {
+      update(state =>
+        state.filter(item => ![item.id, item.name].includes(idOrName))
+      )
+    }
+  }
+}
+
+export const isInvincible = derived(effects, $effect =>
+  Boolean($effect.find(effect => effect.name === 'Invincibility'))
+)
 
 function createRipples() {
   const { subscribe, update } = writable([])
@@ -112,6 +154,7 @@ function createTickets() {
       update(state => [...state, createTicket()])
     },
     land(id, target) {
+      console.warn('id, target:', id, target)
       if (target === get(hand).direction) {
         const difference = Date.now() - get(hand).lastPressedTime
         score.update(state => state + (difference < 300 ? 25 : 10))
@@ -132,7 +175,7 @@ function createSession() {
   return {
     addAuthenticationListener: () => {
       firebase.auth().onAuthStateChanged(async authData => {
-        requests.start('authenticationStateChange')
+        requests.start('authStateChange')
 
         // If user is signing in...
         if (authData && get(player) === null) {
@@ -149,7 +192,7 @@ function createSession() {
             console.warn('WRONG')
             database.signOut()
             firebase.auth().currentUser.delete()
-            requests.stop('authenticationStateChange')
+            requests.stop('authStateChange')
             requests.stop('signIn')
             errors.show('wrongEmailDomain')
             appIsReady.set(true)
@@ -215,7 +258,7 @@ function createSession() {
         }
 
         appIsReady.set(true)
-        requests.stop('authenticationStateChange')
+        requests.stop('authStateChange')
       })
     },
     signIn: () => {
@@ -232,7 +275,7 @@ function createSession() {
       // })
 
       // KILLME: mocks
-      requests.start('authenticationStateChange')
+      requests.start('authStateChange')
       storage.save('signedIn', true)
       player.set({
         id: 'M0ck3d1d',
@@ -244,7 +287,7 @@ function createSession() {
       })
       requests.stop('signIn')
       appIsReady.set(true)
-      requests.stop('authenticationStateChange')
+      requests.stop('authStateChange')
     },
     signOut: async () => {
       const playerData = get(player)
@@ -277,12 +320,12 @@ function createSession() {
       //   })
 
       // KILLME: mocks
-      requests.start('authenticationStateChange')
+      requests.start('authStateChange')
       storage.save('signedIn', false)
       player.set(null)
       requests.stop('signOut')
       appIsReady.set(true)
-      requests.stop('authenticationStateChange')
+      requests.stop('authStateChange')
       storage.clear()
     }
   }
@@ -307,7 +350,7 @@ function createScreen() {
 
 function createRequests() {
   const { subscribe, update } = writable({
-    authenticationStateChange: !!JSON.parse(
+    authStateChange: !!JSON.parse(
       localStorage.getItem('ticket-deflect_signedIn')
     ),
     signIn: false,
@@ -374,22 +417,6 @@ function createStorage() {
     }
   }
 }
-
-export const lives = writable(INITIAL_LIVES)
-export const score = writable(0)
-export const player = writable(null)
-export const players = readable([])
-export const appIsReady = writable(true) // false
-export const gameIsRunning = writable(false)
-export const gameIsOver = writable(false)
-export const screen = createScreen()
-export const hand = createHand()
-export const tickets = createTickets()
-export const requests = createRequests()
-export const errors = createErrors()
-export const session = createSession()
-export const storage = createStorage()
-export const ripples = createRipples()
 
 lives.subscribe(value => {
   if (value <= 0) {

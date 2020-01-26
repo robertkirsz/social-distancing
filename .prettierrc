@@ -2,5 +2,6 @@
   "plugins": ["prettier-plugin-svelte"],
   "tabWidth": 2,
   "semi": false,
-  "singleQuote": true
+  "singleQuote": true,
+  "svelteSortOrder": "scripts-markup-styles"
 }

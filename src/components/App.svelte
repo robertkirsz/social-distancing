@@ -2,7 +2,6 @@
   import { onMount } from 'svelte'
   import initializeFirebase from 'database'
   import { hand, requests, session, player } from 'store'
-
   import Score from 'components/Score'
   import Intro from 'components/Intro'
   import Lives from 'components/Lives'
@@ -10,6 +9,7 @@
   import Tickets from 'components/Tickets'
   import Ripples from 'components/Ripples'
   import Screens from 'components/Screens'
+  import DevTools from 'components/DevTools'
   import TouchArea from 'components/TouchArea'
   import MenuButton from 'components/MenuButton'
   import GameControlButton from 'components/GameControlButton'
@@ -31,7 +31,7 @@
     // session.addAuthenticationListener()
 
     // KILLME: mocks
-    if ($requests.authenticationStateChange) {
+    if ($requests.authStateChange) {
       session.signIn()
     }
 
@@ -71,6 +71,7 @@
 
     <GameControlButton />
     <MenuButton />
+    <DevTools />
   {:else}
     <Intro />
   {/if}

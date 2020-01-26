@@ -4,7 +4,8 @@
 </script>
 
 {#if $menu.isOpened}
-  <div transition:fade class="wrapper">
+  <div transition:fade class="frost">
+    <button>Ranking</button>
     <button on:click={session.signOut}>Log out</button>
   </div>
 {/if}

@@ -1,7 +1,8 @@
 <script>
   import { linear } from 'svelte/easing'
-  import { gameIsRunning, tickets } from '../store'
-  import { randomNumber, coordinates } from '../stuff'
+  import { gameIsRunning, tickets } from 'store'
+  import { randomNumber } from 'stuff'
+  import Ticket from 'components/Ticket'
 
   let timeout = null
 
@@ -36,23 +37,10 @@
 
     overflow: hidden;
   }
-
-  span {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    width: 5vw;
-    height: 5vw;
-
-    position: absolute;
-    background: rgba(42, 160, 140, 0.6);
-  }
 </style>
 
 <div>
-  {#each $tickets as { id, x, y, duration, target } (id)}
-    <span />
+  {#each $tickets as { id, target, duration } (id)}
+    <Ticket {id} {target} {duration} />
   {/each}
 </div>
-<!-- on:introend={() => tickets.land(id, target)} /> -->

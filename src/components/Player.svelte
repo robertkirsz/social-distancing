@@ -1,5 +1,5 @@
 <script>
-  import { hand, player } from '../store'
+  import { hand, player, isInvincible } from 'store'
 
   const stuff = [
     { direction: 'UP', rotation: 0, emoji: '✊', emojiRotation: 0 },
@@ -30,8 +30,11 @@
     justify-content: center;
     align-items: center;
     position: relative;
-
     background: rgba(255, 192, 203, 0.5);
+  }
+
+  .invincible {
+    opacity: 0.3;
   }
 
   .hand-wrapper {
@@ -69,7 +72,7 @@
   }
 </style>
 
-<div>
+<div class:invincible={$isInvincible}>
   {#each stuff as item}
     <span class="hand-wrapper" style="transform: rotate({item.rotation}deg);">
       <span class="hand" class:active={$hand.direction === item.direction}>

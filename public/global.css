@@ -43,31 +43,12 @@ a:visited {
   color: rgb(0, 80, 160);
 }
 
-label {
-  display: block;
-}
-
-input,
-button,
-select,
-textarea {
-  font-family: inherit;
-  font-size: inherit;
-  padding: 0.4em;
-  border: 1px solid #ccc;
-  border-radius: 2px;
-}
-
-input:disabled {
-  color: #ccc;
-}
-
-button:disabled {
+*:disabled {
   opacity: 0.5;
   pointer-events: none;
 }
 
-.wrapper {
+.frost {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -83,6 +64,6 @@ button:disabled {
   padding: 16px;
 }
 
-.wrapper h1:only-child {
+.frost h1:only-child {
   margin: auto;
 }

@@ -1,6 +1,15 @@
 <script>
-  import { screen, gameIsRunning } from '../store.js'
+  import { screen, gameIsRunning } from 'store'
 </script>
+
+<button
+  class:opened={$screen === 'MENU'}
+  on:mouseup={() => screen.toggle('MENU')}
+  disabled={$gameIsRunning}>
+  <span />
+  <span />
+  <span />
+</button>
 
 <style>
   button {
@@ -53,12 +62,3 @@
     transition-delay: 100ms;
   }
 </style>
-
-<button
-  class:opened={$screen === 'MENU'}
-  on:mouseup={() => screen.toggle('MENU')}
-  disabled={$gameIsRunning}>
-  <span />
-  <span />
-  <span />
-</button>

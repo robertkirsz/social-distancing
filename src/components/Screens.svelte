@@ -3,17 +3,17 @@
   import { screen, session, requests } from 'store'
 
   // prettier-ignore
-  $: isLoading = $requests.authenticationStateChange || $requests.signIn || $requests.signOut
+  $: isLoading = $requests.authStateChange || $requests.signIn || $requests.signOut
 </script>
 
 {#if isLoading}
-  <div transition:fade class="wrapper">
+  <div transition:fade class="frost">
     <h1>Loading...</h1>
   </div>
 {/if}
 
 {#if $screen}
-  <div transition:fade class="wrapper">
+  <div transition:fade class="frost">
     {#if $screen === 'GAME OVER'}
       <h1>Game Over</h1>
     {/if}
