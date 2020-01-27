@@ -14,8 +14,27 @@
     font-size: 12px;
   }
 
-  aside > *, aside > div > * {
+  aside > *,
+  aside > div > * {
     margin: 4px;
+  }
+
+  .throwing-block {
+    display: flex;
+    flex-wrap: wrap;
+    width: 72px;
+    height: 72px;
+  }
+
+  .throwing-block button {
+    width: 20px;
+    height: 20px;
+    padding: 0;
+    margin: 0;
+    border-radius: 4px;
+    margin: 2px;
+    outline: none;
+    cursor: pointer;
   }
 </style>
 
@@ -24,7 +43,20 @@
   <pre>tickets: {JSON.stringify($tickets, null, 2)}</pre>
 
   <div>
-    <button on:click={tickets.throw}>Throw ticket</button>
+    <div class="throwing-block">
+      <button on:click={() => tickets.throw('UP-LEFT')} />
+      <button on:click={() => tickets.throw('UP')} />
+      <button on:click={() => tickets.throw('UP-RIGHT')} />
+      <button on:click={() => tickets.throw('LEFT')} />
+      <button on:click={() => tickets.throw()}>?</button>
+      <button on:click={() => tickets.throw('RIGHT')} />
+      <button on:click={() => tickets.throw('DOWN-LEFT')} />
+      <button on:click={() => tickets.throw('DOWN')} />
+      <button on:click={() => tickets.throw('DOWN-RIGHT')} />
+    </div>
+
+    <button on:click={tickets.reset}>Reset tickets</button>
+    <button on:click={tickets.toggleAutoDeflect}>Auto-deflect</button>
     <button on:click={() => lives.update(v => v + 1)}>Life +1</button>
     <button on:click={() => lives.update(v => v - 1)}>Life -1</button>
 

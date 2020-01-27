@@ -151,21 +151,16 @@ function createHand() {
 function createTickets() {
   const { subscribe, set, update } = writable([])
 
-  function createTicket() {
-    const target = randomItem(Object.keys(coordinates))
-    const id = Date.now()
-
-    return {
-      id,
-      target,
-      duration: randomNumber(1000, 2000)
-    }
+  function createTicket(target = randomItem(Object.keys(coordinates))) {
+    return { id: Date.now(), target, duration: randomNumber(1000, 2000) }
   }
+
+  let autoDeflect = false
 
   return {
     subscribe,
-    throw() {
-      update(state => [...state, createTicket()])
+    throw(target) {
+      update(state => [...state, createTicket(target)])
     },
     land(id, target) {
       if (get(isInvincible)) {
@@ -174,7 +169,7 @@ function createTickets() {
         return
       }
 
-      if (target === get(hand).direction) {
+      if (autoDeflect || target === get(hand).direction) {
         console.warn(target, '=> DEFLECTED')
         const difference = Date.now() - get(hand).lastPressedTime
         score.update(state => state + (difference < 300 ? 25 : 10))
@@ -196,6 +191,9 @@ function createTickets() {
     },
     reset() {
       set([])
+    },
+    toggleAutoDeflect() {
+      autoDeflect = !autoDeflect
     }
   }
 }
