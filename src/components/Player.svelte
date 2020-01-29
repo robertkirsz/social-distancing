@@ -1,5 +1,5 @@
 <script>
-  import { hand, player, isInvincible, lives } from 'store'
+  import { hand, player, isInvincible, isExhausted, lives } from 'store'
 
   const stuff = [
     { direction: 'UP', rotation: 0, emoji: '✊', emojiRotation: 0 },
@@ -127,6 +127,10 @@
     animation-direction: alternate;
   }
 
+  .exhaustion {
+    opacity: 0.2;
+  }
+
   div {
     display: flex;
     justify-content: center;
@@ -176,10 +180,9 @@
     animation-name: brokenHeart;
     animation-duration: 1s;
   }
-
 </style>
 
-<div class:invincibility={$isInvincible} on:animationend={handleAnimationEnd}>
+<div class:invincibility={$isInvincible} class:exhaustion={$isExhausted} on:animationend={handleAnimationEnd}>
   {#each stuff as item}
     <span class="hand-wrapper" style="transform: rotate({item.rotation}deg);">
       <span class="hand" class:punch={$hand.direction === item.direction}>

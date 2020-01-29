@@ -70,6 +70,10 @@ export const isInvincible = derived(effects, $effect =>
   Boolean($effect.find(effect => effect.name === 'Invincibility'))
 )
 
+export const isExhausted = derived(effects, $effect =>
+  Boolean($effect.find(effect => effect.name === 'Exhaustion'))
+)
+
 function createRipples() {
   const { subscribe, update } = writable([])
 

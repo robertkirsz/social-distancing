@@ -1,5 +1,5 @@
 <script>
-  import { lives, effects, tickets, isInvincible } from 'store'
+  import { lives, effects, tickets, isInvincible, isExhausted } from 'store'
 </script>
 
 <style>
@@ -63,6 +63,11 @@
     <button
       on:click={$isInvincible ? effects.deactivate('Invincibility') : effects.activate('Invincibility')}>
       Invincible
+    </button>
+
+    <button
+      on:click={$isExhausted ? effects.deactivate('Exhaustion') : effects.activate('Exhaustion')}>
+      Exhaustion
     </button>
   </div>
 </aside>

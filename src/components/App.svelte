@@ -1,7 +1,7 @@
 <script>
   import { onMount } from 'svelte'
   import initializeFirebase from 'database'
-  import { hand, requests, session, player } from 'store'
+  import { hand, requests, session, isExhausted, player } from 'store'
   import Score from 'components/Score'
   import Intro from 'components/Intro'
   import Lives from 'components/Lives'
@@ -16,6 +16,7 @@
 
   function keyListener(method) {
     return function(event) {
+      if ($isExhausted) return
       // prettier-ignore
       if (!['ArrowUp', 'ArrowRight', 'ArrowDown', 'ArrowLeft'].includes(event.key)) return;
       if (method === 'keydown' && $hand[event.key] === true) return
