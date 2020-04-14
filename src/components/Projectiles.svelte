@@ -1,27 +1,33 @@
 <script>
   import { linear } from 'svelte/easing'
-  import { gameIsRunning, tickets } from 'store'
+  import { gameIsRunning, projectiles } from 'store'
   import { randomNumber } from 'stuff'
-  import Ticket from 'components/Ticket'
+  import Projectile from 'components/Projectile'
 
   let timeout = null
 
-  function throwTicket() {
+  function throwProjectile() {
     timeout = setTimeout(() => {
-      tickets.throw()
-      if ($gameIsRunning) throwTicket()
+      projectiles.throw()
+      if ($gameIsRunning) throwProjectile()
     }, randomNumber(1000, 2000))
   }
 
   gameIsRunning.subscribe(isRunning => {
     if (isRunning) {
-      throwTicket()
+      throwProjectile()
     } else {
       clearTimeout(timeout)
-      tickets.reset()
+      projectiles.reset()
     }
   })
 </script>
+
+<div>
+  {#each $projectiles as projectile (projectile.id)}
+    <Projectile {...projectile} />
+  {/each}
+</div>
 
 <style>
   div {
@@ -38,9 +44,3 @@
     overflow: hidden;
   }
 </style>
-
-<div>
-  {#each $tickets as ticket (ticket.id)}
-    <Ticket {...ticket} />
-  {/each}
-</div>

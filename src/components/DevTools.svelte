@@ -1,6 +1,40 @@
 <script>
-  import { lives, effects, tickets, isInvincible, isExhausted } from 'store'
+  import { lives, effects, projectiles, isInvincible, isExhausted } from 'store'
 </script>
+
+<aside>
+  <pre>effects: {JSON.stringify($effects, null, 2)}</pre>
+  <pre>projectiles: {JSON.stringify($projectiles, null, 2)}</pre>
+
+  <div>
+    <div class="throwing-block">
+      <button on:click={() => projectiles.throw('UP-LEFT')} />
+      <button on:click={() => projectiles.throw('UP')} />
+      <button on:click={() => projectiles.throw('UP-RIGHT')} />
+      <button on:click={() => projectiles.throw('LEFT')} />
+      <button on:click={() => projectiles.throw()}>?</button>
+      <button on:click={() => projectiles.throw('RIGHT')} />
+      <button on:click={() => projectiles.throw('DOWN-LEFT')} />
+      <button on:click={() => projectiles.throw('DOWN')} />
+      <button on:click={() => projectiles.throw('DOWN-RIGHT')} />
+    </div>
+
+    <button on:click={projectiles.reset}>Reset projectiles</button>
+    <button on:click={projectiles.toggleAutoDeflect}>Auto-deflect</button>
+    <button on:click={() => lives.update(v => v + 1)}>Life +1</button>
+    <button on:click={() => lives.update(v => v - 1)}>Life -1</button>
+
+    <button
+      on:click={$isInvincible ? effects.deactivate('Invincibility') : effects.activate('Invincibility')}>
+      Invincible
+    </button>
+
+    <button
+      on:click={$isExhausted ? effects.deactivate('Exhaustion') : effects.activate('Exhaustion')}>
+      Exhaustion
+    </button>
+  </div>
+</aside>
 
 <style>
   aside {
@@ -37,37 +71,3 @@
     cursor: pointer;
   }
 </style>
-
-<aside>
-  <pre>effects: {JSON.stringify($effects, null, 2)}</pre>
-  <pre>tickets: {JSON.stringify($tickets, null, 2)}</pre>
-
-  <div>
-    <div class="throwing-block">
-      <button on:click={() => tickets.throw('UP-LEFT')} />
-      <button on:click={() => tickets.throw('UP')} />
-      <button on:click={() => tickets.throw('UP-RIGHT')} />
-      <button on:click={() => tickets.throw('LEFT')} />
-      <button on:click={() => tickets.throw()}>?</button>
-      <button on:click={() => tickets.throw('RIGHT')} />
-      <button on:click={() => tickets.throw('DOWN-LEFT')} />
-      <button on:click={() => tickets.throw('DOWN')} />
-      <button on:click={() => tickets.throw('DOWN-RIGHT')} />
-    </div>
-
-    <button on:click={tickets.reset}>Reset tickets</button>
-    <button on:click={tickets.toggleAutoDeflect}>Auto-deflect</button>
-    <button on:click={() => lives.update(v => v + 1)}>Life +1</button>
-    <button on:click={() => lives.update(v => v - 1)}>Life -1</button>
-
-    <button
-      on:click={$isInvincible ? effects.deactivate('Invincibility') : effects.activate('Invincibility')}>
-      Invincible
-    </button>
-
-    <button
-      on:click={$isExhausted ? effects.deactivate('Exhaustion') : effects.activate('Exhaustion')}>
-      Exhaustion
-    </button>
-  </div>
-</aside>

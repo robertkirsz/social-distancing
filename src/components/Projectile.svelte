@@ -1,6 +1,6 @@
 <script>
   import { onMount, tick } from 'svelte'
-  import { tickets } from 'store'
+  import { projectiles } from 'store'
 
   export let id = null
   export let target = null
@@ -34,7 +34,7 @@
 
 <span
   in:fly
-  on:introend={tickets.land(id, target)}
+  on:introend={projectiles.land(id, target)}
   class={animation}
   style={`top: ${to.y}%; left: ${to.x}%;`} />
 

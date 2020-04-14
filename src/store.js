@@ -9,7 +9,7 @@ import {
   randomNumber,
   getHandDirection,
   getError,
-  INITIAL_LIVES
+  INITIAL_LIVES,
 } from 'stuff'
 
 const MINIMUM_RIPPLE_SIZE = 100
@@ -23,7 +23,7 @@ export const gameIsRunning = writable(false)
 export const gameIsOver = writable(false)
 export const screen = createScreen()
 export const hand = createHand()
-export const tickets = createTickets()
+export const projectiles = createProjectiles()
 export const requests = createRequests()
 export const errors = createErrors()
 export const session = createSession()
@@ -41,7 +41,7 @@ function createPlayer() {
       if (get(lives) <= 0) return
       lives.update(state => state - 1)
       effects.activate('Invincibility', { duration: 1500 })
-    }
+    },
   }
 }
 
@@ -62,7 +62,7 @@ function createEffects() {
       update(state =>
         state.filter(item => ![item.id, item.name].includes(idOrName))
       )
-    }
+    },
   }
 }
 
@@ -95,7 +95,7 @@ function createRipples() {
           height: ${size}px;
           left: ${x - size / 2}px;
           top: ${y - size / 2}px;
-        `
+        `,
       }
 
       update(state => [...state, item])
@@ -103,7 +103,7 @@ function createRipples() {
     hide(id) {
       console.log('hide:', id)
       update(state => state.filter(item => item.id !== id))
-    }
+    },
   }
 }
 
@@ -115,7 +115,7 @@ function createHand() {
     ArrowDown: false,
     ArrowLeft: false,
     lastPressedKey: null,
-    lastPressedTime: 0
+    lastPressedTime: 0,
   })
 
   return {
@@ -128,7 +128,7 @@ function createHand() {
           ...updatedKeys,
           direction: getHandDirection(updatedKeys),
           lastPressedKey: keyName,
-          lastPressedTime: Date.now()
+          lastPressedTime: Date.now(),
         }
       })
     },
@@ -138,7 +138,7 @@ function createHand() {
 
         return {
           ...updatedKeys,
-          direction: getHandDirection(updatedKeys)
+          direction: getHandDirection(updatedKeys),
         }
       })
     },
@@ -146,16 +146,16 @@ function createHand() {
       update(state => ({
         ...state,
         direction,
-        lastPressedTime: Date.now()
+        lastPressedTime: Date.now(),
       }))
-    }
+    },
   }
 }
 
-function createTickets() {
+function createProjectiles() {
   const { subscribe, set, update } = writable([])
 
-  function createTicket(target = randomItem(Object.keys(coordinates))) {
+  function createProjectile(target = randomItem(Object.keys(coordinates))) {
     return { id: Date.now(), target, duration: randomNumber(1000, 2000) }
   }
 
@@ -164,11 +164,11 @@ function createTickets() {
   return {
     subscribe,
     throw(target) {
-      update(state => [...state, createTicket(target)])
+      update(state => [...state, createProjectile(target)])
     },
     land(id, target) {
       if (get(isInvincible)) {
-        tickets.remove(id)
+        projectiles.remove(id)
         console.log(target, '=> IS INVISIBLE')
         return
       }
@@ -177,28 +177,28 @@ function createTickets() {
         console.warn(target, '=> DEFLECTED')
         const difference = Date.now() - get(hand).lastPressedTime
         score.update(state => state + (difference < 300 ? 25 : 10))
-        tickets.animate(id, 'deflect')
+        projectiles.animate(id, 'deflect')
       } else if (get(lives) > 0) {
         console.warn(target, '=> HIT')
         player.hit()
-        tickets.animate(id, 'hit')
+        projectiles.animate(id, 'hit')
       }
     },
     animate(id, animation) {
       update(state =>
         state.map(item => (item.id === id ? { ...item, animation } : item))
       )
-      setTimeout(() => tickets.remove(id), 1000)
+      setTimeout(() => projectiles.remove(id), 1000)
     },
     remove(id) {
-      update(state => state.filter(ticket => ticket.id !== id))
+      update(state => state.filter(projectile => projectile.id !== id))
     },
     reset() {
       set([])
     },
     toggleAutoDeflect() {
       autoDeflect = !autoDeflect
-    }
+    },
   }
 }
 
@@ -214,11 +214,8 @@ function createSession() {
           if (
             // TODO: temporary?
             authData.email !== 'robert.kirsz@gmail.com' &&
-            authData.email
-              .split('@')
-              .pop()
-              .split('.')
-              .slice(-2)[0] !== 'kreditech'
+            authData.email.split('@').pop().split('.').slice(-2)[0] !==
+              'kreditech'
           ) {
             console.warn('WRONG')
             database.signOut()
@@ -250,7 +247,7 @@ function createSession() {
 
             const template = {
               ...characterTemplates.default,
-              ...characterTemplates[emailSlug]
+              ...characterTemplates[emailSlug],
             }
 
             playerData = {
@@ -259,14 +256,14 @@ function createSession() {
               email: authData.email,
               emailSlug,
               photoUrl: authData.photoURL,
-              ...template
+              ...template,
             }
           }
 
           playerData = {
             ...playerData,
             isOnline: true,
-            lastLogin: moment().format()
+            lastLogin: moment().format(),
           }
 
           // Save the user data in the database with updated last login date
@@ -314,7 +311,7 @@ function createSession() {
         email: 'robert.kirsz@gmail.com',
         emailSlug: 'robertkirsz',
         photoUrl:
-          'https://lh3.googleusercontent.com/a-/AAuE7mAPnMxV4UEnKcDQ8I5JN8I3ScdvZEqEbZnp8Hta-Ig'
+          'https://lh3.googleusercontent.com/a-/AAuE7mAPnMxV4UEnKcDQ8I5JN8I3ScdvZEqEbZnp8Hta-Ig',
       })
       requests.stop('signIn')
       appIsReady.set(true)
@@ -358,7 +355,7 @@ function createSession() {
       appIsReady.set(true)
       requests.stop('authStateChange')
       storage.clear()
-    }
+    },
   }
 }
 
@@ -375,17 +372,17 @@ function createScreen() {
     },
     toggle(name) {
       update(state => (state === name ? null : name))
-    }
+    },
   }
 }
 
 function createRequests() {
   const { subscribe, update } = writable({
     authStateChange: !!JSON.parse(
-      localStorage.getItem('ticket-deflect_signedIn')
+      localStorage.getItem('projectile-deflect_signedIn')
     ),
     signIn: false,
-    signOut: false
+    signOut: false,
   })
 
   return {
@@ -397,7 +394,7 @@ function createRequests() {
     stop: name => {
       if (!get(requests)[name]) return
       update(state => ({ ...state, [name]: false }))
-    }
+    },
   }
 }
 
@@ -409,7 +406,7 @@ function createErrors() {
     show: (id, error) => {
       update(state => [
         ...state.filter(item => item.id !== id),
-        getError(id, error)
+        getError(id, error),
       ])
     },
     hide: id => {
@@ -417,26 +414,26 @@ function createErrors() {
       update(state =>
         id ? state.filter(item => item.id !== id) : state.slice(1)
       )
-    }
+    },
   }
 }
 
 function createStorage() {
   const { subscribe, update } = writable({
-    signedIn: !!JSON.parse(localStorage.getItem('ticket-deflect_signedIn'))
+    signedIn: !!JSON.parse(localStorage.getItem('projectile-deflect_signedIn')),
   })
 
   return {
     subscribe,
     save: (key, data) => {
-      localStorage.setItem(`ticket-deflect_${key}`, JSON.stringify(data))
+      localStorage.setItem(`projectile-deflect_${key}`, JSON.stringify(data))
       update(state => ({ ...state, [key]: data }))
     },
     clear: () => {
       const localStorageKeys = Object.keys(get(storage))
 
       localStorageKeys.forEach(key =>
-        localStorage.removeItem(`ticket-deflect_${key}`)
+        localStorage.removeItem(`projectile-deflect_${key}`)
       )
 
       const keys = localStorageKeys.reduce(
@@ -445,7 +442,7 @@ function createStorage() {
       )
 
       update(state => ({ signedIn: keys.signedIn ? false : state.signedIn }))
-    }
+    },
   }
 }
 
