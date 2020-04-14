@@ -3,15 +3,18 @@
     lives,
     effects,
     projectiles,
+    shields,
+    hasShield,
     isInvincible,
-    isExhausted,
-    hasShield
+    isExhausted
   } from 'store'
 </script>
 
 <aside>
   <pre>effects: {JSON.stringify($effects, null, 2)}</pre>
   <pre>projectiles: {JSON.stringify($projectiles, null, 2)}</pre>
+  <pre>shields: {JSON.stringify($shields, null, 2)}</pre>
+  <pre>hasShield: {$hasShield}</pre>
 
   <div>
     <div class="throwing-block">
@@ -36,10 +39,9 @@
       Invincible
     </button>
 
-    <button
-      on:click={$hasShield ? effects.deactivate('Shield') : effects.activate('Shield')}>
-      Shield
-    </button>
+    <button on:click={shields.create}>Create shield</button>
+
+    <button on:click={shields.destroy}>Destroy shield</button>
 
     <button
       on:click={$isExhausted ? effects.deactivate('Exhaustion') : effects.activate('Exhaustion')}>
@@ -56,7 +58,7 @@
     position: absolute;
     bottom: 8px;
     left: 8px;
-    z-index: 100;
+    z-index: 20;
     font-size: 12px;
   }
 

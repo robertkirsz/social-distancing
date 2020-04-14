@@ -11,16 +11,16 @@ export function randomNumber(min, max) {
 // prettier-ignore
 export function getHandDirection({ ArrowUp, ArrowRight, ArrowDown, ArrowLeft, lastPressedKey }) {
   return (
-    ArrowUp && !ArrowRight && !ArrowDown && !ArrowLeft ? 'UP'
-      : ArrowUp && ArrowRight && !ArrowDown && !ArrowLeft ? 'UP-RIGHT'
-        : !ArrowUp && ArrowRight && !ArrowDown && !ArrowLeft ? 'RIGHT'
-          : !ArrowUp && ArrowRight && ArrowDown && !ArrowLeft ? 'DOWN-RIGHT'
-            : !ArrowUp && !ArrowRight && ArrowDown && !ArrowLeft ? 'DOWN'
-              : !ArrowUp && !ArrowRight && ArrowDown && ArrowLeft ? 'DOWN-LEFT'
-                : !ArrowUp && !ArrowRight && !ArrowDown && ArrowLeft ? 'LEFT'
-                  : ArrowUp && !ArrowRight && !ArrowDown && ArrowLeft ? 'UP-LEFT'
-                    : !ArrowUp && !ArrowRight && !ArrowDown && !ArrowLeft ? null
-                      : lastPressedKey
+     ArrowUp && !ArrowRight && !ArrowDown && !ArrowLeft ? 'UP'
+  :  ArrowUp &&  ArrowRight && !ArrowDown && !ArrowLeft ? 'UP-RIGHT'
+  : !ArrowUp &&  ArrowRight && !ArrowDown && !ArrowLeft ? 'RIGHT'
+  : !ArrowUp &&  ArrowRight &&  ArrowDown && !ArrowLeft ? 'DOWN-RIGHT'
+  : !ArrowUp && !ArrowRight &&  ArrowDown && !ArrowLeft ? 'DOWN'
+  : !ArrowUp && !ArrowRight &&  ArrowDown &&  ArrowLeft ? 'DOWN-LEFT'
+  : !ArrowUp && !ArrowRight && !ArrowDown &&  ArrowLeft ? 'LEFT'
+  :  ArrowUp && !ArrowRight && !ArrowDown &&  ArrowLeft ? 'UP-LEFT'
+  : !ArrowUp && !ArrowRight && !ArrowDown && !ArrowLeft ? null
+  : lastPressedKey
   )
 }
 
@@ -47,3 +47,9 @@ export const getError = (id, error = {}) => ({
   code: error.code,
   message: error.response || error.request || error.message || error.config
 })
+
+export const add = item => state => [...state, item]
+
+export const remove = id => state => (id === undefined ? state.slice(0, -1) : state.filter(item => item.id !== id))
+
+export const tween = (min, max, progress, inverse) => (inverse ? Math.abs(1 - progress) : progress) * (max - min) + min

@@ -3,14 +3,7 @@ import moment from 'moment'
 import firebase from 'firebase/app'
 import 'firebase/auth'
 import * as database from 'database'
-import {
-  coordinates,
-  randomItem,
-  randomNumber,
-  getHandDirection,
-  getError,
-  INITIAL_LIVES,
-} from 'stuff'
+import { add, remove, coordinates, randomItem, randomNumber, getHandDirection, getError, INITIAL_LIVES } from 'stuff'
 
 const MINIMUM_RIPPLE_SIZE = 100
 
@@ -23,6 +16,8 @@ export const gameIsRunning = writable(false)
 export const gameIsOver = writable(false)
 export const screen = createScreen()
 export const hand = createHand()
+export const shields = createShields()
+export const hasShield = derived(shields, $shields => $shields.length > 0)
 export const projectiles = createProjectiles()
 export const requests = createRequests()
 export const errors = createErrors()
@@ -30,6 +25,9 @@ export const session = createSession()
 export const storage = createStorage()
 export const ripples = createRipples()
 export const effects = createEffects()
+export const isExhausted = derived(effects, $effects => Boolean($effects.find(effect => effect.name === 'Exhaustion')))
+// prettier-ignore
+export const isInvincible = derived(effects, $effects => Boolean($effects.find(effect => effect.name === 'Invincibility')))
 
 function createPlayer() {
   const { subscribe, set } = writable(null)
@@ -41,7 +39,7 @@ function createPlayer() {
       if (get(lives) <= 0) return
       lives.update(state => state - 1)
       effects.activate('Invincibility', { duration: 1500 })
-    },
+    }
   }
 }
 
@@ -53,30 +51,15 @@ function createEffects() {
     activate(name, options = {}) {
       const id = Date.now()
       update(state => [...state, { id, name, ...options }])
-      if (options.duration)
-        setTimeout(() => effects.deactivate(id), options.duration)
+      if (options.duration) setTimeout(() => effects.deactivate(id), options.duration)
 
       return id
     },
     deactivate(idOrName) {
-      update(state =>
-        state.filter(item => ![item.id, item.name].includes(idOrName))
-      )
-    },
+      update(state => state.filter(item => ![item.id, item.name].includes(idOrName)))
+    }
   }
 }
-
-export const isInvincible = derived(effects, $effect =>
-  Boolean($effect.find(effect => effect.name === 'Invincibility'))
-)
-
-export const hasShield = derived(effects, $effect =>
-  Boolean($effect.find(effect => effect.name === 'Shield'))
-)
-
-export const isExhausted = derived(effects, $effect =>
-  Boolean($effect.find(effect => effect.name === 'Exhaustion'))
-)
 
 function createRipples() {
   const { subscribe, update } = writable([])
@@ -87,11 +70,7 @@ function createRipples() {
       const { left, top } = event.currentTarget.getBoundingClientRect()
       const x = event.clientX - left
       const y = event.clientY - top
-      const size = Math.min(
-        event.currentTarget.clientHeight,
-        event.currentTarget.clientWidth,
-        MINIMUM_RIPPLE_SIZE
-      )
+      const size = Math.min(event.currentTarget.clientHeight, event.currentTarget.clientWidth, MINIMUM_RIPPLE_SIZE)
       const item = {
         id: event.timeStamp,
         style: `
@@ -99,7 +78,7 @@ function createRipples() {
           height: ${size}px;
           left: ${x - size / 2}px;
           top: ${y - size / 2}px;
-        `,
+        `
       }
 
       update(state => [...state, item])
@@ -107,7 +86,7 @@ function createRipples() {
     hide(id) {
       console.log('hide:', id)
       update(state => state.filter(item => item.id !== id))
-    },
+    }
   }
 }
 
@@ -119,7 +98,7 @@ function createHand() {
     ArrowDown: false,
     ArrowLeft: false,
     lastPressedKey: null,
-    lastPressedTime: 0,
+    lastPressedTime: 0
   })
 
   return {
@@ -132,7 +111,7 @@ function createHand() {
           ...updatedKeys,
           direction: getHandDirection(updatedKeys),
           lastPressedKey: keyName,
-          lastPressedTime: Date.now(),
+          lastPressedTime: Date.now()
         }
       })
     },
@@ -142,7 +121,7 @@ function createHand() {
 
         return {
           ...updatedKeys,
-          direction: getHandDirection(updatedKeys),
+          direction: getHandDirection(updatedKeys)
         }
       })
     },
@@ -150,17 +129,21 @@ function createHand() {
       update(state => ({
         ...state,
         direction,
-        lastPressedTime: Date.now(),
+        lastPressedTime: Date.now()
       }))
-    },
+    }
   }
 }
 
 function createProjectiles() {
   const { subscribe, set, update } = writable([])
 
-  function createProjectile(target = randomItem(Object.keys(coordinates))) {
-    return { id: Date.now(), target, duration: randomNumber(1000, 2000) }
+  function Projectile({
+    id = Date.now(),
+    target = randomItem(Object.keys(coordinates)),
+    duration = randomNumber(1000, 2000)
+  } = {}) {
+    return { id, target, duration }
   }
 
   let autoDeflect = false
@@ -168,16 +151,9 @@ function createProjectiles() {
   return {
     subscribe,
     throw(target) {
-      update(state => [...state, createProjectile(target)])
+      update(add(new Projectile({ target })))
     },
     land(id, target) {
-      if (get(isInvincible)) {
-        // projectiles.remove(id)
-        projectiles.miss(id)
-        console.log(target, '=> IS INVISIBLE')
-        return
-      }
-
       if (autoDeflect || target === get(hand).direction) {
         console.warn(target, '=> DEFLECTED')
         const difference = Date.now() - get(hand).lastPressedTime
@@ -189,7 +165,13 @@ function createProjectiles() {
       if (get(hasShield)) {
         console.log(target, '=> HAS SHIELD')
         projectiles.animate(id, 'deflect')
-        effects.deactivate('Shield')
+        shields.destroy()
+        return
+      }
+
+      if (get(isInvincible)) {
+        console.log(target, '=> IS INVISIBLE')
+        projectiles.miss(id)
         return
       }
 
@@ -198,23 +180,39 @@ function createProjectiles() {
       projectiles.animate(id, 'hit')
     },
     animate(id, animation) {
-      update(state =>
-        state.map(item => (item.id === id ? { ...item, animation } : item))
-      )
+      update(state => state.map(item => (item.id === id ? { ...item, animation } : item)))
       setTimeout(() => projectiles.remove(id), 1000)
     },
     miss(id, animation) {
       setTimeout(() => projectiles.remove(id), 1000)
     },
     remove(id) {
-      update(state => state.filter(projectile => projectile.id !== id))
+      update(remove(id))
     },
     reset() {
       set([])
     },
     toggleAutoDeflect() {
       autoDeflect = !autoDeflect
+    }
+  }
+}
+
+function createShields() {
+  const { subscribe, set, update } = writable([])
+
+  function Shield({ id = Date.now(), color = randomItem(['#A2F7B5', '#7CEAA7', '#5DDAA1', '#3FC9A2']) } = {}) {
+    return { id, color }
+  }
+
+  return {
+    subscribe,
+    create() {
+      update(add(new Shield()))
     },
+    destroy() {
+      update(remove())
+    }
   }
 }
 
@@ -230,8 +228,7 @@ function createSession() {
           if (
             // TODO: temporary?
             authData.email !== 'robert.kirsz@gmail.com' &&
-            authData.email.split('@').pop().split('.').slice(-2)[0] !==
-              'kreditech'
+            authData.email.split('@').pop().split('.').slice(-2)[0] !== 'kreditech'
           ) {
             console.warn('WRONG')
             database.signOut()
@@ -254,16 +251,13 @@ function createSession() {
 
           // If the data is not found, create it using data from the authentication object
           if (!playerData) {
-            const emailSlug = authData.email
-              .split('@')[0]
-              .split('+')[0]
-              .replace(/[._-]/g, '')
+            const emailSlug = authData.email.split('@')[0].split('+')[0].replace(/[._-]/g, '')
 
             const characterTemplates = await database.get('characterTemplates')
 
             const template = {
               ...characterTemplates.default,
-              ...characterTemplates[emailSlug],
+              ...characterTemplates[emailSlug]
             }
 
             playerData = {
@@ -272,22 +266,20 @@ function createSession() {
               email: authData.email,
               emailSlug,
               photoUrl: authData.photoURL,
-              ...template,
+              ...template
             }
           }
 
           playerData = {
             ...playerData,
             isOnline: true,
-            lastLogin: moment().format(),
+            lastLogin: moment().format()
           }
 
           // Save the user data in the database with updated last login date
-          await database
-            .update(`players/${playerData.id}`, playerData)
-            .catch(error => {
-              errors.show('updateUserInAddAuthenticationListener', error)
-            })
+          await database.update(`players/${playerData.id}`, playerData).catch(error => {
+            errors.show('updateUserInAddAuthenticationListener', error)
+          })
 
           storage.save('signedIn', true)
           player.set(playerData)
@@ -326,14 +318,13 @@ function createSession() {
         name: 'Robert Kirsz',
         email: 'robert.kirsz@gmail.com',
         emailSlug: 'robertkirsz',
-        photoUrl:
-          'https://lh3.googleusercontent.com/a-/AAuE7mAPnMxV4UEnKcDQ8I5JN8I3ScdvZEqEbZnp8Hta-Ig',
+        photoUrl: 'https://lh3.googleusercontent.com/a-/AAuE7mAPnMxV4UEnKcDQ8I5JN8I3ScdvZEqEbZnp8Hta-Ig'
       })
       requests.stop('signIn')
       appIsReady.set(true)
       requests.stop('authStateChange')
     },
-    signOut: async () => {
+    signOut: async() => {
       const playerData = get(player)
 
       if (!playerData || get(requests).signOut) return
@@ -371,7 +362,7 @@ function createSession() {
       appIsReady.set(true)
       requests.stop('authStateChange')
       storage.clear()
-    },
+    }
   }
 }
 
@@ -388,17 +379,15 @@ function createScreen() {
     },
     toggle(name) {
       update(state => (state === name ? null : name))
-    },
+    }
   }
 }
 
 function createRequests() {
   const { subscribe, update } = writable({
-    authStateChange: !!JSON.parse(
-      localStorage.getItem('projectile-deflect_signedIn')
-    ),
+    authStateChange: !!JSON.parse(localStorage.getItem('projectile-deflect_signedIn')),
     signIn: false,
-    signOut: false,
+    signOut: false
   })
 
   return {
@@ -410,7 +399,7 @@ function createRequests() {
     stop: name => {
       if (!get(requests)[name]) return
       update(state => ({ ...state, [name]: false }))
-    },
+    }
   }
 }
 
@@ -420,23 +409,18 @@ function createErrors() {
   return {
     subscribe,
     show: (id, error) => {
-      update(state => [
-        ...state.filter(item => item.id !== id),
-        getError(id, error),
-      ])
+      update(state => [...state.filter(item => item.id !== id), getError(id, error)])
     },
     hide: id => {
       if (!get(errors).find(item => item.id === id)) return
-      update(state =>
-        id ? state.filter(item => item.id !== id) : state.slice(1)
-      )
-    },
+      update(state => (id ? state.filter(item => item.id !== id) : state.slice(1)))
+    }
   }
 }
 
 function createStorage() {
   const { subscribe, update } = writable({
-    signedIn: !!JSON.parse(localStorage.getItem('projectile-deflect_signedIn')),
+    signedIn: !!JSON.parse(localStorage.getItem('projectile-deflect_signedIn'))
   })
 
   return {
@@ -448,17 +432,12 @@ function createStorage() {
     clear: () => {
       const localStorageKeys = Object.keys(get(storage))
 
-      localStorageKeys.forEach(key =>
-        localStorage.removeItem(`projectile-deflect_${key}`)
-      )
+      localStorageKeys.forEach(key => localStorage.removeItem(`projectile-deflect_${key}`))
 
-      const keys = localStorageKeys.reduce(
-        (all, key) => ({ ...all, [key]: true }),
-        {}
-      )
+      const keys = localStorageKeys.reduce((all, key) => ({ ...all, [key]: true }), {})
 
       update(state => ({ signedIn: keys.signedIn ? false : state.signedIn }))
-    },
+    }
   }
 }
 

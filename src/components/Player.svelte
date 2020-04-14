@@ -1,12 +1,5 @@
 <script>
-  import {
-    hand,
-    player,
-    isInvincible,
-    hasShield,
-    isExhausted,
-    lives
-  } from 'store'
+  import { hand, player, isInvincible, isExhausted, lives } from 'store'
 
   const stuff = [
     { direction: 'UP', rotation: 0, emoji: '✊', emojiRotation: 0 },
@@ -47,7 +40,6 @@
 
 <div
   class:invincibility={$isInvincible}
-  class:shield={$hasShield}
   class:exhaustion={$isExhausted}
   on:animationend={handleAnimationEnd}>
   {#each stuff as item}
@@ -156,30 +148,6 @@
     animation-direction: alternate;
   }
 
-  @keyframes shield {
-    0% {
-      box-shadow: 0 0 0 0 #7ceaa700, inset 0 0 0 0 #7ceaa700;
-    }
-    30% {
-      box-shadow: 0 0 16px 16px #7ceaa7, inset 0 0 8px 8px #7ceaa7cc;
-    }
-    100% {
-      box-shadow: 0 0 32px 32px #7ceaa700, inset 0 0 16px 16px #7ceaa700;
-    }
-  }
-
-  .shield::after {
-    content: '';
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    border-radius: 50%;
-    animation-name: shield;
-    animation-duration: 1.5s;
-    animation-iteration-count: infinite;
-    animation-timing-function: linear;
-  }
-
   .exhaustion {
     opacity: 0.2;
   }
@@ -189,7 +157,6 @@
     justify-content: center;
     align-items: center;
     position: relative;
-    border-radius: 50%;
   }
 
   .hand-wrapper {

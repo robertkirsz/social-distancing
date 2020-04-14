@@ -7,6 +7,8 @@
   import Lives from 'components/Lives'
   import Player from 'components/Player'
   import Projectiles from 'components/Projectiles'
+  import Shields from 'components/Shields'
+  // TODO: What with them?
   import Ripples from 'components/Ripples'
   import Screens from 'components/Screens'
   import DevTools from 'components/DevTools'
@@ -53,6 +55,7 @@
     <Score />
     <Lives />
 
+    <Shields />
     <Player />
     <Projectiles />
     <TouchArea />

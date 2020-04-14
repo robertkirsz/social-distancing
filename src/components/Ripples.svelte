@@ -2,8 +2,14 @@
   import { ripples } from 'store'
 </script>
 
+<div on:click={ripples.show}>
+  {#each $ripples as { id, style } (id)}
+    <span {style} on:animationend={ripples.hide(id)} />
+  {/each}
+</div>
+
 <style>
-  @keyframes useRippleAnimation {
+  @keyframes animation {
     to {
       transform: scale(15);
       opacity: 0;
@@ -22,16 +28,10 @@
   span {
     display: block;
     position: absolute;
-    animation-name: useRippleAnimation;
+    animation-name: animation;
     animation-duration: 0.7s;
     background: black;
     border-radius: 50%;
     opacity: 0.4;
   }
 </style>
-
-<div on:click={ripples.show}>
-  {#each $ripples as { id, style } (id)}
-    <span {style} on:animationend={ripples.hide(id)} />
-  {/each}
-</div>
