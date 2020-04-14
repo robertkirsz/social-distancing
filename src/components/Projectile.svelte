@@ -1,6 +1,7 @@
 <script>
   import { onMount, tick } from 'svelte'
   import { projectiles } from 'store'
+  import cn from 'classnames'
 
   export let id = null
   export let target = null
@@ -27,7 +28,7 @@
     css: progress => `
       top: calc(${go(from.y, to.y, progress * 100)}%);
       left: calc(${go(from.x, to.x, progress * 100)}%);
-      transform: translate(-50%, -50%) rotate(${progress * 1000}deg);
+      transform: translate(-50%, -50%));
     `
   })
 </script>
@@ -35,7 +36,7 @@
 <span
   in:fly
   on:introend={projectiles.land(id, target)}
-  class={animation}
+  class={cn(animation, target)}
   style={`top: ${to.y}%; left: ${to.x}%;`} />
 
 <style>
@@ -52,7 +53,7 @@
 
   @keyframes deflect {
     40% {
-      transform: translate(-200%, -200%) rotate(500deg);
+      transform: translate(-200%, -200%) rotate(0.4turn);
     }
 
     90% {
@@ -60,7 +61,7 @@
     }
 
     100% {
-      transform: translate(-250%, 800%) rotate(800deg);
+      transform: translate(-250%, 800%) rotate(1turn);
     }
   }
 
@@ -71,5 +72,9 @@
 
   .hit {
     background: red;
+  }
+
+  .miss {
+    background: blue;
   }
 </style>

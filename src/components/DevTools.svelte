@@ -1,5 +1,12 @@
 <script>
-  import { lives, effects, projectiles, isInvincible, isExhausted } from 'store'
+  import {
+    lives,
+    effects,
+    projectiles,
+    isInvincible,
+    isExhausted,
+    hasShield
+  } from 'store'
 </script>
 
 <aside>
@@ -27,6 +34,11 @@
     <button
       on:click={$isInvincible ? effects.deactivate('Invincibility') : effects.activate('Invincibility')}>
       Invincible
+    </button>
+
+    <button
+      on:click={$hasShield ? effects.deactivate('Shield') : effects.activate('Shield')}>
+      Shield
     </button>
 
     <button

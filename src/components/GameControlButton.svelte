@@ -14,15 +14,15 @@
   }
 </script>
 
+<button on:click={handleClick}>
+  {$gameIsOver ? 'Restart' : $gameIsRunning ? 'Stop' : 'Start'}
+</button>
+
 <style>
   button {
     position: absolute;
-    bottom: 40px;
+    top: 40px;
     left: 50%;
     transform: translateX(-50%);
   }
 </style>
-
-<button on:click={handleClick}>
-  {$gameIsOver ? 'Restart' : $gameIsRunning ? 'Stop' : 'Start'}
-</button>

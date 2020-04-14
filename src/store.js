@@ -70,6 +70,10 @@ export const isInvincible = derived(effects, $effect =>
   Boolean($effect.find(effect => effect.name === 'Invincibility'))
 )
 
+export const hasShield = derived(effects, $effect =>
+  Boolean($effect.find(effect => effect.name === 'Shield'))
+)
+
 export const isExhausted = derived(effects, $effect =>
   Boolean($effect.find(effect => effect.name === 'Exhaustion'))
 )
@@ -168,7 +172,8 @@ function createProjectiles() {
     },
     land(id, target) {
       if (get(isInvincible)) {
-        projectiles.remove(id)
+        // projectiles.remove(id)
+        projectiles.miss(id)
         console.log(target, '=> IS INVISIBLE')
         return
       }
@@ -178,16 +183,27 @@ function createProjectiles() {
         const difference = Date.now() - get(hand).lastPressedTime
         score.update(state => state + (difference < 300 ? 25 : 10))
         projectiles.animate(id, 'deflect')
-      } else if (get(lives) > 0) {
-        console.warn(target, '=> HIT')
-        player.hit()
-        projectiles.animate(id, 'hit')
+        return
       }
+
+      if (get(hasShield)) {
+        console.log(target, '=> HAS SHIELD')
+        projectiles.animate(id, 'deflect')
+        effects.deactivate('Shield')
+        return
+      }
+
+      console.warn(target, '=> HIT')
+      player.hit()
+      projectiles.animate(id, 'hit')
     },
     animate(id, animation) {
       update(state =>
         state.map(item => (item.id === id ? { ...item, animation } : item))
       )
+      setTimeout(() => projectiles.remove(id), 1000)
+    },
+    miss(id, animation) {
       setTimeout(() => projectiles.remove(id), 1000)
     },
     remove(id) {
@@ -317,7 +333,7 @@ function createSession() {
       appIsReady.set(true)
       requests.stop('authStateChange')
     },
-    signOut: async() => {
+    signOut: async () => {
       const playerData = get(player)
 
       if (!playerData || get(requests).signOut) return
