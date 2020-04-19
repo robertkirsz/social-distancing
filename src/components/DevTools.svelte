@@ -1,18 +1,12 @@
 <script>
-  import {
-    lives,
-    effects,
-    projectiles,
-    shields,
-    hasShield,
-    isInvincible,
-    isExhausted
-  } from 'store'
+  import { lives, effects, projectiles, shields, hasShield, isInvincible, isExhausted } from 'store'
 </script>
 
 <aside>
   <pre>effects: {JSON.stringify($effects, null, 2)}</pre>
-  <pre>projectiles: {JSON.stringify($projectiles, null, 2)}</pre>
+  <pre>
+    projectiles: {JSON.stringify($projectiles.map(({ type, emoji, target }) => ({ type, emoji, target })), null, 2)}
+  </pre>
   <pre>shields: {JSON.stringify($shields, null, 2)}</pre>
   <pre>hasShield: {$hasShield}</pre>
 
@@ -34,8 +28,7 @@
     <button on:click={() => lives.update(v => v + 1)}>Life +1</button>
     <button on:click={() => lives.update(v => v - 1)}>Life -1</button>
 
-    <button
-      on:click={$isInvincible ? effects.deactivate('Invincibility') : effects.activate('Invincibility')}>
+    <button on:click={$isInvincible ? effects.deactivate('Invincibility') : effects.activate('Invincibility')}>
       Invincible
     </button>
 
@@ -43,8 +36,7 @@
 
     <button on:click={shields.destroy}>Destroy shield</button>
 
-    <button
-      on:click={$isExhausted ? effects.deactivate('Exhaustion') : effects.activate('Exhaustion')}>
+    <button on:click={$isExhausted ? effects.deactivate('Exhaustion') : effects.activate('Exhaustion')}>
       Exhaustion
     </button>
   </div>

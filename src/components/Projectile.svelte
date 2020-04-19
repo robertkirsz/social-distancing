@@ -7,6 +7,9 @@
   export let target = null
   export let duration = 0
   export let animation = null
+  export let emoji = null
+  export let onHit = null
+  export let onDeflect = null
 
   const directions = {
     'UP-LEFT': { from: { x: 0, y: 0 }, to: { x: 42, y: 42 } },
@@ -35,9 +38,11 @@
 
 <span
   in:fly
-  on:introend={projectiles.land(id, target)}
+  on:introend={projectiles.land(id, target, onHit, onDeflect)}
   class={cn(animation, target)}
-  style={`top: ${to.y}%; left: ${to.x}%;`} />
+  style={`top: ${to.y}%; left: ${to.x}%;`}>
+  {emoji}
+</span>
 
 <style>
   span {
@@ -46,8 +51,9 @@
     align-items: center;
     width: 7vw;
     height: 7vw;
+    font-size: 7vw;
     position: absolute;
-    background: rgba(42, 160, 140, 0.8);
+    border: 2px solid rgba(42, 160, 140, 0.8);
     transform: translate(-50%, -50%);
   }
 
