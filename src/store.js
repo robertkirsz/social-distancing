@@ -191,7 +191,7 @@ function createProjectiles() {
     type = 'Person'
   } = {}) {
     const { emoji, ...rest } = projectileTypes[type]
-    return { id, target, duration, emoji: typeof emoji === 'function' ? emoji() : emoji, ...rest }
+    return { id, type, target, duration, emoji: typeof emoji === 'function' ? emoji() : emoji, ...rest }
   }
 
   let autoDeflect = false
@@ -201,9 +201,14 @@ function createProjectiles() {
     throw(target, type) {
       update(add(new Projectile({ target, type })))
     },
-    land(id, target, onHit, onDeflect) {
+    land(id, type, target, onHit, onDeflect) {
       if (autoDeflect || target === get(hand).direction) {
         actionHandler({ id, target, ...onDeflect })
+        return
+      }
+
+      if (type !== 'Person') {
+        actionHandler({ id, target, ...onHit })
         return
       }
 

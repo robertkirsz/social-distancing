@@ -4,6 +4,7 @@
   import cn from 'classnames'
 
   export let id = null
+  export let type = null
   export let target = null
   export let duration = 0
   export let animation = null
@@ -38,7 +39,7 @@
 
 <span
   in:fly
-  on:introend={projectiles.land(id, target, onHit, onDeflect)}
+  on:introend={projectiles.land(id, type, target, onHit, onDeflect)}
   class={cn(animation, target)}
   style={`top: ${to.y}%; left: ${to.x}%;`}>
   {emoji}
