@@ -45,9 +45,9 @@ function createPlayer() {
   return {
     subscribe,
     set,
-    hit() {
+    hit(amount) {
       if (get(lives) <= 0) return
-      lives.update(state => state - 1)
+      lives.update(state => state - amount)
       effects.activate('Invincibility', { duration: 1500 })
     }
   }
@@ -154,7 +154,33 @@ function createProjectiles() {
     Person: {
       emoji: () => randomItem(people),
       onHit: { type: 'Remove life', amount: 1 },
-      onDeflect: { type: 'Score', amount: 10 }
+      onDeflect: { type: 'Score', points: 10 }
+    }
+  }
+
+  const actionHandler = ({ type, ...parameters }) => {
+    switch (type) {
+      case 'Add life':
+        break
+      case 'Remove life': {
+        const { id, target, amount } = parameters
+        console.warn(target, '=> HIT')
+        player.hit(amount)
+        projectiles.animate(id, 'hit')
+        break
+      }
+      case 'Add shield':
+        break
+      case 'Score': {
+        const { id, target, points } = parameters
+        console.warn(target, '=> DEFLECTED')
+        const difference = Date.now() - get(hand).lastPressedTime
+        score.update(state => state + (difference < 300 ? points * 2.5 : points))
+        projectiles.animate(id, 'deflect')
+        break
+      }
+      default:
+        console.warn('Action type not found!')
     }
   }
 
@@ -177,10 +203,7 @@ function createProjectiles() {
     },
     land(id, target, onHit, onDeflect) {
       if (autoDeflect || target === get(hand).direction) {
-        console.warn(target, '=> DEFLECTED')
-        const difference = Date.now() - get(hand).lastPressedTime
-        score.update(state => state + (difference < 300 ? 25 : 10))
-        projectiles.animate(id, 'deflect')
+        actionHandler({ id, target, ...onDeflect })
         return
       }
 
@@ -197,9 +220,7 @@ function createProjectiles() {
         return
       }
 
-      console.warn(target, '=> HIT')
-      player.hit()
-      projectiles.animate(id, 'hit')
+      actionHandler({ id, target, ...onHit })
     },
     animate(id, animation) {
       update(state => state.map(item => (item.id === id ? { ...item, animation } : item)))
@@ -221,7 +242,7 @@ function createProjectiles() {
 }
 
 function createShields() {
-  const { subscribe, set, update } = writable([])
+  const { subscribe, update } = writable([])
 
   function Shield({ id = Date.now(), color = randomItem(['#A2F7B5', '#7CEAA7', '#5DDAA1', '#3FC9A2']) } = {}) {
     return { id, color }
@@ -346,7 +367,7 @@ function createSession() {
       appIsReady.set(true)
       requests.stop('authStateChange')
     },
-    signOut: async () => {
+    signOut: async() => {
       const playerData = get(player)
 
       if (!playerData || get(requests).signOut) return
