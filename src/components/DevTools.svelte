@@ -23,8 +23,8 @@
       <button on:click={() => projectiles.throw('DOWN-RIGHT')} />
     </div>
 
-    <button on:click={() => projectiles.throw('RIGHT', 'Life')}>💖</button>
-    <button on:click={() => projectiles.throw('RIGHT', 'Shield')}>🛡</button>
+    <button on:click={() => projectiles.throw('RIGHT', 'Life')} class="emoji">💖</button>
+    <button on:click={() => projectiles.throw('RIGHT', 'Shield')} class="emoji">🛡</button>
 
     <button on:click={projectiles.reset}>Reset projectiles</button>
     <button on:click={projectiles.toggleAutoDeflect}>Auto-deflect</button>
@@ -60,6 +60,14 @@
   aside > *,
   aside > div > * {
     margin: 4px;
+  }
+
+  button.emoji {
+    width: 24px;
+    height: 18px;
+    padding: 0;
+    font-size: 9px;
+    text-align: center;
   }
 
   .throwing-block {
