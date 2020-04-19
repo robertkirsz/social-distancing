@@ -12,7 +12,7 @@ import {
   getHandDirection,
   getError,
   INITIAL_LIVES,
-  people
+  projectileTypes
 } from 'stuff'
 
 const MINIMUM_RIPPLE_SIZE = 100
@@ -148,20 +148,14 @@ function createHand() {
 function createProjectiles() {
   const { subscribe, set, update } = writable([])
 
-  const types = {
-    Live: { emoji: '💖', onHit: { type: 'Add life', amount: 1 }, onDeflect: null },
-    Shield: { emoji: '🛡', onHit: { type: 'Add shield', amount: 1 }, onDeflect: null },
-    Person: {
-      emoji: () => randomItem(people),
-      onHit: { type: 'Remove life', amount: 1 },
-      onDeflect: { type: 'Score', points: 10 }
-    }
-  }
-
   const actionHandler = ({ type, ...parameters }) => {
     switch (type) {
-      case 'Add life':
+      case 'Add life': {
+        const { id, amount } = parameters
+        lives.update(state => state + amount)
+        projectiles.animate(id, 'hit')
         break
+      }
       case 'Remove life': {
         const { id, target, amount } = parameters
         console.warn(target, '=> HIT')
@@ -169,8 +163,12 @@ function createProjectiles() {
         projectiles.animate(id, 'hit')
         break
       }
-      case 'Add shield':
+      case 'Add shield': {
+        const { id } = parameters
+        shields.create()
+        projectiles.animate(id, 'hit')
         break
+      }
       case 'Score': {
         const { id, target, points } = parameters
         console.warn(target, '=> DEFLECTED')
@@ -179,8 +177,10 @@ function createProjectiles() {
         projectiles.animate(id, 'deflect')
         break
       }
-      default:
-        console.warn('Action type not found!')
+      default: {
+        const { id } = parameters
+        projectiles.animate(id, 'deflect')
+      }
     }
   }
 
@@ -190,7 +190,7 @@ function createProjectiles() {
     duration = randomNumber(1000, 2000),
     type = 'Person'
   } = {}) {
-    const { emoji, ...rest } = types[type]
+    const { emoji, ...rest } = projectileTypes[type]
     return { id, target, duration, emoji: typeof emoji === 'function' ? emoji() : emoji, ...rest }
   }
 
@@ -198,8 +198,8 @@ function createProjectiles() {
 
   return {
     subscribe,
-    throw(target) {
-      update(add(new Projectile({ target })))
+    throw(target, type) {
+      update(add(new Projectile({ target, type })))
     },
     land(id, target, onHit, onDeflect) {
       if (autoDeflect || target === get(hand).direction) {
@@ -367,7 +367,7 @@ function createSession() {
       appIsReady.set(true)
       requests.stop('authStateChange')
     },
-    signOut: async() => {
+    signOut: async () => {
       const playerData = get(player)
 
       if (!playerData || get(requests).signOut) return

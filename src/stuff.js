@@ -49,6 +49,16 @@ export const people = [
   '🧍‍♀️','🧍🏻‍♀️','🧍🏼‍♀️','🧍🏽‍♀️','🧍🏾‍♀️','🧍🏿‍♀️'
 ]
 
+export const projectileTypes = {
+  Life: { emoji: '💖', onHit: { type: 'Add life', amount: 1 }, onDeflect: {} },
+  Shield: { emoji: '🛡', onHit: { type: 'Add shield' }, onDeflect: {} },
+  Person: {
+    emoji: () => randomItem(people),
+    onHit: { type: 'Remove life', amount: 1 },
+    onDeflect: { type: 'Score', points: 10 }
+  }
+}
+
 export const getError = (id, error = {}) => ({
   id,
   code: error.code,

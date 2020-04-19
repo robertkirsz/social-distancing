@@ -23,6 +23,9 @@
       <button on:click={() => projectiles.throw('DOWN-RIGHT')} />
     </div>
 
+    <button on:click={() => projectiles.throw('RIGHT', 'Life')}>💖</button>
+    <button on:click={() => projectiles.throw('RIGHT', 'Shield')}>🛡</button>
+
     <button on:click={projectiles.reset}>Reset projectiles</button>
     <button on:click={projectiles.toggleAutoDeflect}>Auto-deflect</button>
     <button on:click={() => lives.update(v => v + 1)}>Life +1</button>
