@@ -38,16 +38,11 @@
   })
 </script>
 
-<div
-  class:invincibility={$isInvincible}
-  class:exhaustion={$isExhausted}
-  on:animationend={handleAnimationEnd}>
+<div class:invincibility={$isInvincible} class:exhaustion={$isExhausted} on:animationend={handleAnimationEnd}>
   {#each stuff as item}
     <span class="hand-wrapper" style="transform: rotate({item.rotation}deg);">
       <span class="hand" class:punch={$hand.direction === item.direction}>
-        <span class="emoji" style="transform: rotate({item.emojiRotation}deg);">
-          {item.emoji}
-        </span>
+        <span class="emoji" style="transform: rotate({item.emojiRotation}deg);">{item.emoji}</span>
       </span>
     </span>
   {/each}
@@ -164,6 +159,7 @@
     justify-content: center;
     align-items: center;
     position: absolute;
+    z-index: 9;
   }
 
   .hand {

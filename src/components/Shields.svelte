@@ -21,11 +21,7 @@
 
 <div>
   {#each $shields as shield, index (shield.id)}
-    <span
-      in:appear
-      out:leave
-      class="animate"
-      style="font-size: {17 + index * 6}vw; color: {shield.color}" />
+    <span in:appear out:leave class="animate" style="font-size: {17 + index * 4}vw; color: {shield.color}" />
   {/each}
 </div>
 

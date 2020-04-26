@@ -53,13 +53,13 @@
     position: absolute;
     bottom: 8px;
     left: 8px;
-    z-index: 20;
     font-size: 12px;
+    background: #0001;
   }
 
   aside > *,
   aside > div > * {
-    margin: 4px;
+    margin: 2px;
   }
 
   button.emoji {
