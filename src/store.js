@@ -169,12 +169,26 @@ function createProjectiles() {
         projectiles.animate(id, 'hit')
         break
       }
-      case 'Score': {
+      case 'Hit stranger': {
         const { id, target, points } = parameters
-        console.warn(target, '=> DEFLECTED')
+        console.warn(target, '=> HIT STRANGER')
         const difference = Date.now() - get(hand).lastPressedTime
         score.update(state => state + (difference < 300 ? points * 2.5 : points))
         projectiles.animate(id, 'deflect')
+        break
+      }
+      case 'Hit friend': {
+        const { id, target, points } = parameters
+        console.warn(target, '=> HIT FRIEND')
+        score.update(state => state + points)
+        projectiles.animate(id, 'deflect')
+        break
+      }
+      case 'Hug friend': {
+        const { id, target, points } = parameters
+        console.warn(target, '=> HUG FRIEND')
+        score.update(state => state + points)
+        projectiles.animate(id, 'hit')
         break
       }
       default: {
@@ -188,13 +202,13 @@ function createProjectiles() {
     id = Date.now(),
     target = randomItem(Object.keys(coordinates)),
     duration = randomNumber(900, 2100),
-    type = 'Person'
+    type = 'Stranger'
   } = {}) {
     const { emoji, ...rest } = projectileTypes[type]
     return { id, type, target, duration, emoji: typeof emoji === 'function' ? emoji(duration) : emoji, ...rest }
   }
 
-  let autoDeflect = true
+  let autoDeflect = false
 
   return {
     subscribe,
@@ -207,7 +221,7 @@ function createProjectiles() {
         return
       }
 
-      if (type !== 'Person') {
+      if (type !== 'Stranger') {
         actionHandler({ id, target, ...onHit })
         return
       }

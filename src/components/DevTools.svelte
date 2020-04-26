@@ -25,6 +25,7 @@
 
     <button on:click={() => projectiles.throw('RIGHT', 'Life')} class="emoji">💖</button>
     <button on:click={() => projectiles.throw('RIGHT', 'Shield')} class="emoji">🛡</button>
+    <button on:click={() => projectiles.throw('RIGHT', 'Friend')} class="emoji">👩‍❤️‍👨</button>
 
     <button on:click={projectiles.reset}>Reset projectiles</button>
     <button on:click={projectiles.toggleAutoDeflect}>Auto-deflect</button>
