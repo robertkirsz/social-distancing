@@ -194,7 +194,7 @@ function createProjectiles() {
     return { id, type, target, duration, emoji: typeof emoji === 'function' ? emoji() : emoji, ...rest }
   }
 
-  let autoDeflect = false
+  let autoDeflect = true
 
   return {
     subscribe,
@@ -372,7 +372,7 @@ function createSession() {
       appIsReady.set(true)
       requests.stop('authStateChange')
     },
-    signOut: async () => {
+    signOut: async() => {
       const playerData = get(player)
 
       if (!playerData || get(requests).signOut) return

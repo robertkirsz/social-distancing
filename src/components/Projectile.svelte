@@ -54,27 +54,44 @@
     height: 7vw;
     font-size: 7vw;
     position: absolute;
-    border: 2px solid rgba(42, 160, 140, 0.8);
+    z-index: 8;
     transform: translate(-50%, -50%);
   }
 
-  @keyframes deflect {
+  @keyframes deflect-left {
     40% {
       transform: translate(-200%, -200%) rotate(0.4turn);
     }
-
-    90% {
-      opacity: 1;
-    }
-
     100% {
       transform: translate(-250%, 800%) rotate(1turn);
     }
   }
 
+  @keyframes deflect-right {
+    40% {
+      transform: translate(100%, -200%) rotate(0.4turn);
+    }
+    100% {
+      transform: translate(125%, 800%) rotate(1turn);
+    }
+  }
+
   .deflect {
-    animation-name: deflect;
     animation-duration: 1s;
+  }
+
+  .deflect.UP,
+  .deflect.UP-LEFT,
+  .deflect.LEFT,
+  .deflect.DOWN-LEFT {
+    animation-name: deflect-left;
+  }
+
+  .deflect.DOWN,
+  .deflect.UP-RIGHT,
+  .deflect.RIGHT,
+  .deflect.DOWN-RIGHT {
+    animation-name: deflect-right;
   }
 
   .hit {
