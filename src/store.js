@@ -187,11 +187,11 @@ function createProjectiles() {
   function Projectile({
     id = Date.now(),
     target = randomItem(Object.keys(coordinates)),
-    duration = randomNumber(1000, 2000),
+    duration = randomNumber(900, 2100),
     type = 'Person'
   } = {}) {
     const { emoji, ...rest } = projectileTypes[type]
-    return { id, type, target, duration, emoji: typeof emoji === 'function' ? emoji() : emoji, ...rest }
+    return { id, type, target, duration, emoji: typeof emoji === 'function' ? emoji(duration) : emoji, ...rest }
   }
 
   let autoDeflect = true

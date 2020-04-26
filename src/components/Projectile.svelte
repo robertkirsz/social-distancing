@@ -40,13 +40,13 @@
 <span
   in:fly
   on:introend={projectiles.land(id, type, target, onHit, onDeflect)}
-  class={cn(animation, target)}
+  class={cn('wrapper', animation, target)}
   style={`top: ${to.y}%; left: ${to.x}%;`}>
-  {emoji}
+  <span class="emoji">{emoji}</span>
 </span>
 
 <style>
-  span {
+  .wrapper {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -58,12 +58,27 @@
     transform: translate(-50%, -50%);
   }
 
+  .UP,
+  .UP-LEFT,
+  .LEFT,
+  .DOWN-LEFT {
+    animation-name: deflect-left;
+    transform: translate(-50%, -50%);
+  }
+
+  .UP .emoji,
+  .UP-LEFT .emoji,
+  .LEFT .emoji,
+  .DOWN-LEFT .emoji {
+    transform: rotate3d(0, 1, 0, 180deg);
+  }
+
   @keyframes deflect-left {
     40% {
-      transform: translate(-200%, -200%) rotate(0.4turn);
+      transform: translate(-200%, -200%) rotate(-0.4turn);
     }
     100% {
-      transform: translate(-250%, 800%) rotate(1turn);
+      transform: translate(-250%, 800%) rotate(-1turn);
     }
   }
 
