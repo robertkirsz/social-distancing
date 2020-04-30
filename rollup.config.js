@@ -32,8 +32,7 @@ export default {
     // https://github.com/rollup/plugins/tree/master/packages/commonjs
     resolve({
       browser: true,
-      dedupe: importee =>
-        importee === 'svelte' || importee.startsWith('svelte/')
+      dedupe: importee => importee === 'svelte' || importee.startsWith('svelte/')
     }),
     commonjs(),
     // In dev mode, call `npm run start` once
@@ -53,11 +52,11 @@ export default {
   }
 }
 
-function serve () {
+function serve() {
   let started = false
 
   return {
-    writeBundle () {
+    writeBundle() {
       if (!started) {
         started = true
 

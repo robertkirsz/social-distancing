@@ -1,7 +1,7 @@
 <script>
   import { tweened } from 'svelte/motion'
   import { cubicOut } from 'svelte/easing'
-  import { score } from '../store.js'
+  import { score } from 'store'
 
   const progress = tweened($score, {
     duration: 400,
@@ -10,6 +10,8 @@
 
   score.subscribe(progress.set)
 </script>
+
+<div>{Math.round($progress)}</div>
 
 <style>
   div {
@@ -20,5 +22,3 @@
     text-align: right;
   }
 </style>
-
-<div>{Math.round($progress)}</div>

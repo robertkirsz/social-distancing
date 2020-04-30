@@ -1,5 +1,5 @@
 <script>
-  import { hand } from '../store'
+  import { hand } from 'store'
 
   const SIZE = 320
   const UNIT = SIZE / 3
@@ -30,6 +30,8 @@
   }
 </script>
 
+<div on:touchstart={handleTouch} on:touchmove={handleTouch} on:touchend={handleTouchEnd} />
+
 <style>
   div {
     display: flex;
@@ -39,8 +41,3 @@
     height: 320px;
   }
 </style>
-
-<div
-  on:touchstart={handleTouch}
-  on:touchmove={handleTouch}
-  on:touchend={handleTouchEnd} />

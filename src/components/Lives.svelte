@@ -1,7 +1,13 @@
 <script>
   import { fade } from 'svelte/transition'
-  import { lives } from '../store.js'
+  import { lives } from 'store'
 </script>
+
+<div>
+  {#each Array($lives) as live}
+    <span transition:fade>❤️</span>
+  {/each}
+</div>
 
 <style>
   div {
@@ -12,9 +18,3 @@
     text-align: right;
   }
 </style>
-
-<div>
-  {#each Array($lives) as live}
-    <span transition:fade>❤️</span>
-  {/each}
-</div>
