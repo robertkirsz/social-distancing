@@ -1,11 +1,11 @@
 import { writable, get } from 'svelte/store'
-import { add, remove, coordinates, randomItem, randomNumber, projectileTypes } from 'stuff'
 import lives from 'store/lives'
 import player from 'store/player'
 import score from 'store/score'
 import shields, { hasShield } from 'store/shields'
 import hand from 'store/hand'
 import { isInvincible } from 'store/effects'
+import { add, remove, coordinates, randomItem, randomNumber, projectileTypes } from 'stuff'
 
 const { subscribe, set, update } = writable([])
 
@@ -18,8 +18,8 @@ const actionHandler = ({ type, ...parameters }) => {
       break
     }
     case 'Remove life': {
-      const { id, target, amount } = parameters
-      console.warn(target, '=> HIT')
+      const { id, direction, amount } = parameters
+      console.warn(direction, '=> HIT')
       player.hit(amount)
       projectiles.animate(id, 'hit')
       break
@@ -31,24 +31,24 @@ const actionHandler = ({ type, ...parameters }) => {
       break
     }
     case 'Hit stranger': {
-      const { id, target, points } = parameters
-      console.warn(target, '=> HIT STRANGER')
+      const { id, direction, points } = parameters
+      console.warn(direction, '=> HIT STRANGER')
       const difference = Date.now() - get(hand).lastPressedTime
-      score.update(state => state + (difference < 300 ? points * 2.5 : points))
+      score.update(difference < 300 ? points * 2.5 : points)
       projectiles.animate(id, 'deflect')
       break
     }
     case 'Hit friend': {
-      const { id, target, points } = parameters
-      console.warn(target, '=> HIT FRIEND')
-      score.update(state => state + points)
+      const { id, direction, points } = parameters
+      console.warn(direction, '=> HIT FRIEND')
+      score.update(points)
       projectiles.animate(id, 'deflect')
       break
     }
     case 'Hug friend': {
-      const { id, target, points } = parameters
-      console.warn(target, '=> HUG FRIEND')
-      score.update(state => state + points)
+      const { id, direction, points } = parameters
+      console.warn(direction, '=> HUG FRIEND')
+      score.update(points)
       projectiles.animate(id, 'hit')
       break
     }
@@ -61,46 +61,46 @@ const actionHandler = ({ type, ...parameters }) => {
 
 function Projectile({
   id = Date.now(),
-  target = randomItem(Object.keys(coordinates)),
+  direction = randomItem(Object.keys(coordinates)),
   duration = randomNumber(900, 2100),
   type = 'Stranger'
 } = {}) {
   const { emoji, ...rest } = projectileTypes[type]
-  return { id, type, target, duration, emoji: typeof emoji === 'function' ? emoji(duration) : emoji, ...rest }
+  return { id, type, direction, duration, emoji: typeof emoji === 'function' ? emoji(duration) : emoji, ...rest }
 }
 
 let autoDeflect = false
 
 const projectiles = {
   subscribe,
-  throw(target, type) {
-    update(add(new Projectile({ target, type })))
+  throw(direction, type) {
+    update(add(new Projectile({ direction, type })))
   },
-  land(id, type, target, onHit, onDeflect) {
-    if (autoDeflect || target === get(hand).direction) {
-      actionHandler({ id, target, ...onDeflect })
+  land(id, type, direction, onHit, onDeflect) {
+    if (autoDeflect || direction === get(hand).direction) {
+      actionHandler({ id, direction, ...onDeflect })
       return
     }
 
     if (type !== 'Stranger') {
-      actionHandler({ id, target, ...onHit })
+      actionHandler({ id, direction, ...onHit })
       return
     }
 
     if (get(hasShield)) {
-      console.log(target, '=> HAS SHIELD')
+      console.log(direction, '=> HAS SHIELD')
       projectiles.animate(id, 'deflect')
       shields.destroy()
       return
     }
 
     if (get(isInvincible)) {
-      console.log(target, '=> IS INVISIBLE')
+      console.log(direction, '=> IS INVISIBLE')
       projectiles.miss(id)
       return
     }
 
-    actionHandler({ id, target, ...onHit })
+    actionHandler({ id, direction, ...onHit })
   },
   animate(id, animation) {
     update(state => state.map(item => (item.id === id ? { ...item, animation } : item)))

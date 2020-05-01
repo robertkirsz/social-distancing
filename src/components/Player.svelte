@@ -2,14 +2,14 @@
   import { hand, player, isInvincible, isExhausted, lives } from 'store'
 
   const stuff = [
-    { direction: 'UP', rotation: 0, emoji: '✊', emojiRotation: 0 },
-    { direction: 'UP-RIGHT', rotation: 45, emoji: '🤜', emojiRotation: -90 },
-    { direction: 'RIGHT', rotation: 90, emoji: '🤜', emojiRotation: -90 },
-    { direction: 'DOWN-RIGHT', rotation: 135, emoji: '🤜', emojiRotation: -90 },
-    { direction: 'DOWN', rotation: 180, emoji: '✊', emojiRotation: 0 },
-    { direction: 'DOWN-LEFT', rotation: -135, emoji: '🤛', emojiRotation: 90 },
-    { direction: 'LEFT', rotation: -90, emoji: '🤛', emojiRotation: 90 },
-    { direction: 'UP-LEFT', rotation: -45, emoji: '🤛', emojiRotation: 90 }
+    { direction: 'up', rotation: 0, emoji: '✊', emojiRotation: 0 },
+    { direction: 'up-right', rotation: 45, emoji: '🤜', emojiRotation: -90 },
+    { direction: 'right', rotation: 90, emoji: '🤜', emojiRotation: -90 },
+    { direction: 'down-right', rotation: 135, emoji: '🤜', emojiRotation: -90 },
+    { direction: 'down', rotation: 180, emoji: '✊', emojiRotation: 0 },
+    { direction: 'down-left', rotation: -135, emoji: '🤛', emojiRotation: 90 },
+    { direction: 'left', rotation: -90, emoji: '🤛', emojiRotation: 90 },
+    { direction: 'up-left', rotation: -45, emoji: '🤛', emojiRotation: 90 }
   ]
 
   let shake = false

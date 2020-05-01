@@ -11,31 +11,32 @@ export function randomNumber(min, max) {
 // prettier-ignore
 export function getHandDirection({ ArrowUp, ArrowRight, ArrowDown, ArrowLeft, lastPressedKey }) {
   return (
-     ArrowUp && !ArrowRight && !ArrowDown && !ArrowLeft ? 'UP'
-  :  ArrowUp &&  ArrowRight && !ArrowDown && !ArrowLeft ? 'UP-RIGHT'
-  : !ArrowUp &&  ArrowRight && !ArrowDown && !ArrowLeft ? 'RIGHT'
-  : !ArrowUp &&  ArrowRight &&  ArrowDown && !ArrowLeft ? 'DOWN-RIGHT'
-  : !ArrowUp && !ArrowRight &&  ArrowDown && !ArrowLeft ? 'DOWN'
-  : !ArrowUp && !ArrowRight &&  ArrowDown &&  ArrowLeft ? 'DOWN-LEFT'
-  : !ArrowUp && !ArrowRight && !ArrowDown &&  ArrowLeft ? 'LEFT'
-  :  ArrowUp && !ArrowRight && !ArrowDown &&  ArrowLeft ? 'UP-LEFT'
+     ArrowUp && !ArrowRight && !ArrowDown && !ArrowLeft ? 'up'
+  :  ArrowUp &&  ArrowRight && !ArrowDown && !ArrowLeft ? 'up-right'
+  : !ArrowUp &&  ArrowRight && !ArrowDown && !ArrowLeft ? 'right'
+  : !ArrowUp &&  ArrowRight &&  ArrowDown && !ArrowLeft ? 'down-right'
+  : !ArrowUp && !ArrowRight &&  ArrowDown && !ArrowLeft ? 'down'
+  : !ArrowUp && !ArrowRight &&  ArrowDown &&  ArrowLeft ? 'down-left'
+  : !ArrowUp && !ArrowRight && !ArrowDown &&  ArrowLeft ? 'left'
+  :  ArrowUp && !ArrowRight && !ArrowDown &&  ArrowLeft ? 'up-left'
   : !ArrowUp && !ArrowRight && !ArrowDown && !ArrowLeft ? null
   : lastPressedKey
   )
 }
 
 export const coordinates = {
-  UP: { from: [0, -50], to: [0, -10] },
-  'UP-RIGHT': { from: [50, -50], to: [10, -10] },
-  RIGHT: { from: [50, 0], to: [10, 0] },
-  'DOWN-RIGHT': { from: [50, 50], to: [10, 10] },
-  DOWN: { from: [0, 50], to: [0, 10] },
-  'DOWN-LEFT': { from: [-50, 50], to: [-10, 10] },
-  LEFT: { from: [-50, 0], to: [-10, 0] },
-  'UP-LEFT': { from: [-50, -50], to: [-10, -10] }
+  up: { from: [0, -50], to: [0, -10] },
+  'up-right': { from: [50, -50], to: [10, -10] },
+  right: { from: [50, 0], to: [10, 0] },
+  'down-right': { from: [50, 50], to: [10, 10] },
+  down: { from: [0, 50], to: [0, 10] },
+  'down-left': { from: [-50, 50], to: [-10, 10] },
+  left: { from: [-50, 0], to: [-10, 0] },
+  'up-left': { from: [-50, -50], to: [-10, -10] }
 }
 
 // prettier-ignore
+// TODO: not used
 export const avatars = [
   '👩','👩🏻','👩🏼','👩🏽','👩🏾','👩🏿',
   '🧑','🧑🏻','🧑🏼','🧑🏽','🧑🏾','🧑🏿',

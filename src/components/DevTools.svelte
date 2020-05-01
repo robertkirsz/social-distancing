@@ -1,31 +1,32 @@
 <script>
-  import { lives, effects, projectiles, shields, hasShield, isInvincible, isExhausted } from 'store'
+  import { lives, points, effects, projectiles, shields, hasShield, isInvincible, isExhausted } from 'store'
 </script>
 
 <aside>
   <pre>effects: {JSON.stringify($effects, null, 2)}</pre>
   <pre>
-    projectiles: {JSON.stringify($projectiles.map(({ type, emoji, target }) => ({ type, emoji, target })), null, 2)}
+    projectiles: {JSON.stringify($projectiles.map(({ type, emoji, direction }) => ({ type, emoji, direction })), null, 2)}
   </pre>
   <pre>shields: {JSON.stringify($shields, null, 2)}</pre>
+  <pre>points: {JSON.stringify($points.map(({ id, value }) => ({ id, value })), null, 2)}</pre>
   <pre>hasShield: {$hasShield}</pre>
 
   <div>
     <div class="throwing-block">
-      <button on:click={() => projectiles.throw('UP-LEFT')} />
-      <button on:click={() => projectiles.throw('UP')} />
-      <button on:click={() => projectiles.throw('UP-RIGHT')} />
-      <button on:click={() => projectiles.throw('LEFT')} />
+      <button on:click={() => projectiles.throw('up-left')} />
+      <button on:click={() => projectiles.throw('up')} />
+      <button on:click={() => projectiles.throw('up-right')} />
+      <button on:click={() => projectiles.throw('left')} />
       <button on:click={() => projectiles.throw()}>?</button>
-      <button on:click={() => projectiles.throw('RIGHT')} />
-      <button on:click={() => projectiles.throw('DOWN-LEFT')} />
-      <button on:click={() => projectiles.throw('DOWN')} />
-      <button on:click={() => projectiles.throw('DOWN-RIGHT')} />
+      <button on:click={() => projectiles.throw('right')} />
+      <button on:click={() => projectiles.throw('down-left')} />
+      <button on:click={() => projectiles.throw('down')} />
+      <button on:click={() => projectiles.throw('down-right')} />
     </div>
 
-    <button on:click={() => projectiles.throw('RIGHT', 'Life')} class="emoji">💖</button>
-    <button on:click={() => projectiles.throw('RIGHT', 'Shield')} class="emoji">🛡</button>
-    <button on:click={() => projectiles.throw('RIGHT', 'Friend')} class="emoji">👩‍❤️‍👨</button>
+    <button on:click={() => projectiles.throw('right', 'Life')} class="emoji">💖</button>
+    <button on:click={() => projectiles.throw('right', 'Shield')} class="emoji">🛡</button>
+    <button on:click={() => projectiles.throw('right', 'Friend')} class="emoji">👩‍❤️‍👨</button>
 
     <button on:click={projectiles.reset}>Reset projectiles</button>
     <button on:click={projectiles.toggleAutoDeflect}>Auto-deflect</button>
@@ -55,12 +56,13 @@
     bottom: 8px;
     left: 8px;
     font-size: 12px;
-    background: #0001;
+    pointer-events: none;
   }
 
   aside > *,
   aside > div > * {
     margin: 2px;
+    pointer-events: all;
   }
 
   button.emoji {
