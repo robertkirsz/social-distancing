@@ -7,22 +7,20 @@ const score = {
   set,
   update(value) {
     update(state => state + value)
-    points.animate(Date.now(), value)
   }
 }
 
 export default score
 
-const { subscribe: pointsSubscribe, update: pointsUpdate } = writable([])
+const { subscribe: scoreLabelsSubscribe, update: scoreLabelsUpdate } = writable([])
 
-export const points = {
-  subscribe: pointsSubscribe,
-  update: pointsUpdate,
-  animate(id, value) {
-    points.update(state => [...state, { id, value }])
-
-    setTimeout(() => {
-      points.update(state => state.filter(item => item.id !== id))
-    }, 2000)
+export const scoreLabels = {
+  subscribe: scoreLabelsSubscribe,
+  update: scoreLabelsUpdate,
+  show(value, direction) {
+    scoreLabels.update(state => [...state, { id: Date.now(), value, direction }])
+  },
+  hide(id) {
+    scoreLabels.update(state => state.filter(item => item.id !== id))
   }
 }

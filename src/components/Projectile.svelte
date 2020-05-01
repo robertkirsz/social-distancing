@@ -51,6 +51,9 @@
     justify-content: center;
     align-items: center;
     font-size: 5vw;
+    width: 7vw;
+    height: 7vw;
+    text-align: center;
     line-height: 1;
     position: absolute;
     z-index: 8;

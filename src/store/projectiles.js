@@ -1,7 +1,7 @@
 import { writable, get } from 'svelte/store'
 import lives from 'store/lives'
 import player from 'store/player'
-import score from 'store/score'
+import score, { scoreLabels } from 'store/score'
 import shields, { hasShield } from 'store/shields'
 import hand from 'store/hand'
 import { isInvincible } from 'store/effects'
@@ -34,7 +34,9 @@ const actionHandler = ({ type, ...parameters }) => {
       const { id, direction, points } = parameters
       console.warn(direction, '=> HIT STRANGER')
       const difference = Date.now() - get(hand).lastPressedTime
-      score.update(difference < 300 ? points * 2.5 : points)
+      const _points = difference < 300 ? points * 2.5 : points
+      score.update(_points)
+      scoreLabels.show(_points, direction)
       projectiles.animate(id, 'deflect')
       break
     }
@@ -42,6 +44,7 @@ const actionHandler = ({ type, ...parameters }) => {
       const { id, direction, points } = parameters
       console.warn(direction, '=> HIT FRIEND')
       score.update(points)
+      scoreLabels.show(points, direction)
       projectiles.animate(id, 'deflect')
       break
     }
@@ -49,6 +52,7 @@ const actionHandler = ({ type, ...parameters }) => {
       const { id, direction, points } = parameters
       console.warn(direction, '=> HUG FRIEND')
       score.update(points)
+      scoreLabels.show(points, direction)
       projectiles.animate(id, 'hit')
       break
     }

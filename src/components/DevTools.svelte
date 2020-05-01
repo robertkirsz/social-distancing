@@ -1,5 +1,5 @@
 <script>
-  import { lives, points, effects, projectiles, shields, hasShield, isInvincible, isExhausted } from 'store'
+  import { lives, scoreLabels, effects, projectiles, shields, hasShield, isInvincible, isExhausted } from 'store'
 </script>
 
 <aside>
@@ -8,7 +8,7 @@
     projectiles: {JSON.stringify($projectiles.map(({ type, emoji, direction }) => ({ type, emoji, direction })), null, 2)}
   </pre>
   <pre>shields: {JSON.stringify($shields, null, 2)}</pre>
-  <pre>points: {JSON.stringify($points.map(({ id, value }) => ({ id, value })), null, 2)}</pre>
+  <pre>scoreLabels: {JSON.stringify($scoreLabels, null, 2)}</pre>
   <pre>hasShield: {$hasShield}</pre>
 
   <div>
