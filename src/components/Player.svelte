@@ -143,8 +143,27 @@
     animation-direction: alternate;
   }
 
-  .exhaustion {
-    opacity: 0.2;
+  .exhaustion img {
+    filter: grayscale(100%);
+  }
+
+  .exhaustion::before {
+    content: '💦';
+    position: absolute;
+    transform: rotate3d(0, 1, 0, 180deg);
+    top: 16px;
+    left: 16px;
+    font-size: 4vw;
+    z-index: 1;
+  }
+
+  .exhaustion::after {
+    content: '💦';
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    font-size: 4vw;
+    z-index: 1;
   }
 
   div {
@@ -178,6 +197,7 @@
     height: 16vw;
     object-fit: cover;
     border-radius: 50%;
+    transition: filter 0.3s;
   }
 
   .one-up-heart,

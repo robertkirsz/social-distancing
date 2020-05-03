@@ -1,5 +1,5 @@
 <script>
-  import { lives, scoreLabels, effects, projectiles, shields, hasShield, isInvincible, isExhausted } from 'store'
+  import { lives, scoreLabels, effects, projectiles, shields, hasShield, isInvincible } from 'store'
 </script>
 
 <aside>
@@ -40,10 +40,6 @@
     <button on:click={shields.create}>Create shield</button>
 
     <button on:click={shields.destroy}>Destroy shield</button>
-
-    <button on:click={$isExhausted ? effects.deactivate('Exhaustion') : effects.activate('Exhaustion')}>
-      Exhaustion
-    </button>
   </div>
 </aside>
 

@@ -41,6 +41,16 @@ const hand = {
       direction,
       lastPressedTime: Date.now()
     }))
+  },
+  reset() {
+    update(state => ({
+      ...state,
+      direction: null,
+      ArrowUp: false,
+      ArrowRight: false,
+      ArrowDown: false,
+      ArrowLeft: false
+    }))
   }
 }
 

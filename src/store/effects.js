@@ -18,8 +18,6 @@ const effects = {
 
 export default effects
 
-export const isExhausted = derived(effects, $effects => Boolean($effects.find(effect => effect.name === 'Exhaustion')))
-
 export const isInvincible = derived(effects, $effects =>
   Boolean($effects.find(effect => effect.name === 'Invincibility'))
 )
