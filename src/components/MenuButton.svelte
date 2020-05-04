@@ -2,10 +2,7 @@
   import { screen, gameIsRunning } from 'store'
 </script>
 
-<button
-  class:opened={$screen === 'MENU'}
-  on:mouseup={() => screen.toggle('MENU')}
-  disabled={$gameIsRunning}>
+<button class:opened={$screen === 'MENU'} on:mouseup={() => screen.toggle('MENU')} disabled={$gameIsRunning}>
   <span />
   <span />
   <span />
@@ -16,7 +13,7 @@
     position: absolute;
     bottom: 8px;
     right: 8px;
-    z-index: 15;
+    z-index: 70;
 
     width: 40px;
     height: 40px;

@@ -1,6 +1,6 @@
 <script>
   import { session } from 'store'
-  let email = `a${Date.now()}@.mock.com`
+  let email = `a${Date.now()}@mock.com`
   let password = '123456'
 
   function handleSubmit(event) {

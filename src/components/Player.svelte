@@ -147,23 +147,22 @@
     filter: grayscale(100%);
   }
 
-  .exhaustion::before {
-    content: '💦';
-    position: absolute;
-    transform: rotate3d(0, 1, 0, 180deg);
-    top: 16px;
-    left: 16px;
-    font-size: 4vw;
-    z-index: 1;
-  }
-
+  .exhaustion::before,
   .exhaustion::after {
     content: '💦';
     position: absolute;
     top: 16px;
-    right: 16px;
     font-size: 4vw;
-    z-index: 1;
+    z-index: 10;
+  }
+
+  .exhaustion::before {
+    transform: rotate3d(0, 1, 0, 180deg);
+    left: 16px;
+  }
+
+  .exhaustion::after {
+    right: 16px;
   }
 
   div {
@@ -178,7 +177,7 @@
     justify-content: center;
     align-items: center;
     position: absolute;
-    z-index: 9;
+    z-index: 40;
   }
 
   .hand {

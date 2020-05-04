@@ -1,7 +1,7 @@
 <script>
   import { onMount } from 'svelte'
   import initializeFirebase from 'database'
-  import { hand, requests, session, isExhausted, player } from 'store'
+  import { hand, session, isExhausted, player } from 'store'
   import Intro from 'components/Intro'
   import Lives from 'components/Lives'
   import Score from 'components/Score'
@@ -33,14 +33,8 @@
   }
 
   onMount(() => {
-    // NOTE: real code
     initializeFirebase()
     session.addAuthenticationListener()
-
-    // KILLME: mocks
-    // if ($requests.authStateChange) {
-    // session.signIn()
-    // }
 
     document.addEventListener('keydown', keyListener('keydown'))
     document.addEventListener('keyup', keyListener('keyup'))
@@ -51,6 +45,9 @@
     }
   })
 </script>
+
+<Errors />
+<Screens />
 
 <main>
   {#if $player}
@@ -70,9 +67,7 @@
   {/if}
 </main>
 
-<Errors />
 <DevTools />
-<Screens />
 
 <style>
   main {

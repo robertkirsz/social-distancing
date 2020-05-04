@@ -81,7 +81,7 @@
     display: inline-block;
     position: absolute;
     font-size: 2.5vw;
-    z-index: 16;
+    z-index: 50;
     color: #ff3e00;
     font-weight: bold;
     animation-duration: 1s;

@@ -56,7 +56,7 @@
     text-align: center;
     line-height: 1;
     position: absolute;
-    z-index: 8;
+    z-index: 20;
     transform: translate(-50%, -50%);
   }
 

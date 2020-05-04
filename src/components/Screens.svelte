@@ -2,7 +2,6 @@
   import { fade } from 'svelte/transition'
   import { screen, session, requests } from 'store'
 
-  // prettier-ignore
   $: isLoading = $requests.authStateChange || $requests.signIn || $requests.signOut
 </script>
 

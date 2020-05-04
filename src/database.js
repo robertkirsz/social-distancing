@@ -22,7 +22,7 @@ export const get = path =>
       .database()
       .ref(path)
       .once('value')
-      .then(snapshot => (snapshot.val() ? resolve(snapshot.val()) : reject(new Error(`No data found for ${path}`))))
+      .then(snapshot => resolve(snapshot.val()))
   })
 
 export const set = (path, data) =>
