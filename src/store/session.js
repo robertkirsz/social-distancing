@@ -9,8 +9,8 @@ import errors from 'store/errors'
 import storage from 'store/storage'
 import appIsReady from 'store/appIsReady'
 
-const session = {
-  addAuthenticationListener: () => {
+export default {
+  addAuthenticationListener() {
     firebase.auth().onAuthStateChanged(async authData => {
       requests.start('authStateChange')
 
@@ -34,12 +34,7 @@ const session = {
         }
 
         // Try to find user's data in the database
-        let playerData = await database
-          .get(`players/${authData.uid}`)
-          // TODO: I dont think i need this
-          .catch(() => {
-            //   errors.show('getUserData', error)
-          })
+        let playerData = await database.get(`players/${authData.uid}`)
 
         // If the data is not found, create it using data from the authentication object
         if (!playerData) {
@@ -89,34 +84,34 @@ const session = {
       requests.stop('authStateChange')
     })
   },
-  signIn: () => {
+  signIn() {
     if (get(player) || get(requests).signIn) return
 
     console.log('SIGN IN')
     errors.hide('signIn')
     requests.start('signIn')
 
-    // TODO: bring back
-    // database.signIn().catch(error => {
-    //   errors.show('signIn', error)
-    //   requests.stop('signIn')
-    // })
+    // NOTE: real code
+    database.signIn().catch(error => {
+      errors.show('signIn', error)
+      requests.stop('signIn')
+    })
 
     // KILLME: mocks
-    requests.start('authStateChange')
-    storage.save('signedIn', true)
-    player.set({
-      id: 'M0ck3d1d',
-      name: 'Robert Kirsz',
-      email: 'robert.kirsz@gmail.com',
-      emailSlug: 'robertkirsz',
-      photoUrl: 'https://lh3.googleusercontent.com/a-/AAuE7mAPnMxV4UEnKcDQ8I5JN8I3ScdvZEqEbZnp8Hta-Ig'
-    })
-    requests.stop('signIn')
-    appIsReady.set(true)
-    requests.stop('authStateChange')
+    // requests.start('authStateChange')
+    // storage.save('signedIn', true)
+    // player.set({
+    //   id: 'M0ck3d1d',
+    //   name: 'Robert Kirsz',
+    //   email: 'robert.kirsz@gmail.com',
+    //   emailSlug: 'robertkirsz',
+    //   photoUrl: 'https://lh3.googleusercontent.com/a-/AAuE7mAPnMxV4UEnKcDQ8I5JN8I3ScdvZEqEbZnp8Hta-Ig'
+    // })
+    // requests.stop('signIn')
+    // appIsReady.set(true)
+    // requests.stop('authStateChange')
   },
-  signOut: async() => {
+  async signOut() {
     const playerData = get(player)
 
     if (!playerData || get(requests).signOut) return
@@ -126,35 +121,33 @@ const session = {
     errors.hide('signOut')
     requests.start('signOut')
 
-    // TODO: bring back
-    // await database
-    //   .update(`players/${playerData.id}`, {
-    //     ...playerData,
-    //     isOnline: false
-    //   })
-    //   .catch(error => {
-    //     errors.show('updateUserInSignOut', error)
-    //   })
+    // NOTE: real code
+    await database
+      .update(`players/${playerData.id}`, {
+        ...playerData,
+        isOnline: false
+      })
+      .catch(error => {
+        errors.show('updateUserInSignOut', error)
+      })
 
-    // TODO: bring back
-    // database
-    //   .signOut()
-    //   // TODO: Don't know if needed, we do saveToLocalStorage('signedIn', false) in addAuthenticationListener signOut case
-    //   .then(storage.clear)
-    //   .catch(error => {
-    //     errors.show('signOut', error)
-    //     requests.stop('signOut')
-    //   })
+    // NOTE: real code
+    database
+      .signOut()
+      // TODO: Don't know if needed, we do saveToLocalStorage('signedIn', false) in addAuthenticationListener signOut case
+      .then(storage.clear)
+      .catch(error => {
+        errors.show('signOut', error)
+        requests.stop('signOut')
+      })
 
     // KILLME: mocks
-    requests.start('authStateChange')
-    storage.save('signedIn', false)
-    player.set(null)
-    requests.stop('signOut')
-    appIsReady.set(true)
-    requests.stop('authStateChange')
-    storage.clear()
+    // requests.start('authStateChange')
+    // storage.save('signedIn', false)
+    // player.set(null)
+    // requests.stop('signOut')
+    // appIsReady.set(true)
+    // requests.stop('authStateChange')
+    // storage.clear()
   }
 }
-
-export default session

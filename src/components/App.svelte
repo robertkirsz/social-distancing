@@ -32,7 +32,7 @@
   }
 
   onMount(() => {
-    // NOTE: true code
+    // NOTE: real code
     initializeFirebase()
     session.addAuthenticationListener()
 
