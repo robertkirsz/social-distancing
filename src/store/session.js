@@ -13,6 +13,7 @@ export default {
   addAuthenticationListener() {
     firebase.auth().onAuthStateChanged(async authData => {
       requests.start('authStateChange')
+      console.log({ authData })
 
       // If user is signing in...
       if (authData && get(player) === null) {
@@ -22,7 +23,7 @@ export default {
           authData.email !== 'robert.kirsz@gmail.com' &&
           authData.email.split('@').pop().split('.').slice(-2)[0] !== 'kreditech'
         ) {
-          console.warn('WRONG')
+          console.warn('WRONG EMAIL')
           database.signOut()
           firebase.auth().currentUser.delete()
           requests.stop('authStateChange')
@@ -70,6 +71,7 @@ export default {
 
         storage.save('signedIn', true)
         player.set(playerData)
+        console.log({ playerData })
         requests.stop('signIn')
       }
 
@@ -110,6 +112,18 @@ export default {
     // requests.stop('signIn')
     // appIsReady.set(true)
     // requests.stop('authStateChange')
+  },
+  manualSignIn(email, password) {
+    if (get(player) || get(requests).signIn) return
+
+    console.log('MANUAL SIGN IN')
+    errors.hide('signIn')
+    requests.start('signIn')
+
+    database.manualSignIn(email, password).catch(error => {
+      errors.show('signIn', error)
+      requests.stop('signIn')
+    })
   },
   async signOut() {
     const playerData = get(player)

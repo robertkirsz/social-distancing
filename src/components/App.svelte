@@ -64,10 +64,10 @@
 
     <GameControlButton />
     <MenuButton />
-    <DevTools />
   {:else}
     <Intro />
   {/if}
+  <DevTools />
 </main>
 
 <Screens />

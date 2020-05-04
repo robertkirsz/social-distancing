@@ -14,11 +14,7 @@ const config = {
 export default () => firebase.initializeApp(config)
 
 // ---------- DATABASE ----------
-export const getKey = path =>
-  firebase
-    .database()
-    .ref(path)
-    .push().key
+export const getKey = path => firebase.database().ref(path).push().key
 
 export const get = path =>
   new Promise((resolve, reject) => {
@@ -26,42 +22,22 @@ export const get = path =>
       .database()
       .ref(path)
       .once('value')
-      .then(snapshot =>
-        snapshot.val()
-          ? resolve(snapshot.val())
-          : reject(new Error(`No data found for ${path}`))
-      )
+      .then(snapshot => (snapshot.val() ? resolve(snapshot.val()) : reject(new Error(`No data found for ${path}`))))
   })
 
 export const set = (path, data) =>
   new Promise((resolve, reject) => {
-    firebase
-      .database()
-      .ref(path)
-      .set(data)
-      .then(resolve)
-      .catch(reject)
+    firebase.database().ref(path).set(data).then(resolve).catch(reject)
   })
 
 export const push = (path, data) =>
   new Promise((resolve, reject) => {
-    firebase
-      .database()
-      .ref(path)
-      .push()
-      .set(data)
-      .then(resolve)
-      .catch(reject)
+    firebase.database().ref(path).push().set(data).then(resolve).catch(reject)
   })
 
 export const update = (path, data) =>
   new Promise((resolve, reject) => {
-    firebase
-      .database()
-      .ref(path)
-      .update(data)
-      .then(resolve)
-      .catch(reject)
+    firebase.database().ref(path).update(data).then(resolve).catch(reject)
   })
 
 export const addValueListener = (path, callback) =>
@@ -74,15 +50,9 @@ export const addChildAddedListener = (path, callback) =>
   firebase
     .database()
     .ref(path)
-    .on('child_added', snapshot =>
-      callback({ id: snapshot.key, ...snapshot.val() })
-    )
+    .on('child_added', snapshot => callback({ id: snapshot.key, ...snapshot.val() }))
 
-export const removeListener = (path, listener) =>
-  firebase
-    .database()
-    .ref(path)
-    .off(listener)
+export const removeListener = (path, listener) => firebase.database().ref(path).off(listener)
 
 // ---------- AUTHENTICATION ----------
 const provider = new firebase.auth.GoogleAuthProvider()
@@ -90,4 +60,5 @@ provider.addScope('profile')
 provider.addScope('email')
 
 export const signIn = () => firebase.auth().signInWithPopup(provider)
+export const manualSignIn = (email, password) => firebase.auth().createUserWithEmailAndPassword(email, password)
 export const signOut = () => firebase.auth().signOut()
