@@ -9,8 +9,6 @@
   import Player from 'components/Player'
   import Projectiles from 'components/Projectiles'
   import Shields from 'components/Shields'
-  // TODO: What with them?
-  import Ripples from 'components/Ripples'
   import Screens from 'components/Screens'
   import DevTools from 'components/DevTools'
   import TouchArea from 'components/TouchArea'
@@ -34,14 +32,14 @@
   }
 
   onMount(() => {
-    // TODO: bring back
-    // initializeFirebase()
-    // session.addAuthenticationListener()
+    // NOTE: true code
+    initializeFirebase()
+    session.addAuthenticationListener()
 
     // KILLME: mocks
-    if ($requests.authStateChange) {
-      session.signIn()
-    }
+    // if ($requests.authStateChange) {
+    // session.signIn()
+    // }
 
     document.addEventListener('keydown', keyListener('keydown'))
     document.addEventListener('keyup', keyListener('keyup'))
@@ -52,8 +50,6 @@
     }
   })
 </script>
-
-<Ripples />
 
 <main>
   {#if $player}
