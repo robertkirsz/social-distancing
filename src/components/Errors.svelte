@@ -28,7 +28,7 @@
     display: flex;
     margin: 4px;
     padding: 8px;
-    background: #f44336;
+    background: #ff3e00;
     color: white;
   }
 

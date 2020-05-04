@@ -2,6 +2,7 @@ import firebase from 'firebase/app'
 import 'firebase/auth'
 import 'firebase/database'
 
+// TODO: move to JSON and import in Rollup
 const config = {
   apiKey: 'AIzaSyCZbgK5m0xqjAlR9nw3NX3jOYj6yBxAEEw',
   authDomain: 'ktp-online.firebaseapp.com',
