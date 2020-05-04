@@ -1,5 +1,10 @@
 import { writable, get } from 'svelte/store'
-import { getError } from 'stuff'
+
+export const getError = (id = Date.now(), error = {}) => ({
+  id,
+  code: error.code || '',
+  message: error.response || error.request || error.message || error.config || ''
+})
 
 const { subscribe, update } = writable([])
 

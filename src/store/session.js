@@ -17,20 +17,16 @@ export default {
 
       // If user is signing in...
       if (authData && get(player) === null) {
-        // Don't let non-Kreditech users in
-        if (
-          // TODO: temporary?
-          authData.email !== 'robert.kirsz@gmail.com' &&
-          authData.email.split('@').pop().split('.').slice(-2)[0] !== 'kreditech'
-        ) {
-          console.warn('WRONG EMAIL')
+        const domain = authData.email.split('@').pop().split('.').slice(-2)[0]
+
+        // Don't let non-Monedo users in
+        if (!['monedo', 'kreditech'].includes(domain)) {
           database.signOut()
           firebase.auth().currentUser.delete()
           requests.stop('authStateChange')
           requests.stop('signIn')
-          errors.show('wrongEmailDomain')
+          errors.show('wrongEmailDomain', { message: 'You must log in using company email' })
           appIsReady.set(true)
-
           return
         }
 

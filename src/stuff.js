@@ -79,12 +79,6 @@ export const projectileTypes = {
   }
 }
 
-export const getError = (id, error = {}) => ({
-  id,
-  code: error.code,
-  message: error.response || error.request || error.message || error.config
-})
-
 export const add = item => state => [...state, item]
 
 export const remove = id => state => (id === undefined ? state.slice(0, -1) : state.filter(item => item.id !== id))

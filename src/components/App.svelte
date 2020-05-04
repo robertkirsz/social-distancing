@@ -3,16 +3,17 @@
   import initializeFirebase from 'database'
   import { hand, requests, session, isExhausted, player } from 'store'
   import Intro from 'components/Intro'
-  import Score from 'components/Score'
   import Lives from 'components/Lives'
-  import Stamina from 'components/Stamina'
+  import Score from 'components/Score'
+  import Errors from 'components/Errors'
   import Player from 'components/Player'
-  import Projectiles from 'components/Projectiles'
   import Shields from 'components/Shields'
+  import Stamina from 'components/Stamina'
   import Screens from 'components/Screens'
   import DevTools from 'components/DevTools'
   import TouchArea from 'components/TouchArea'
   import MenuButton from 'components/MenuButton'
+  import Projectiles from 'components/Projectiles'
   import GameControlButton from 'components/GameControlButton'
 
   function keyListener(method) {
@@ -67,9 +68,10 @@
   {:else}
     <Intro />
   {/if}
-  <DevTools />
 </main>
 
+<Errors />
+<DevTools />
 <Screens />
 
 <style>

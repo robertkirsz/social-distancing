@@ -1,5 +1,5 @@
 <script>
-  import { lives, scoreLabels, effects, projectiles, shields, hasShield, isInvincible } from 'store'
+  import { lives, scoreLabels, effects, errors, projectiles, shields, hasShield, isInvincible } from 'store'
 </script>
 
 <aside>
@@ -10,6 +10,7 @@
   <pre>shields: {JSON.stringify($shields, null, 2)}</pre>
   <pre>scoreLabels: {JSON.stringify($scoreLabels, null, 2)}</pre>
   <pre>hasShield: {$hasShield}</pre>
+  <pre>errors: {JSON.stringify($errors, null, 2)}</pre>
 
   <div>
     <div class="throwing-block">
@@ -38,8 +39,8 @@
     </button>
 
     <button on:click={shields.create}>Create shield</button>
-
     <button on:click={shields.destroy}>Destroy shield</button>
+    <button on:click={() => errors.show(Date.now(), { code: 'Foo', message: 'Lorem ipsum' })}>Throw error</button>
   </div>
 </aside>
 
