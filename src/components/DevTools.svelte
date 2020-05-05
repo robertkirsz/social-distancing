@@ -10,7 +10,7 @@
   <pre>shields: {JSON.stringify($shields, null, 2)}</pre>
   <pre>scoreLabels: {JSON.stringify($scoreLabels, null, 2)}</pre>
   <pre>hasShield: {$hasShield}</pre>
-  <pre>player: {JSON.stringify($player, null, 2)}</pre>
+  <pre>player: {$player && JSON.stringify({ name: $player.name, email: $player.email }, null, 2)}</pre>
   <pre>errors: {JSON.stringify($errors, null, 2)}</pre>
 
   <div>
@@ -53,12 +53,13 @@
     position: absolute;
     bottom: 8px;
     left: 8px;
-    font-size: 12px;
     pointer-events: none;
   }
 
   aside > *,
   aside > div > * {
+    font-size: 12px;
+    line-height: 1.3em;
     margin: 2px;
     pointer-events: all;
   }
