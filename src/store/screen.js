@@ -2,7 +2,7 @@ import { writable } from 'svelte/store'
 
 const { subscribe, set, update } = writable(null)
 
-const screen = {
+export default {
   subscribe,
   open(name) {
     set(name)
@@ -14,5 +14,3 @@ const screen = {
     update(state => (state === name ? null : name))
   }
 }
-
-export default screen
