@@ -151,18 +151,18 @@
   .exhaustion::after {
     content: '💦';
     position: absolute;
-    top: 16px;
+    top: 15%;
     font-size: 4vw;
     z-index: 10;
   }
 
   .exhaustion::before {
     transform: rotate3d(0, 1, 0, 180deg);
-    left: 16px;
+    left: 10%;
   }
 
   .exhaustion::after {
-    right: 16px;
+    right: 10%;
   }
 
   div {

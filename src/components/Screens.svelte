@@ -13,18 +13,14 @@
   <LoadingScreen />
 {/if}
 
-{#if $screen}
-  <div transition:fade class="frost">
-    {#if $screen === 'GAME OVER'}
-      <GameOverScreen />
-    {/if}
+{#if $screen === 'GAME OVER'}
+  <GameOverScreen />
+{/if}
 
-    {#if $screen === 'MENU'}
-      <MenuScreen />
-    {/if}
+{#if $screen === 'MENU'}
+  <MenuScreen />
+{/if}
 
-    {#if $screen === 'HOW TO PLAY'}
-      <HowToPlayScreen />
-    {/if}
-  </div>
+{#if $screen === 'HOW TO PLAY'}
+  <HowToPlayScreen />
 {/if}

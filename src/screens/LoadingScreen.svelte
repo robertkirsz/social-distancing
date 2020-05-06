@@ -17,6 +17,7 @@
 <style>
   h2 {
     display: flex;
+    margin: auto;
   }
 
   span {

@@ -1,4 +1,6 @@
+import { onDestroy } from 'svelte'
 export const INITIAL_LIVES = 3
+
 export const MAX_STAMINA = 12
 
 export function randomItem(array) {
@@ -9,8 +11,25 @@ export function randomNumber(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min
 }
 
+export function loopThrough(items) {
+  let index = 0
+
+  return function next() {
+    if (index === items.length) index = 0
+    return items[index++]
+  }
+}
+
 export function clamp(num, min, max) {
   return num <= min ? min : num >= max ? max : num
+}
+
+export function onInterval(callback, milliseconds) {
+  const interval = setInterval(callback, milliseconds)
+
+  onDestroy(() => {
+    clearInterval(interval)
+  })
 }
 
 // prettier-ignore

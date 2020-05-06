@@ -1,5 +1,5 @@
 <script>
-  import { session } from 'store'
+  import { session, screen } from 'store'
 
   // TODO: remove in prod
   let email = `${Date.now()}@mock.com`
@@ -15,7 +15,7 @@
 
 <div>
   <button on:click={session.signIn}>Start</button>
-  <button on:click={session.signIn}>How to play</button>
+  <button on:click={() => screen.open('HOW TO PLAY')}>How to play</button>
 
   <form on:submit={handleSubmit}>
     <input bind:value={email} placeholder="Email" />

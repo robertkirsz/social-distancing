@@ -11,7 +11,8 @@ body {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-size: calc(14px + (26 - 14) * ((100vw - 300px) / (1600 - 300)));
+  /* font-size: calc(14px + (26 - 14) * ((100vw - 300px) / (1600 - 300))); */
+  font-size: 20px;
   font-family: sans-serif;
 }
 
@@ -78,8 +79,4 @@ button {
   backdrop-filter: blur(8px);
   background: rgba(240, 240, 240, 0.8);
   padding: 16px;
-}
-
-.frost *:only-child {
-  margin: auto;
 }
