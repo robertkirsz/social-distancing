@@ -52,6 +52,14 @@ export function getHandDirection({ ArrowUp, ArrowRight, ArrowDown, ArrowLeft, la
   )
 }
 
+export const getTirednessLevel = value => (value <= 20 ? 2 : value <= 50 ? 1 : 0)
+
+export const tirednessEffects = [
+  { color: 'gold', cooldown: 500 },
+  { color: 'orange', cooldown: 1000 },
+  { color: 'red', cooldown: 1500 }
+]
+
 export const coordinates = {
   up: { from: [0, -50], to: [0, -10] },
   'up-right': { from: [50, -50], to: [10, -10] },

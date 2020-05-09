@@ -3,16 +3,19 @@
   import { screen } from 'store'
   import { walkers, runners, friends, projectileTypes, randomItem, loopThrough, onInterval, range } from 'stuff'
   import CloseButton from 'components/CloseButton'
+  import StaminaBar from 'components/StaminaBar'
 
   const strangers = [...walkers, ...runners]
 
   let randomStranger = randomItem(strangers)
   const nextFriend = loopThrough(friends)
   let randomFriend = nextFriend()
+  let stamina = 100
 
   onInterval(() => {
     randomStranger = randomItem(strangers)
     randomFriend = nextFriend()
+    stamina = !stamina ? 100 : stamina === 100 ? 50 : stamina === 50 ? 20 : 0
   }, 1500)
 </script>
 
@@ -50,6 +53,8 @@
       <p>Once you lost all your lives, the game's over ☠️</p>
 
       <p>Keep an eye on your stamina, don't wave your fists too much or you'll get exhausted!</p>
+
+      <StaminaBar value={stamina} />
     </div>
   </section>
 </div>
