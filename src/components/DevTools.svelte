@@ -1,5 +1,24 @@
 <script>
-  import { lives, scoreLabels, effects, errors, projectiles, shields, player, hasShield, isInvincible } from 'store'
+  import {
+    effects,
+    errors,
+    hasShield,
+    isInvincible,
+    lives,
+    player,
+    projectiles,
+    scoreLabels,
+    session,
+    shields
+  } from 'store'
+
+  let email = `${Date.now()}@mock.com`
+  let password = '123456'
+
+  function handleSubmit(event) {
+    event.preventDefault()
+    session.manualSignIn(email, password)
+  }
 </script>
 
 <aside>
@@ -42,6 +61,12 @@
     <button on:click={shields.create}>Create shield</button>
     <button on:click={shields.destroy}>Destroy shield</button>
     <button on:click={() => errors.show(Date.now(), { code: 'Foo', message: 'Lorem ipsum' })}>Throw error</button>
+
+    <form on:submit={handleSubmit}>
+      <input bind:value={email} placeholder="Email" />
+      <input bind:value={password} placeholder="Password" />
+      <button type="submit">Manual login</button>
+    </form>
   </div>
 </aside>
 
