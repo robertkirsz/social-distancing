@@ -1,7 +1,8 @@
 <script>
   import { fade } from 'svelte/transition'
   import { screen } from 'store'
-  import { walkers, runners, friends, projectileTypes, randomItem, loopThrough, onInterval } from 'stuff'
+  import { walkers, runners, friends, projectileTypes, randomItem, loopThrough, onInterval, range } from 'stuff'
+  import CloseButton from 'components/CloseButton'
 
   const strangers = [...walkers, ...runners]
 
@@ -15,47 +16,57 @@
   }, 1500)
 </script>
 
-<div transition:fade class="frost">
-  <button on:click={screen.close}>Close</button>
-  <section>
-    <h3>How to keep social distance</h3>
+<div class="screen column itemsCenter justifyCenter">
+  <section transition:fade>
+    <div>
+      <h3 class="flex justifyBetween">
+        How to keep social distance
+        <CloseButton on:click={screen.close} />
+      </h3>
 
-    <p>
-      You're trying to stay socialy distant, but all around you are these people who just don't care. Look at them,
-      they're not even wearing a mask... 🙄
-      <br />
-      They're irresponsible and deserve a solid smack!
-    </p>
+      <p>
+        You're trying to stay socialy distant, but all around you are these people who just don't care. Look at them,
+        they're not even wearing a mask... 🙄
+        <br />
+        They're irresponsible and deserve a solid smack!
+      </p>
 
-    <p>Use arrow keys to throw punches at them. If you're on mobile, touch the area around your avatar.</p>
+      <p>Use arrow keys to throw punches at them. If you're on mobile, touch the area around your avatar.</p>
 
-    <p>
-      <span>{randomStranger}</span>
-      Strangers: Smack 'em right in the face!
-      <br />
-      <span>{randomFriend}</span>
-      Loved ones: Hug them (DON'T punch them!)
-      <br />
-      <span>{projectileTypes.Life.emoji}</span>
-      Heart: Grab it for an extra life (or punch it for extra points)
-      <br />
-      <span>{projectileTypes.Shield.emoji}</span>
-      Shield: Gives you protection from strangers (or points if you punch it)
-    </p>
+      <p>
+        <span>{randomStranger}</span>
+        Strangers: Smack 'em right in the face!
+        <br />
+        <span>{randomFriend}</span>
+        Loved ones: Hug them (DON'T punch them!)
+        <br />
+        <span>{projectileTypes.Life.emoji}</span>
+        Heart: Grab it for an extra life (or punch it for extra points)
+        <br />
+        <span>{projectileTypes.Shield.emoji}</span>
+        Shield: Gives you protection from strangers (or points if you punch it)
+      </p>
 
-    <p>Once you lost all your lives, the game's over ☠️</p>
+      <p>Once you lost all your lives, the game's over ☠️</p>
 
-    <p>Keep an eye at your stamina, don't wave your fist to much or you'll get exhausted!</p>
+      <p>Keep an eye on your stamina, don't wave your fists too much or you'll get exhausted!</p>
+    </div>
   </section>
 </div>
 
 <style>
   section {
-    display: flex;
-    flex-direction: column;
-    max-width: 960px;
+    overflow: hidden;
     margin: 0 auto;
-    border: 1px solid;
+    border-radius: 50px;
+    background: #eeeeee;
+    box-shadow: 20px 20px 60px #cacaca, -20px -20px 60px #ffffff;
+  }
+
+  section > div {
+    width: 100%;
+    max-width: 800px;
+    padding: 32px;
   }
 
   span {

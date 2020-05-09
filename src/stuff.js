@@ -11,6 +11,10 @@ export function randomNumber(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min
 }
 
+export function range(value, min, max) {
+  return value * (max - min) + min
+}
+
 export function loopThrough(items) {
   let index = 0
 
