@@ -23,8 +23,10 @@
     margin-top: 8px;
   }
 
-  form {
-    display: flex;
-    flex-direction: column;
+  button {
+    border: none;
+    background: none;
+    outline: none;
+    cursor: pointer;
   }
 </style>

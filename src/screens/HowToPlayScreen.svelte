@@ -21,10 +21,10 @@
 
 <div class="screen column itemsCenter justifyCenter">
   <section transition:fade>
-    <div>
+    <div class="column listTop">
       <h3 class="flex justifyBetween">
         How to keep social distance
-        <CloseButton on:click={screen.close} />
+        <CloseButton on:click={screen.close} style="margin-left: 16px;" />
       </h3>
 
       <p>
@@ -36,19 +36,39 @@
 
       <p>Use arrow keys to throw punches at them. If you're on mobile, touch the area around your avatar.</p>
 
-      <p>
-        <span>{randomStranger}</span>
-        Strangers: Smack 'em right in the face!
-        <br />
-        <span>{randomFriend}</span>
-        Loved ones: Hug them (DON'T punch them!)
-        <br />
-        <span>{projectileTypes.Life.emoji}</span>
-        Heart: Grab it for an extra life (or punch it for extra points)
-        <br />
-        <span>{projectileTypes.Shield.emoji}</span>
-        Shield: Gives you protection from strangers (or points if you punch it)
-      </p>
+      <div class="column listTop">
+        <div class="flex listLeft itemsCenter wrap">
+          <div class="flex itemsCenter">
+            <span class="emoji">{randomStranger}</span>
+            Strangers:
+          </div>
+          <span>Smack 'em right in the face!</span>
+        </div>
+
+        <div class="flex listLeft itemsCenter wrap">
+          <div class="flex itemsCenter">
+            <span class="emoji">{randomFriend}</span>
+            Loved ones:
+          </div>
+          <span>Hug them (DON'T punch them!)</span>
+        </div>
+
+        <div class="flex listLeft itemsCenter wrap">
+          <div class="flex itemsCenter">
+            <span class="emoji">{projectileTypes.Life.emoji}</span>
+            Heart:
+          </div>
+          <span>Grab it for an extra life (or punch it for extra points)</span>
+        </div>
+
+        <div class="flex listLeft itemsCenter wrap">
+          <div class="flex itemsCenter">
+            <span class="emoji">{projectileTypes.Shield.emoji}</span>
+            Shield:
+          </div>
+          <span>Gives you protection from strangers (or points if you punch it)</span>
+        </div>
+      </div>
 
       <p>Once you lost all your lives, the game's over ☠️</p>
 
@@ -61,11 +81,11 @@
 
 <style>
   section {
-    overflow: hidden;
     margin: 0 auto;
     border-radius: 50px;
     background: #eeeeee;
     box-shadow: 20px 20px 60px #cacaca, -20px -20px 60px #ffffff;
+    overflow: auto;
   }
 
   section > div {
@@ -74,9 +94,18 @@
     padding: 32px;
   }
 
-  span {
+  @media (max-width: 425px) {
+    section {
+      border-radius: 25px;
+    }
+
+    section > div {
+      padding: 16px;
+    }
+  }
+
+  .emoji {
     font-size: 2em;
     margin-right: 8px;
-    vertical-align: middle;
   }
 </style>

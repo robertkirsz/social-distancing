@@ -1,4 +1,8 @@
-<button on:click />
+<script>
+  export let style = null
+</script>
+
+<button on:click {style} />
 
 <style>
   button {
@@ -20,11 +24,18 @@
     box-sizing: content-box;
   }
 
+  @media (max-width: 425px) {
+    button {
+      width: 14px;
+      height: 14px;
+    }
+  }
+
   button::before,
   button::after {
     content: '';
     display: block;
-    width: 24px;
+    width: 60%;
     height: 3px;
     position: absolute;
     background: currentColor;
