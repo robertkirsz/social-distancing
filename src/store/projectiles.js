@@ -59,8 +59,6 @@ const actionHandler = ({ type, ...parameters }) => {
       const { id, direction, points } = parameters
       score.update(points)
       scoreLabels.show(points, direction)
-      // TODO: is this unused at the moment?
-      // projectiles.animate(id, 'hit')
       projectiles.remove(id)
       break
     }

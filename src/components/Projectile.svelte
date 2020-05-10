@@ -44,7 +44,7 @@
 
   const foo = width => (width * Math.sqrt(2) - width) / 2
 
-  function overlaps(projectile) {
+  function collides(projectile) {
     const {
       top: projectileTop,
       bottom: projectileBottom,
@@ -83,9 +83,9 @@
       top: ${go(from.y, to.y, progress * 100)}%;
       left: ${go(from.x, to.x, progress * 100)}%;
     `,
-    tick() {
-      // t > 0.35 && t < 0.47
-      if (!landed && overlaps(node, player)) {
+    tick(progress) {
+      // TODO: test that 'progress'
+      if (!landed && progress > 0.27 && progress < 0.42 && collides(node, player)) {
         landed = true
         projectiles.land(id, type, direction, onHit, onDeflect)
       }
@@ -93,7 +93,6 @@
   })
 
   onDestroy(() => {
-    if (animation !== 'hit') return
     const clone = node.cloneNode(true)
     clone.removeAttribute('style')
     clone.style.top = `${playerCorners[direction].top}%`
@@ -174,10 +173,6 @@
   .deflect.right,
   .deflect.down-right {
     animation-name: deflect-right !important;
-  }
-
-  .hit {
-    background: red;
   }
 
   .miss {

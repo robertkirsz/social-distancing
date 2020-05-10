@@ -1,7 +1,7 @@
 import { onDestroy } from 'svelte'
-export const INITIAL_LIVES = 3
 
-export const MAX_STAMINA = 12
+export const INITIAL_LIVES = 3
+export const MAX_STAMINA = 10
 
 export function randomItem(array) {
   return array[Math.floor(Math.random() * array.length)]
@@ -70,14 +70,6 @@ export const coordinates = {
   left: { from: [-50, 0], to: [-10, 0] },
   'up-left': { from: [-50, -50], to: [-10, -10] }
 }
-
-// prettier-ignore
-// TODO: not used
-export const avatars = [
-  '👩','👩🏻','👩🏼','👩🏽','👩🏾','👩🏿',
-  '🧑','🧑🏻','🧑🏼','🧑🏽','🧑🏾','🧑🏿',
-  '👨','👨🏻','👨🏼','👨🏽','👨🏾','👨🏿'
-]
 
 // prettier-ignore
 export const walkers = [
