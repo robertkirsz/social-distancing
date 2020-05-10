@@ -2,6 +2,7 @@
   import { tweened } from 'svelte/motion'
   import { cubicOut } from 'svelte/easing'
   import { score, scoreLabels } from 'store'
+  import cn from 'classnames'
 
   const progress = tweened($score, {
     duration: 400,
@@ -14,7 +15,9 @@
 <div>{Math.round($progress)}</div>
 
 {#each $scoreLabels as { id, value, direction, extra } (id)}
-  <span class={direction} class:extra on:animationend={scoreLabels.hide(id)}>{value > 0 ? `+${value}` : value}</span>
+  <span class={cn(direction, { extra, minus: value < 0 })} on:animationend={scoreLabels.hide(id)}>
+    {value > 0 ? `+${value}` : value}
+  </span>
 {/each}
 
 <style>
@@ -24,6 +27,47 @@
     top: 8px;
     right: 8px;
     text-align: right;
+  }
+
+  span {
+    display: inline-block;
+    position: absolute;
+    font-size: 2.5vw;
+    z-index: 50;
+    color: goldenrod;
+    font-weight: bold;
+    animation-duration: 1s;
+    animation-timing-function: linear;
+  }
+
+  .extra {
+    font-size: 3.5vw;
+    animation-duration: 2s;
+    color: #ff3e00;
+  }
+
+  span.up,
+  span.down {
+    animation-name: animation-center;
+  }
+
+  span.up-left,
+  span.left,
+  span.down-left {
+    animation-name: animation-left;
+  }
+
+  span.up-right,
+  span.right,
+  span.down-right {
+    animation-name: animation-right;
+  }
+
+  span.minus {
+    color: #333;
+    font-size: 3vw;
+    animation-name: animation-down;
+    animation-duration: 2s;
   }
 
   @keyframes animation-center {
@@ -77,37 +121,20 @@
     }
   }
 
-  span {
-    display: inline-block;
-    position: absolute;
-    font-size: 2.5vw;
-    z-index: 50;
-    color: goldenrod;
-    font-weight: bold;
-    animation-duration: 1s;
-    animation-timing-function: linear;
-  }
+  @keyframes animation-down {
+    0% {
+      transform: translateY(10vw) scale(2);
+      opacity: 0;
+    }
 
-  .extra {
-    font-size: 4vw;
-    animation-duration: 2s;
-    color: #ff3e00;
-  }
+    10% {
+      transform: translateY(10.5vw) scale(1);
+      opacity: 1;
+    }
 
-  span.up,
-  span.down {
-    animation-name: animation-center;
-  }
-
-  span.up-left,
-  span.left,
-  span.down-left {
-    animation-name: animation-left;
-  }
-
-  span.up-right,
-  span.right,
-  span.down-right {
-    animation-name: animation-right;
+    100% {
+      transform: translateY(15vw) scale(1);
+      opacity: 0;
+    }
   }
 </style>
