@@ -38,7 +38,11 @@
   })
 </script>
 
-<div class:invincibility={$isInvincible} class:exhaustion={$isExhausted} on:animationend={handleAnimationEnd}>
+<div
+  id="player"
+  class:invincibility={$isInvincible}
+  class:exhaustion={$isExhausted}
+  on:animationend={handleAnimationEnd}>
   {#each stuff as item}
     <span class="hand-wrapper" style="transform: rotate({item.rotation}deg);">
       <span class="hand" class:punch={$hand.direction === item.direction}>

@@ -96,17 +96,28 @@ export const runners = [
 export const friends = ['👩‍❤️‍👨', '👩‍❤️‍👩', '👨‍❤️‍👨']
 
 export const projectileTypes = {
-  Life: { emoji: '💖', onHit: { type: 'Add life', amount: 1 }, onDeflect: {} },
-  Shield: { emoji: '🛡', onHit: { type: 'Add shield' }, onDeflect: {} },
+  Life: {
+    emoji: '💖',
+    onHit: { type: 'Add life', amount: 1 },
+    onDeflect: { type: 'Hit heart', points: randomNumber(250, 300) }
+  },
+  Shield: {
+    emoji: '🛡',
+    onHit: { type: 'Add shield' },
+    onDeflect: { type: 'Hit shield', points: randomNumber(150, 200) }
+  },
   Stranger: {
-    emoji: duration => (duration <= 1500 ? randomItem(runners) : randomItem(walkers)),
+    emoji: duration => (duration <= 2500 ? randomItem(runners) : randomItem(walkers)),
     onHit: { type: 'Remove life', amount: 1 },
-    onDeflect: { type: 'Hit stranger', points: 10 }
+    onDeflect: duration => ({
+      type: 'Hit stranger',
+      points: duration <= 2500 ? randomNumber(150, 220) : randomNumber(80, 150)
+    })
   },
   Friend: {
     emoji: () => randomItem(friends),
-    onHit: { type: 'Hug friend', points: 20 },
-    onDeflect: { type: 'Hit friend', points: -20 }
+    onHit: { type: 'Hug friend', points: 200 },
+    onDeflect: { type: 'Hit friend', points: -200 }
   }
 }
 

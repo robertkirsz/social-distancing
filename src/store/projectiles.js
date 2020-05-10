@@ -1,3 +1,4 @@
+import { v4 as uuidv4 } from 'uuid'
 import { writable, get } from 'svelte/store'
 import lives from 'store/lives'
 import player from 'store/player'
@@ -14,63 +15,87 @@ const actionHandler = ({ type, ...parameters }) => {
     case 'Add life': {
       const { id, amount } = parameters
       lives.update(state => state + amount)
-      projectiles.animate(id, 'hit')
+      projectiles.remove(id)
       break
     }
     case 'Remove life': {
-      const { id, direction, amount } = parameters
-      console.warn(direction, '=> HIT')
+      const { id, amount } = parameters
       player.hit(amount)
-      projectiles.animate(id, 'hit')
+      projectiles.remove(id)
+      break
+    }
+    case 'Hit heart': {
+      const { id, points } = parameters
+      score.update(points)
+      scoreLabels.show(points)
+      projectiles.remove(id)
       break
     }
     case 'Add shield': {
       const { id } = parameters
       shields.create()
-      projectiles.animate(id, 'hit')
+      projectiles.remove(id)
+      break
+    }
+    case 'Hit shield': {
+      const { id, points } = parameters
+      score.update(points)
+      scoreLabels.show(points)
+      projectiles.remove(id)
       break
     }
     case 'Hit stranger': {
       const { id, direction, points } = parameters
-      console.warn(direction, '=> HIT STRANGER')
       const difference = Date.now() - get(hand).lastPressedTime
       const _points = difference < 300 ? points * 2.5 : points
       score.update(_points)
       scoreLabels.show(_points, direction)
-      projectiles.animate(id, 'deflect')
-      break
-    }
-    case 'Hit friend': {
-      const { id, direction, points } = parameters
-      console.warn(direction, '=> HIT FRIEND')
-      score.update(points)
-      scoreLabels.show(points, direction)
-      projectiles.animate(id, 'deflect')
+      // projectiles.animate(id, 'deflect')
+      setTimeout(() => projectiles.remove(id))
       break
     }
     case 'Hug friend': {
       const { id, direction, points } = parameters
-      console.warn(direction, '=> HUG FRIEND')
       score.update(points)
       scoreLabels.show(points, direction)
-      projectiles.animate(id, 'hit')
+      // TODO: is this unused at the moment?
+      // projectiles.animate(id, 'hit')
+      projectiles.remove(id)
+      break
+    }
+    case 'Hit friend': {
+      const { id, direction, points } = parameters
+      score.update(points)
+      scoreLabels.show(points, direction)
+      projectiles.animate(id, 'deflect')
+      projectiles.remove(id)
       break
     }
     default: {
       const { id } = parameters
       projectiles.animate(id, 'deflect')
+      projectiles.remove(id)
     }
   }
 }
 
 function Projectile({
-  id = Date.now(),
+  id = uuidv4(),
   direction = randomItem(Object.keys(coordinates)),
-  duration = randomNumber(900, 2100),
+  duration = randomNumber(1500, 4500),
   type = 'Stranger'
 } = {}) {
-  const { emoji, ...rest } = projectileTypes[type]
-  return { id, type, direction, duration, emoji: typeof emoji === 'function' ? emoji(duration) : emoji, ...rest }
+  const { emoji, onHit, onDeflect, ...rest } = projectileTypes[type]
+  return {
+    id,
+    type,
+    direction,
+    duration,
+    emoji: typeof emoji === 'function' ? emoji(duration) : emoji,
+    onHit: typeof onHit === 'function' ? onHit(duration) : onHit,
+    onDeflect: typeof onDeflect === 'function' ? onDeflect(duration) : onDeflect,
+    ...rest
+  }
 }
 
 let autoDeflect = false
@@ -100,7 +125,7 @@ const projectiles = {
 
     if (get(isInvincible)) {
       console.log(direction, '=> IS INVISIBLE')
-      projectiles.miss(id)
+      projectiles.animate(id, 'miss', 3000)
       return
     }
 
@@ -108,10 +133,6 @@ const projectiles = {
   },
   animate(id, animation) {
     update(state => state.map(item => (item.id === id ? { ...item, animation } : item)))
-    setTimeout(() => projectiles.remove(id), 1000)
-  },
-  miss(id, animation) {
-    setTimeout(() => projectiles.remove(id), 1000)
   },
   remove(id) {
     update(remove(id))

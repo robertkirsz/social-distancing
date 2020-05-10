@@ -1,4 +1,6 @@
 <script>
+  import { v4 as uuidv4 } from 'uuid'
+
   import {
     effects,
     errors,
@@ -12,7 +14,7 @@
     shields
   } from 'store'
 
-  let email = `${Date.now()}@mock.com`
+  let email = `${uuidv4()}@mock.com`
   let password = '123456'
 
   function handleSubmit(event) {
@@ -60,7 +62,7 @@
 
     <button on:click={shields.create}>Create shield</button>
     <button on:click={shields.destroy}>Destroy shield</button>
-    <button on:click={() => errors.show(Date.now(), { code: 'Foo', message: 'Lorem ipsum' })}>Throw error</button>
+    <button on:click={() => errors.show(uuidv4(), { code: 'Foo', message: 'Lorem ipsum' })}>Throw error</button>
 
     <form on:submit={handleSubmit}>
       <input bind:value={email} placeholder="Email" />

@@ -21,7 +21,8 @@
     "classnames": "2.2.6",
     "firebase": "7.14.3",
     "moment": "2.25.3",
-    "sirv-cli": "0.4.5"
+    "sirv-cli": "0.4.5",
+    "uuid": "8.0.0"
   },
   "devDependencies": {
     "@rollup/plugin-commonjs": "11.1.0",

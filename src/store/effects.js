@@ -1,3 +1,4 @@
+import { v4 as uuidv4 } from 'uuid'
 import { writable, derived } from 'svelte/store'
 
 const { subscribe, update } = writable([])
@@ -5,7 +6,7 @@ const { subscribe, update } = writable([])
 const effects = {
   subscribe,
   activate(name, options = {}) {
-    const id = Date.now()
+    const id = uuidv4()
     update(state => [...state, { id, name, ...options }])
     if (options.duration) setTimeout(() => effects.deactivate(id), options.duration)
 

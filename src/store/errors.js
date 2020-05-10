@@ -1,6 +1,7 @@
+import { v4 as uuidv4 } from 'uuid'
 import { writable, get } from 'svelte/store'
 
-export const getError = (id = Date.now(), error = {}) => ({
+export const getError = (id = uuidv4(), error = {}) => ({
   id,
   code: error.code || '',
   message: error.response || error.request || error.message || error.config || ''
