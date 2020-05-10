@@ -18,8 +18,8 @@ const { subscribe: scoreLabelsSubscribe, update: scoreLabelsUpdate } = writable(
 export const scoreLabels = {
   subscribe: scoreLabelsSubscribe,
   update: scoreLabelsUpdate,
-  show(value, direction = 'up') {
-    scoreLabels.update(state => [...state, { id: uuidv4(), value, direction }])
+  show(value, direction = 'up', extra) {
+    scoreLabels.update(state => [...state, { id: uuidv4(), value, direction, extra }])
   },
   hide(id) {
     scoreLabels.update(state => state.filter(item => item.id !== id))

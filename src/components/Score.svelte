@@ -13,8 +13,8 @@
 
 <div>{Math.round($progress)}</div>
 
-{#each $scoreLabels as { id, value, direction } (id)}
-  <span class={direction} on:animationend={scoreLabels.hide(id)}>{value > 0 ? `+${value}` : value}</span>
+{#each $scoreLabels as { id, value, direction, extra } (id)}
+  <span class={direction} class:extra on:animationend={scoreLabels.hide(id)}>{value > 0 ? `+${value}` : value}</span>
 {/each}
 
 <style>
@@ -82,10 +82,16 @@
     position: absolute;
     font-size: 2.5vw;
     z-index: 50;
-    color: #ff3e00;
+    color: goldenrod;
     font-weight: bold;
     animation-duration: 1s;
     animation-timing-function: linear;
+  }
+
+  .extra {
+    font-size: 4vw;
+    animation-duration: 2s;
+    color: #ff3e00;
   }
 
   span.up,

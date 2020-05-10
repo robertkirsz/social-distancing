@@ -45,12 +45,13 @@ const actionHandler = ({ type, ...parameters }) => {
       break
     }
     case 'Hit stranger': {
-      const { id, direction, points } = parameters
+      const { id, direction, points: rawPoints } = parameters
       const difference = Date.now() - get(hand).lastPressedTime
-      const _points = difference < 300 ? points * 2.5 : points
-      score.update(_points)
-      scoreLabels.show(_points, direction)
-      // projectiles.animate(id, 'deflect')
+      const bonus = difference < 150
+      const points = bonus ? rawPoints * 2 : rawPoints
+      score.update(points)
+      scoreLabels.show(points, direction, bonus)
+      projectiles.animate(id, 'deflect')
       setTimeout(() => projectiles.remove(id))
       break
     }
