@@ -40,9 +40,7 @@
 
   const go = (from, to, percent) => (percent * (to - from)) / 100 + from
 
-  const { from, to } = directions[direction]
-
-  const foo = width => (width * Math.sqrt(2) - width) / 2
+  const distanceToCorner = width => (width * Math.sqrt(2) - width) / 2
 
   function collides(projectile) {
     const {
@@ -61,54 +59,76 @@
       width: playerWidth
     } = player.getBoundingClientRect()
 
-    const projectileFoo = foo(projectileWidth)
-    const playerFoo = foo(playerWidth)
+    const projectileDistanceToCorner = distanceToCorner(projectileWidth)
+    const playerDistanceToCorner = distanceToCorner(playerWidth)
 
     // prettier-ignore
     if (
-      direction === 'up' && projectileBottom >= playerTop ||
-      direction === 'down' && projectileTop <= playerBottom ||
-      direction === 'left' && projectileRight >= playerLeft ||
-      direction === 'right' && projectileLeft <= playerRight ||
-      direction === 'up-left' && projectileRight + projectileFoo >= playerLeft + playerFoo ||
-      direction === 'up-right' && projectileLeft - projectileFoo <= playerRight - playerFoo ||
-      direction === 'down-left' && projectileRight + projectileFoo >= playerLeft + playerFoo ||
-      direction === 'down-right' && projectileLeft - projectileFoo <= playerRight - playerFoo
+      direction ===         'up' && projectileBottom >= playerTop    ||
+      direction ===       'down' && projectileTop    <= playerBottom ||
+      direction ===       'left' && projectileRight  >= playerLeft   ||
+      direction ===      'right' && projectileLeft   <= playerRight  ||
+      direction ===    'up-left' && projectileRight   + projectileDistanceToCorner >= playerLeft  + playerDistanceToCorner ||
+      direction ===   'up-right' && projectileLeft    - projectileDistanceToCorner <= playerRight - playerDistanceToCorner ||
+      direction ===  'down-left' && projectileRight   + projectileDistanceToCorner >= playerLeft  + playerDistanceToCorner ||
+      direction === 'down-right' && projectileLeft    - projectileDistanceToCorner <= playerRight - playerDistanceToCorner
     ) return true
   }
 
-  const fly = node => ({
-    duration,
-    css: progress => `
-      top: ${go(from.y, to.y, progress * 100)}%;
-      left: ${go(from.x, to.x, progress * 100)}%;
-    `,
-    tick(progress) {
-      // TODO: test that 'progress'
-      if (!landed && progress > 0.27 && progress < 0.42 && collides(node, player)) {
-        landed = true
-        projectiles.land(id, type, direction, onHit, onDeflect)
+  function fly(node) {
+    const { from, to } = directions[direction]
+
+    return {
+      duration,
+      css: progress => `
+        top: ${go(from.y, to.y, progress * 100)}%;
+        left: ${go(from.x, to.x, progress * 100)}%;
+      `,
+      tick(progress) {
+        // Projectiles that hit the player
+        if (!landed && progress > 0.25 && progress < 0.45 && collides(node, player)) {
+          landed = true
+          projectiles.land(id, type, direction, onHit, onDeflect)
+        }
+
+        // Projectiles that missed the player
+        if (progress === 1 && document.body.contains(node)) {
+          disableCloning = true
+          projectiles.remove(id)
+        }
       }
     }
-  })
+  }
 
-  onDestroy(() => {
+  let disableCloning = false
+
+  function createAnimatedClone() {
+    if (animation !== 'deflect' || disableCloning) return
+
+    const { top, left } = node.getBoundingClientRect()
+
     const clone = node.cloneNode(true)
     clone.removeAttribute('style')
-    clone.style.top = `${playerCorners[direction].top}%`
-    clone.style.left = `${playerCorners[direction].left}%`
-    // clone.className += ` clone ${animation}`
+    clone.style.top = `${top}px`
+    clone.style.left = `${left}px`
+    clone.style.transform = 'none'
+    clone.className += ` deflect`
     clone.addEventListener('animationend', clone.remove)
-    // player.appendChild(clone)
-  })
+
+    document.body.appendChild(clone)
+  }
+
+  onDestroy(createAnimatedClone)
 </script>
 
-<span bind:this={node} in:fly class={cn('wrapper', type, animation, direction)}>
-  <span class="emoji">{emoji}</span>
-</span>
+<div bind:this={node} in:fly class={cn('outer-wrapper', type, direction)}>
+  <div class="inner-wrapper">
+    <div class="emoji">{emoji}</div>
+  </div>
+</div>
 
 <style>
-  .wrapper {
+  .outer-wrapper {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -119,63 +139,134 @@
     line-height: 1;
     position: absolute;
     z-index: 20;
-    border: 1px solid black;
     border-radius: 50%;
     transform: translate(-50%, -50%);
   }
 
-  .wrapper.clone {
-    background: rgba(0, 100, 0, 0.2);
-  }
-
-  .wrapper.Stranger {
+  .outer-wrapper.Stranger {
     font-size: 7vw;
   }
 
-  .up .emoji,
-  .up-left .emoji,
-  .left .emoji,
-  .down-left .emoji {
+  .up .inner-wrapper,
+  .up-left .inner-wrapper,
+  .left .inner-wrapper,
+  .down-left .inner-wrapper {
     transform: rotate3d(0, 1, 0, 180deg);
   }
 
-  @keyframes deflect-left {
-    40% {
-      transform: translate(-200%, -200%) rotate(-0.4turn);
+  .deflect.down.outer-wrapper,
+  .deflect.up-right.outer-wrapper,
+  .deflect.right.outer-wrapper,
+  .deflect.down-right.outer-wrapper {
+    animation-name: horizontal-right;
+    animation-duration: 0.5s;
+  }
+
+  .deflect.down .inner-wrapper,
+  .deflect.up-right .inner-wrapper,
+  .deflect.right .inner-wrapper,
+  .deflect.down-right .inner-wrapper {
+    animation-name: vertical-right;
+    animation-duration: 0.5s;
+  }
+
+  .deflect.down .emoji,
+  .deflect.up-right .emoji,
+  .deflect.right .emoji,
+  .deflect.down-right .emoji {
+    animation-name: rotate-right;
+    animation-duration: 0.5s;
+  }
+
+  @keyframes horizontal-right {
+    0% {
+      animation-timing-function: ease-in;
+    }
+    50% {
+      transform: translateX(100%);
+      animation-timing-function: ease-out;
+      opacity: 1;
     }
     100% {
-      transform: translate(-250%, 800%) rotate(-1turn);
+      transform: translateX(200%);
+      opacity: 0;
     }
   }
 
-  @keyframes deflect-right {
-    40% {
-      transform: translate(100%, -200%) rotate(0.4turn);
+  @keyframes vertical-right {
+    0% {
+      animation-timing-function: ease-out;
+    }
+    50% {
+      transform: translateY(-100%);
+      animation-timing-function: ease-in;
     }
     100% {
-      transform: translate(125%, 800%) rotate(1turn);
+      transform: translateY(0);
     }
   }
 
-  .deflect {
-    animation-duration: 1s;
+  @keyframes rotate-right {
+    to {
+      transform: rotate(0.5turn);
+    }
   }
 
-  .deflect.up,
-  .deflect.up-left,
-  .deflect.left,
-  .deflect.down-left {
-    animation-name: deflect-left !important;
+  .deflect.up.outer-wrapper,
+  .deflect.up-left.outer-wrapper,
+  .deflect.left.outer-wrapper,
+  .deflect.down-left.outer-wrapper {
+    animation-name: horizontal-left;
+    animation-duration: 0.5s;
   }
 
-  .deflect.down,
-  .deflect.up-right,
-  .deflect.right,
-  .deflect.down-right {
-    animation-name: deflect-right !important;
+  .deflect.up .inner-wrapper,
+  .deflect.up-left .inner-wrapper,
+  .deflect.left .inner-wrapper,
+  .deflect.down-left .inner-wrapper {
+    animation-name: vertical-left;
+    animation-duration: 0.5s;
   }
 
-  .miss {
-    background: blue;
+  .deflect.up .emoji,
+  .deflect.up-left .emoji,
+  .deflect.left .emoji,
+  .deflect.down-left .emoji {
+    animation-name: rotate-left;
+    animation-duration: 0.5s;
+  }
+
+  @keyframes horizontal-left {
+    0% {
+      animation-timing-function: ease-in;
+    }
+    50% {
+      transform: translateX(-100%);
+      animation-timing-function: ease-out;
+      opacity: 1;
+    }
+    100% {
+      transform: translateX(-200%);
+      opacity: 0;
+    }
+  }
+
+  @keyframes vertical-left {
+    0% {
+      animation-timing-function: ease-out;
+    }
+    50% {
+      transform: translateY(-100%) rotate3d(0, 1, 0, 180deg);
+      animation-timing-function: ease-in;
+    }
+    100% {
+      transform: translateY(0) rotate3d(0, 1, 0, 180deg);
+    }
+  }
+
+  @keyframes rotate-left {
+    to {
+      transform: rotate(0.5turn);
+    }
   }
 </style>

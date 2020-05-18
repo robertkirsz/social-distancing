@@ -18,32 +18,37 @@ const actionHandler = ({ type, ...parameters }) => {
       projectiles.remove(id)
       break
     }
+
     case 'Remove life': {
       const { id, amount } = parameters
       player.hit(amount)
       projectiles.remove(id)
       break
     }
+
     case 'Hit heart': {
       const { id, points } = parameters
       score.update(points)
       scoreLabels.show(points)
-      projectiles.remove(id)
+      projectiles.remove(id, 'deflect')
       break
     }
+
     case 'Add shield': {
       const { id } = parameters
       shields.create()
       projectiles.remove(id)
       break
     }
+
     case 'Hit shield': {
       const { id, points } = parameters
       score.update(points)
       scoreLabels.show(points)
-      projectiles.remove(id)
+      projectiles.remove(id, 'deflect')
       break
     }
+
     case 'Hit stranger': {
       const { id, direction, points: rawPoints } = parameters
       const difference = Date.now() - get(hand).lastPressedTime
@@ -51,10 +56,10 @@ const actionHandler = ({ type, ...parameters }) => {
       const points = bonus ? rawPoints * 2 : rawPoints
       score.update(points)
       scoreLabels.show(points, direction, bonus)
-      projectiles.animate(id, 'deflect')
-      setTimeout(() => projectiles.remove(id))
+      projectiles.remove(id, 'deflect')
       break
     }
+
     case 'Hug friend': {
       const { id, direction, points } = parameters
       score.update(points)
@@ -62,17 +67,17 @@ const actionHandler = ({ type, ...parameters }) => {
       projectiles.remove(id)
       break
     }
+
     case 'Hit friend': {
       const { id, direction, points } = parameters
       score.update(points)
       scoreLabels.show(points, direction)
-      projectiles.animate(id, 'deflect')
-      projectiles.remove(id)
+      projectiles.remove(id, 'deflect')
       break
     }
+
     default: {
       const { id } = parameters
-      projectiles.animate(id, 'deflect')
       projectiles.remove(id)
     }
   }
@@ -110,31 +115,25 @@ const projectiles = {
       return
     }
 
-    if (type !== 'Stranger') {
-      actionHandler({ id, direction, ...onHit })
-      return
-    }
+    if (type === 'Stranger') {
+      if (get(isInvincible)) return
 
-    if (get(hasShield)) {
-      console.log(direction, '=> HAS SHIELD')
-      projectiles.animate(id, 'deflect')
-      shields.destroy()
-      return
-    }
-
-    if (get(isInvincible)) {
-      console.log(direction, '=> IS INVISIBLE')
-      projectiles.animate(id, 'miss', 3000)
-      return
+      if (get(hasShield)) {
+        shields.destroy()
+        projectiles.remove(id, 'deflect')
+        return
+      }
     }
 
     actionHandler({ id, direction, ...onHit })
   },
-  animate(id, animation) {
-    update(state => state.map(item => (item.id === id ? { ...item, animation } : item)))
-  },
-  remove(id) {
-    update(remove(id))
+  remove(id, animation) {
+    if (animation) {
+      update(state => state.map(item => (item.id === id ? { ...item, animation } : item)))
+      setTimeout(() => update(remove(id)))
+    } else {
+      update(remove(id))
+    }
   },
   reset() {
     set([])
