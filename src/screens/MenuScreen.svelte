@@ -4,7 +4,7 @@
 </script>
 
 <div transition:fade class="frost">
-  <button>Ranking</button>
+  <button on:click={() => screen.open('RANKING')}>Ranking</button>
   <button on:click={() => screen.open('HOW TO PLAY')}>How to play</button>
   <button on:click={session.signOut}>Log out</button>
 </div>

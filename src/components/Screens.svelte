@@ -5,6 +5,7 @@
   import GameOverScreen from 'screens/GameOverScreen'
   import HowToPlayScreen from 'screens/HowToPlayScreen'
   import MenuScreen from 'screens/MenuScreen'
+  import RankingScreen from 'screens/RankingScreen'
 
   $: isLoading = $requests.authStateChange || $requests.signIn || $requests.signOut
 </script>
@@ -23,4 +24,8 @@
 
 {#if $screen === 'HOW TO PLAY'}
   <HowToPlayScreen />
+{/if}
+
+{#if $screen === 'RANKING'}
+  <RankingScreen />
 {/if}
