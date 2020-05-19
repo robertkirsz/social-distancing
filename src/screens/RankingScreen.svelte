@@ -2,11 +2,12 @@
   import { onMount } from 'svelte'
   import { fade } from 'svelte/transition'
   import { get } from 'database'
+  import { descendingBy } from 'stuff'
 
   let players = null
 
   onMount(async () => {
-    players = Object.values(await get('players'))
+    players = Object.values(await get('players')).sort(descendingBy('socialDistancingScore'))
   })
 </script>
 
@@ -20,8 +21,8 @@
             <td>
               <img src={player.photoUrl} width="40" height="40" alt={`${player.name} photo`} />
             </td>
-            <td>{player.socialDistancingScore || 0}</td>
             <td>{player.name}</td>
+            <td colspan="2">{player.socialDistancingScore || 0}</td>
           </tr>
         {/each}
       </table>
@@ -43,7 +44,8 @@
     border-spacing: 5px;
   }
 
-  table tr td:first-child {
+  table tr td:first-child,
+  table tr td:last-child {
     text-align: right;
   }
 

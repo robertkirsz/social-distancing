@@ -32,7 +32,7 @@
   <pre>scoreLabels: {JSON.stringify($scoreLabels, null, 2)}</pre>
   <pre>hasShield: {$hasShield}</pre>
   <pre>
-    player: {$player && JSON.stringify({ name: $player.name, email: $player.email, points: $player.socialDistancingScore || 0, timesPlayed: $player.socialDistancingTimesPlayed || 0 }, null, 2)}
+    player: {$player && JSON.stringify({ name: $player.name, email: $player.email, points: $player.socialDistancingScore, timesPlayed: $player.socialDistancingTimesPlayed }, null, 2)}
   </pre>
   <pre>errors: {JSON.stringify($errors, null, 2)}</pre>
 
