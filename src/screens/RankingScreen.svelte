@@ -20,7 +20,7 @@
             <td>
               <img src={player.photoUrl} width="40" height="40" alt={`${player.name} photo`} />
             </td>
-            <td>{player.socialDistancingPoints || 0}</td>
+            <td>{player.socialDistancingScore || 0}</td>
             <td>{player.name}</td>
           </tr>
         {/each}
