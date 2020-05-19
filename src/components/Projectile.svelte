@@ -115,7 +115,15 @@
     clone.className += ` deflect`
     clone.addEventListener('animationend', clone.remove)
 
+    const hitMark = document.createElement('div')
+    hitMark.innerHTML = '💥'
+    hitMark.className = 'hit-mark'
+    hitMark.style.top = `${top}px`
+    hitMark.style.left = `${left}px`
+    hitMark.addEventListener('animationend', hitMark.remove)
+
     document.body.appendChild(clone)
+    document.body.appendChild(hitMark)
   }
 
   onDestroy(createAnimatedClone)
@@ -267,6 +275,21 @@
   @keyframes rotate-left {
     to {
       transform: rotate(0.5turn);
+    }
+  }
+
+  :global(.hit-mark) {
+    position: absolute;
+    z-index: 21;
+    font-size: 4vw;
+    animation-name: hit;
+    animation-duration: 0.3s;
+  }
+
+  @keyframes hit {
+    to {
+      transform: scale(1.5);
+      opacity: 0;
     }
   }
 </style>
