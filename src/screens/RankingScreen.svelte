@@ -2,30 +2,42 @@
   import { onMount } from 'svelte'
   import { fade } from 'svelte/transition'
   import { get } from 'database'
+  import { screen } from 'store'
   import { descendingBy } from 'stuff'
+  import CloseButton from 'components/CloseButton'
 
   let players = null
 
   onMount(async () => {
-    players = Object.values(await get('players')).sort(descendingBy('socialDistancingScore'))
+    players = Object.values(await get('players'))
+      .filter(({ socialDistancingScore }) => socialDistancingScore !== undefined)
+      .sort(descendingBy('socialDistancingScore'))
   })
 </script>
 
 <div class="screen column itemsCenter justifyCenter">
   {#if players}
     <section transition:fade>
-      <table>
-        {#each players as player, index (player.id)}
-          <tr>
-            <td>{index + 1}</td>
-            <td>
-              <img src={player.photoUrl} width="40" height="40" alt={`${player.name} photo`} />
-            </td>
-            <td>{player.name}</td>
-            <td colspan="2">{player.socialDistancingScore || 0}</td>
-          </tr>
-        {/each}
-      </table>
+      <div class="column listTop">
+
+        <h3 class="flex justifyBetween">
+          Ranking
+          <CloseButton on:click={screen.close} style="margin-left: 16px;" />
+        </h3>
+
+        <table>
+          {#each players as player, index (player.id)}
+            <tr>
+              <td>{index + 1}</td>
+              <td>
+                <img src={player.photoUrl} width="40" height="40" alt={`${player.name} photo`} />
+              </td>
+              <td>{player.name}</td>
+              <td colspan="2">{player.socialDistancingScore || 0}</td>
+            </tr>
+          {/each}
+        </table>
+      </div>
     </section>
   {/if}
 </div>
@@ -39,8 +51,11 @@
     overflow: auto;
   }
 
-  table {
+  section > div {
     margin: 32px;
+  }
+
+  table {
     border-spacing: 5px;
   }
 
@@ -54,8 +69,8 @@
       border-radius: 25px;
     }
 
-    table {
-      margin: 16px;
+    section > div {
+      padding: 16px;
     }
   }
 

@@ -13,11 +13,11 @@ gameIsOver.subscribe(async isOver => {
     const players = Object.values(await database.get('players'))
     const currentPlayerId = get(player).id
     const currentPlayer = players.find(({ id }) => id === currentPlayerId)
-    const currentScore = currentPlayer.socialDistancingScore || 0
+    const currentScore = currentPlayer.socialDistancingScore
     const newScore = get(score)
     const dataToUpdate = { socialDistancingTimesPlayed: (currentPlayer.socialDistancingTimesPlayed || 0) + 1 }
 
-    if (newScore > currentScore) dataToUpdate.socialDistancingScore = newScore
+    if (currentScore === undefined || newScore > currentScore) dataToUpdate.socialDistancingScore = newScore
 
     database.update(`players/${currentPlayerId}`, dataToUpdate)
   }
