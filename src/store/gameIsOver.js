@@ -1,5 +1,5 @@
 import { writable, get } from 'svelte/store'
-import screen from 'store/screen'
+import screens from 'store/screens'
 import score from 'store/score'
 import player from 'store/player'
 import * as database from 'database'
@@ -8,7 +8,7 @@ const gameIsOver = writable(false)
 
 gameIsOver.subscribe(async isOver => {
   if (isOver) {
-    screen.open('GAME OVER')
+    screens.open('GAME OVER')
 
     const players = Object.values(await database.get('players'))
     const currentPlayerId = get(player).id

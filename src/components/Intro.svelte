@@ -1,12 +1,12 @@
 <script>
-  import { session, screen } from 'store'
+  import { session, screens } from 'store'
 </script>
 
 <h2>Social Distancing: The Game</h2>
 
-<div>
+<div class="columnTop marginTop2">
   <button on:click={session.signIn}>Start</button>
-  <button on:click={() => screen.open('HOW TO PLAY')}>How to play</button>
+  <button on:click={() => screens.open('HOW TO PLAY')}>How to play</button>
 </div>
 
 <style>
@@ -14,19 +14,11 @@
     text-align: center;
   }
 
-  div {
-    display: flex;
-    flex-direction: column;
-  }
-
-  div > *:not(:first-child) {
-    margin-top: 8px;
-  }
-
   button {
     border: none;
     background: none;
     outline: none;
     cursor: pointer;
+    text-decoration: underline;
   }
 </style>

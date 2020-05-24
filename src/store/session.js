@@ -5,7 +5,7 @@ import 'firebase/auth'
 import * as database from 'database'
 import player from 'store/player'
 import errors from 'store/errors'
-import screen from 'store/screen'
+import screens from 'store/screens'
 import storage from 'store/storage'
 import requests from 'store/requests'
 import appIsReady from 'store/appIsReady'
@@ -108,7 +108,7 @@ export default {
 
     if (!playerData || get(requests).signOut) return
 
-    screen.close('MENU')
+    screens.close('MENU')
     errors.hide('signOut')
     requests.start('signOut')
 

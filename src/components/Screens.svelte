@@ -1,31 +1,35 @@
 <script>
   import { fade } from 'svelte/transition'
-  import { screen, requests } from 'store'
+  import { screens, requests } from 'store'
   import LoadingScreen from 'screens/LoadingScreen'
   import GameOverScreen from 'screens/GameOverScreen'
   import HowToPlayScreen from 'screens/HowToPlayScreen'
   import MenuScreen from 'screens/MenuScreen'
   import RankingScreen from 'screens/RankingScreen'
 
-  $: isLoading = $requests.authStateChange || $requests.signIn || $requests.signOut
+  $: isLoading = $requests.authStateChange || $requests.signIn || $requests.signOut || $screens.includes('LOADING')
 </script>
 
 {#if isLoading}
   <LoadingScreen />
 {/if}
 
-{#if $screen === 'GAME OVER'}
-  <GameOverScreen />
+{#if $screens.includes('MENU')}
+  <MenuScreen>
+    {#if $screens.includes('HOW TO PLAY')}
+      <HowToPlayScreen />
+    {/if}
+
+    {#if $screens.includes('RANKING')}
+      <RankingScreen />
+    {/if}
+  </MenuScreen>
 {/if}
 
-{#if $screen === 'MENU'}
-  <MenuScreen />
-{/if}
-
-{#if $screen === 'HOW TO PLAY'}
+{#if !$screens.includes('MENU') && $screens.includes('HOW TO PLAY')}
   <HowToPlayScreen />
 {/if}
 
-{#if $screen === 'RANKING'}
-  <RankingScreen />
+{#if $screens.includes('GAME OVER')}
+  <GameOverScreen />
 {/if}
