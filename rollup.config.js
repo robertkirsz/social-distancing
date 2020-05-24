@@ -5,6 +5,7 @@ import livereload from 'rollup-plugin-livereload'
 import { terser } from 'rollup-plugin-terser'
 import includePaths from 'rollup-plugin-includepaths'
 import replace from '@rollup/plugin-replace'
+import packageJson from './package.json'
 
 const production = !process.env.ROLLUP_WATCH
 
@@ -47,7 +48,10 @@ export default {
     production && terser(),
     // Absolute imports from `src` folder
     includePaths({ paths: ['src'], extensions: ['.js', '.svelte'] }),
-    replace({ __isProduction__: production })
+    replace({
+      __production__: production,
+      __version__: String(packageJson.version)
+    })
   ],
   watch: {
     clearScreen: false
