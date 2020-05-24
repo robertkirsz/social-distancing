@@ -1,11 +1,11 @@
 {
-  "name": "deflect",
+  "name": "social-distancing",
   "version": "1.0.0",
   "author": "Robert Kirsz <robert.kirsz@gmail.com>",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/robertkirsz/deflect.git"
+    "url": "https://github.com/robertkirsz/social-distancing.git"
   },
   "scripts": {
     "start": "sirv public",

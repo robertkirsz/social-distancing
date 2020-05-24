@@ -1,19 +1,19 @@
 import { writable, get } from 'svelte/store'
 
 const { subscribe, update } = writable({
-  signedIn: !!JSON.parse(localStorage.getItem('projectile-deflect_signedIn'))
+  signedIn: !!JSON.parse(localStorage.getItem('signedIn'))
 })
 
 const storage = {
   subscribe,
   save: (key, data) => {
-    localStorage.setItem(`projectile-deflect_${key}`, JSON.stringify(data))
+    localStorage.setItem(key, JSON.stringify(data))
     update(state => ({ ...state, [key]: data }))
   },
   clear: () => {
     const localStorageKeys = Object.keys(get(storage))
 
-    localStorageKeys.forEach(key => localStorage.removeItem(`projectile-deflect_${key}`))
+    localStorageKeys.forEach(key => localStorage.removeItem(key))
 
     const keys = localStorageKeys.reduce((all, key) => ({ ...all, [key]: true }), {})
 

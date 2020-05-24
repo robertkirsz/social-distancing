@@ -1,7 +1,7 @@
 import { writable, get } from 'svelte/store'
 
 const { subscribe, update } = writable({
-  authStateChange: !!JSON.parse(localStorage.getItem('projectile-deflect_signedIn')),
+  authStateChange: !!JSON.parse(localStorage.getItem('signedIn')),
   signIn: false,
   signOut: false
 })
