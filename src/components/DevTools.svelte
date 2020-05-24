@@ -10,6 +10,7 @@
     player,
     projectiles,
     scoreLabels,
+    screens,
     session,
     shields
   } from 'store'
@@ -35,35 +36,46 @@
     player: {$player && JSON.stringify({ name: $player.name, email: $player.email, points: $player.socialDistancingScore, timesPlayed: $player.socialDistancingTimesPlayed }, null, 2)}
   </pre>
   <pre>errors: {JSON.stringify($errors, null, 2)}</pre>
+  <pre>screens: {JSON.stringify($screens, null, 2)}</pre>
 
-  <div>
-    <div class="throwing-block">
-      <button on:click={() => projectiles.throw('up-left')} />
-      <button on:click={() => projectiles.throw('up')} />
-      <button on:click={() => projectiles.throw('up-right')} />
-      <button on:click={() => projectiles.throw('left')} />
-      <button on:click={() => projectiles.throw()}>?</button>
-      <button on:click={() => projectiles.throw('right')} />
-      <button on:click={() => projectiles.throw('down-left')} />
-      <button on:click={() => projectiles.throw('down')} />
-      <button on:click={() => projectiles.throw('down-right')} />
+  <div class="column itemsStart">
+    <div class="rowLeft">
+      <div class="throwing-block">
+        <button on:click={() => projectiles.throw('up-left')} />
+        <button on:click={() => projectiles.throw('up')} />
+        <button on:click={() => projectiles.throw('up-right')} />
+        <button on:click={() => projectiles.throw('left')} />
+        <button on:click={() => projectiles.throw()}>?</button>
+        <button on:click={() => projectiles.throw('right')} />
+        <button on:click={() => projectiles.throw('down-left')} />
+        <button on:click={() => projectiles.throw('down')} />
+        <button on:click={() => projectiles.throw('down-right')} />
+      </div>
+
+      <div class="columnTop">
+        <button on:click={() => projectiles.throw('right', 'Life')} class="emoji">💖</button>
+        <button on:click={() => projectiles.throw('right', 'Shield')} class="emoji">🛡</button>
+        <button on:click={() => projectiles.throw('right', 'Friend')} class="emoji">👩‍❤️‍👨</button>
+      </div>
     </div>
-
-    <button on:click={() => projectiles.throw('right', 'Life')} class="emoji">💖</button>
-    <button on:click={() => projectiles.throw('right', 'Shield')} class="emoji">🛡</button>
-    <button on:click={() => projectiles.throw('right', 'Friend')} class="emoji">👩‍❤️‍👨</button>
 
     <button on:click={projectiles.reset}>Reset projectiles</button>
     <button on:click={projectiles.toggleAutoDeflect}>Auto-deflect</button>
-    <button on:click={() => lives.update(v => v + 1)}>Life +1</button>
-    <button on:click={() => lives.update(v => v - 1)}>Life -1</button>
+
+    <div class="rowLeft">
+
+      <button on:click={() => lives.update(v => v + 1)}>Life +1</button>
+      <button on:click={() => lives.update(v => v - 1)}>Life -1</button>
+    </div>
+
+    <div class="rowLeft">
+      <button on:click={shields.create}>Create shield</button>
+      <button on:click={shields.destroy}>Destroy shield</button>
+    </div>
 
     <button on:click={$isInvincible ? effects.deactivate('Invincibility') : effects.activate('Invincibility')}>
       Invincible
     </button>
-
-    <button on:click={shields.create}>Create shield</button>
-    <button on:click={shields.destroy}>Destroy shield</button>
     <button on:click={() => errors.show(uuidv4(), { code: 'Foo', message: 'Lorem ipsum' })}>Throw error</button>
 
     <form on:submit={handleSubmit}>
@@ -83,6 +95,7 @@
     bottom: 8px;
     left: 8px;
     pointer-events: none;
+    z-index: 100;
   }
 
   aside > *,
