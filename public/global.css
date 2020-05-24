@@ -90,28 +90,20 @@ button {
 }
 
 .frost {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  z-index: 60;
-  backdrop-filter: blur(4px);
-  padding: 16px;
+  backdrop-filter: blur(8px);
+  background-color: rgba(255, 255, 255, 0.75);
 }
 
 .screen {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   position: absolute;
   top: 0;
   right: 0;
   bottom: 0;
   left: 0;
   z-index: 60;
-
   padding: 16px;
 }
 
@@ -121,22 +113,55 @@ button {
   }
 }
 
-.flex { display: flex; }
-.column { display: flex; flex-direction: column; }
+.flex, .rowLeft, .rowRight { display: flex; }
+.column, .columnTop, .columnBottom { display: flex; flex-direction: column; }
+.wrap { flex-wrap: wrap; }
+.flexNone { flex: none; }
+
 .justifyStart { justify-content: flex-start; }
 .justifyEnd { justify-content: flex-end; }
 .justifyCenter { justify-content: center; }
 .justifyBetween { justify-content: space-between; }
 .justifyAround { justify-content: space-around; }
 .justifyEvenly { justify-content: space-evenly; }
+
 .itemsStart { align-items: flex-start; }
 .itemsEnd { align-items: flex-end; }
 .itemsCenter { align-items: center; }
 .itemsBaseline { align-items: baseline; }
 .itemsStretch { align-items: stretch; }
-.wrap { flex-wrap: wrap; }
-.flexNone { flex: none; }
-.listLeft > *:not(:first-child) { margin-left: 8px; }
-.listRight > *:not(:last-child) { margin-right: 8px; }
-.listTop > *:not(:first-child) { margin-top: 8px; }
-.listBottom > *:not(:last-child) { margin-bottom: 8px; }
+
+.selfStart { align-self: flex-start; }
+.selfEnd { align-self: flex-end; }
+.selfCenter { align-self: center; }
+.selfBaseline { align-self: baseline; }
+.selfStretch { align-self: stretch; }
+
+.listLeft > *:not(:first-child), .rowLeft > *:not(:first-child) { margin-left: 8px; }
+.listRight > *:not(:last-child), .rowRight > *:not(:last-child) { margin-right: 8px; }
+.listTop > *:not(:first-child), .columnTop > *:not(:first-child) { margin-top: 8px; }
+.listBottom > *:not(:last-child), .columnBottom > *:not(:last-child) { margin-bottom: 8px; }
+
+.marginTop { margin-top: 8px; }
+.marginTop2 { margin-top: 16px; }
+.marginTop2 { margin-top: 24px; }
+.marginTop4 { margin-top: 32px; }
+.marginTop5 { margin-top: 40px; }
+
+.marginRight { margin-right: 8px; }
+.marginRight2 { margin-right: 16px; }
+.marginRight2 { margin-right: 24px; }
+.marginRight4 { margin-right: 32px; }
+.marginRight5 { margin-right: 40px; }
+
+.marginBottom { margin-bottom: 8px; }
+.marginBottom2 { margin-bottom: 16px; }
+.marginBottom2 { margin-bottom: 24px; }
+.marginBottom4 { margin-bottom: 32px; }
+.marginBottom5 { margin-bottom: 40px; }
+
+.marginLeft { margin-left: 8px; }
+.marginLeft2 { margin-left: 16px; }
+.marginLeft2 { margin-left: 24px; }
+.marginLeft4 { margin-left: 32px; }
+.marginLeft5 { margin-left: 40px; }
