@@ -15,6 +15,8 @@
     shields
   } from 'store'
 
+  let isVisible = false
+
   let email = `${uuidv4()}@mock.com`
   let password = '123456'
 
@@ -24,67 +26,75 @@
   }
 </script>
 
-<aside>
-  <pre>effects: {JSON.stringify($effects, null, 2)}</pre>
-  <pre>
-    projectiles: {JSON.stringify($projectiles.map(({ type, emoji, direction }) => ({ type, emoji, direction })), null, 2)}
-  </pre>
-  <pre>shields: {JSON.stringify($shields, null, 2)}</pre>
-  <pre>scoreLabels: {JSON.stringify($scoreLabels, null, 2)}</pre>
-  <pre>hasShield: {$hasShield}</pre>
-  <pre>
-    player: {$player && JSON.stringify({ name: $player.name, email: $player.email, points: $player.socialDistancingScore, timesPlayed: $player.socialDistancingTimesPlayed }, null, 2)}
-  </pre>
-  <pre>errors: {JSON.stringify($errors, null, 2)}</pre>
-  <pre>screens: {JSON.stringify($screens, null, 2)}</pre>
+{#if !isVisible}
+  <button class="toggle" on:click={() => (isVisible = true)}>Devtools</button>
+{/if}
 
-  <div class="column itemsStart">
-    <div class="rowLeft">
-      <div class="throwing-block">
-        <button on:click={() => projectiles.throw('up-left')} />
-        <button on:click={() => projectiles.throw('up')} />
-        <button on:click={() => projectiles.throw('up-right')} />
-        <button on:click={() => projectiles.throw('left')} />
-        <button on:click={() => projectiles.throw()}>?</button>
-        <button on:click={() => projectiles.throw('right')} />
-        <button on:click={() => projectiles.throw('down-left')} />
-        <button on:click={() => projectiles.throw('down')} />
-        <button on:click={() => projectiles.throw('down-right')} />
+{#if isVisible}
+  <aside>
+    <pre>effects: {JSON.stringify($effects, null, 2)}</pre>
+    <pre>
+      projectiles: {JSON.stringify($projectiles.map(({ type, emoji, direction }) => ({ type, emoji, direction })), null, 2)}
+    </pre>
+    <pre>shields: {JSON.stringify($shields, null, 2)}</pre>
+    <pre>scoreLabels: {JSON.stringify($scoreLabels, null, 2)}</pre>
+    <pre>hasShield: {$hasShield}</pre>
+    <pre>
+      player: {$player && JSON.stringify({ name: $player.name, email: $player.email, points: $player.socialDistancingScore, timesPlayed: $player.socialDistancingTimesPlayed }, null, 2)}
+    </pre>
+    <pre>errors: {JSON.stringify($errors, null, 2)}</pre>
+    <pre>screens: {JSON.stringify($screens, null, 2)}</pre>
+
+    <div class="column itemsStart">
+      <div class="rowLeft">
+        <div class="throwing-block">
+          <button on:click={() => projectiles.throw('up-left')} />
+          <button on:click={() => projectiles.throw('up')} />
+          <button on:click={() => projectiles.throw('up-right')} />
+          <button on:click={() => projectiles.throw('left')} />
+          <button on:click={() => projectiles.throw()}>?</button>
+          <button on:click={() => projectiles.throw('right')} />
+          <button on:click={() => projectiles.throw('down-left')} />
+          <button on:click={() => projectiles.throw('down')} />
+          <button on:click={() => projectiles.throw('down-right')} />
+        </div>
+
+        <div class="columnTop">
+          <button on:click={() => projectiles.throw('right', 'Life')} class="emoji">💖</button>
+          <button on:click={() => projectiles.throw('right', 'Shield')} class="emoji">🛡</button>
+          <button on:click={() => projectiles.throw('right', 'Friend')} class="emoji">👩‍❤️‍👨</button>
+        </div>
       </div>
 
-      <div class="columnTop">
-        <button on:click={() => projectiles.throw('right', 'Life')} class="emoji">💖</button>
-        <button on:click={() => projectiles.throw('right', 'Shield')} class="emoji">🛡</button>
-        <button on:click={() => projectiles.throw('right', 'Friend')} class="emoji">👩‍❤️‍👨</button>
+      <button on:click={projectiles.reset}>Reset projectiles</button>
+      <button on:click={projectiles.toggleAutoDeflect}>Auto-deflect</button>
+
+      <div class="rowLeft">
+
+        <button on:click={() => lives.update(v => v + 1)}>Life +1</button>
+        <button on:click={() => lives.update(v => v - 1)}>Life -1</button>
       </div>
+
+      <div class="rowLeft">
+        <button on:click={shields.create}>Create shield</button>
+        <button on:click={shields.destroy}>Destroy shield</button>
+      </div>
+
+      <button on:click={$isInvincible ? effects.deactivate('Invincibility') : effects.activate('Invincibility')}>
+        Invincible
+      </button>
+      <button on:click={() => errors.show(uuidv4(), { code: 'Foo', message: 'Lorem ipsum' })}>Throw error</button>
+
+      <form on:submit={handleSubmit}>
+        <input bind:value={email} placeholder="Email" />
+        <input bind:value={password} placeholder="Password" />
+        <button type="submit">Manual login</button>
+      </form>
     </div>
 
-    <button on:click={projectiles.reset}>Reset projectiles</button>
-    <button on:click={projectiles.toggleAutoDeflect}>Auto-deflect</button>
-
-    <div class="rowLeft">
-
-      <button on:click={() => lives.update(v => v + 1)}>Life +1</button>
-      <button on:click={() => lives.update(v => v - 1)}>Life -1</button>
-    </div>
-
-    <div class="rowLeft">
-      <button on:click={shields.create}>Create shield</button>
-      <button on:click={shields.destroy}>Destroy shield</button>
-    </div>
-
-    <button on:click={$isInvincible ? effects.deactivate('Invincibility') : effects.activate('Invincibility')}>
-      Invincible
-    </button>
-    <button on:click={() => errors.show(uuidv4(), { code: 'Foo', message: 'Lorem ipsum' })}>Throw error</button>
-
-    <form on:submit={handleSubmit}>
-      <input bind:value={email} placeholder="Email" />
-      <input bind:value={password} placeholder="Password" />
-      <button type="submit">Manual login</button>
-    </form>
-  </div>
-</aside>
+    <button on:click={() => (isVisible = false)}>x</button>
+  </aside>
+{/if}
 
 <style>
   aside {
@@ -130,5 +140,12 @@
     margin: 2px;
     outline: none;
     cursor: pointer;
+  }
+
+  .toggle {
+    position: absolute;
+    left: 8px;
+    bottom: 8px;
+    font-size: 12px;
   }
 </style>
