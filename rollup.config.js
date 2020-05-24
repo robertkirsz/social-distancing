@@ -4,6 +4,7 @@ import commonjs from '@rollup/plugin-commonjs'
 import livereload from 'rollup-plugin-livereload'
 import { terser } from 'rollup-plugin-terser'
 import includePaths from 'rollup-plugin-includepaths'
+import replace from '@rollup/plugin-replace'
 
 const production = !process.env.ROLLUP_WATCH
 
@@ -45,7 +46,8 @@ export default {
     // instead of npm run dev), minify
     production && terser(),
     // Absolute imports from `src` folder
-    includePaths({ paths: ['src'], extensions: ['.js', '.svelte'] })
+    includePaths({ paths: ['src'], extensions: ['.js', '.svelte'] }),
+    replace({ __isProduction__: production })
   ],
   watch: {
     clearScreen: false

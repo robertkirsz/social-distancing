@@ -16,6 +16,10 @@
   import Projectiles from 'components/Projectiles'
   import GameControlButton from 'components/GameControlButton'
 
+  const isProduction = __isProduction__
+
+  console.log('isProduction:', isProduction)
+
   function keyListener(method) {
     return function(event) {
       if ($isExhausted) {
@@ -67,7 +71,9 @@
   {/if}
 </main>
 
-<DevTools />
+{#if !isProduction}
+  <DevTools />
+{/if}
 
 <style>
   main {
