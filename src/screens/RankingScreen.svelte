@@ -2,7 +2,7 @@
   import { onMount } from 'svelte'
   import { fade } from 'svelte/transition'
   import { get } from 'database'
-  import { screen } from 'store'
+  import { screens } from 'store'
   import { descendingBy } from 'stuff'
   import CloseButton from 'components/CloseButton'
 
@@ -18,11 +18,11 @@
 <div class="screen column itemsCenter justifyCenter">
   {#if players}
     <section transition:fade>
-      <div class="column listTop">
+      <div class="columnTop">
 
         <h3 class="flex justifyBetween">
           Ranking
-          <CloseButton on:click={screen.close} style="margin-left: 16px;" />
+          <CloseButton on:click={() => screens.close('RANKING')} style="margin-left: 16px;" />
         </h3>
 
         <table>

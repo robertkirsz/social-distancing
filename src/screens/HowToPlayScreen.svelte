@@ -1,6 +1,6 @@
 <script>
   import { fade } from 'svelte/transition'
-  import { screen } from 'store'
+  import { screens } from 'store'
   import { walkers, runners, friends, projectileTypes, randomItem, loopThrough, onInterval, range } from 'stuff'
   import CloseButton from 'components/CloseButton'
   import StaminaBar from 'components/StaminaBar'
@@ -21,10 +21,10 @@
 
 <div class="screen column itemsCenter justifyCenter">
   <section transition:fade>
-    <div class="column listTop">
+    <div class="columnTop">
       <h3 class="flex justifyBetween">
         How to keep social distance
-        <CloseButton on:click={screen.close} style="margin-left: 16px;" />
+        <CloseButton on:click={() => screens.close('HOW TO PLAY')} style="margin-left: 16px;" />
       </h3>
 
       <p>
@@ -36,8 +36,8 @@
 
       <p>Use arrow keys to throw punches at them. If you're on mobile, touch the area around your avatar.</p>
 
-      <div class="column listTop">
-        <div class="flex listLeft itemsCenter wrap">
+      <div class="columnTop">
+        <div class="rowLeft itemsCenter wrap">
           <div class="flex itemsCenter">
             <span class="emoji">{randomStranger}</span>
             Strangers:
@@ -45,7 +45,7 @@
           <span>Smack 'em right in the face!</span>
         </div>
 
-        <div class="flex listLeft itemsCenter wrap">
+        <div class="rowLeft itemsCenter wrap">
           <div class="flex itemsCenter">
             <span class="emoji">{randomFriend}</span>
             Loved ones:
@@ -53,7 +53,7 @@
           <span>Hug them (DON'T punch them!)</span>
         </div>
 
-        <div class="flex listLeft itemsCenter wrap">
+        <div class="rowLeft itemsCenter wrap">
           <div class="flex itemsCenter">
             <span class="emoji">{projectileTypes.Life.emoji}</span>
             Heart:
@@ -61,7 +61,7 @@
           <span>Grab it for an extra life (or punch it for extra points)</span>
         </div>
 
-        <div class="flex listLeft itemsCenter wrap">
+        <div class="rowLeft itemsCenter wrap">
           <div class="flex itemsCenter">
             <span class="emoji">{projectileTypes.Shield.emoji}</span>
             Shield:

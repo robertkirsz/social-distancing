@@ -2,7 +2,7 @@
   import { fade } from 'svelte/transition'
 </script>
 
-<div transition:fade class="frost">
+<div transition:fade class="screen frost">
   <h2>
     <span>L</span>
     <span>o</span>

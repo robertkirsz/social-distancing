@@ -1,8 +1,14 @@
 <script>
-  import { screen, gameIsRunning } from 'store'
+  import { screens, gameIsRunning } from 'store'
+
+  $: isOpened = $screens.includes('MENU')
+
+  function toggleMenu() {
+    isOpened ? screens.closeAll() : screens.open('MENU')
+  }
 </script>
 
-<button class:opened={$screen === 'MENU'} on:mouseup={() => screen.toggle('MENU')} disabled={$gameIsRunning}>
+<button class:opened={isOpened} on:mouseup={toggleMenu} disabled={$gameIsRunning}>
   <span />
   <span />
   <span />
