@@ -1,8 +1,5 @@
 import { onDestroy } from 'svelte'
 
-export const INITIAL_LIVES = 3
-export const MAX_STAMINA = 10
-
 export function randomItem(array) {
   return array[Math.floor(Math.random() * array.length)]
 }
@@ -26,6 +23,24 @@ export function loopThrough(items) {
 
 export function clamp(num, min, max) {
   return num <= min ? min : num >= max ? max : num
+}
+
+export const add = item => state => [...state, item]
+
+export const remove = id => state => (id === undefined ? state.slice(0, -1) : state.filter(item => item.id !== id))
+
+export const tween = (min, max, progress, inverse) => (inverse ? Math.abs(1 - progress) : progress) * (max - min) + min
+
+export const ascendingBy = key => (a, b) => {
+  const valueA = a[key] || 0
+  const valueB = b[key] || 0
+  return valueA < valueB ? -1 : valueA > valueB ? 1 : 0
+}
+
+export const descendingBy = key => (a, b) => {
+  const valueA = a[key] || 0
+  const valueB = b[key] || 0
+  return valueA < valueB ? 1 : valueA > valueB ? -1 : 0
 }
 
 export function onInterval(callback, milliseconds) {
@@ -53,6 +68,9 @@ export function getHandDirection({ ArrowUp, ArrowRight, ArrowDown, ArrowLeft, la
 }
 
 export const getTirednessLevel = value => (value <= 20 ? 2 : value <= 50 ? 1 : 0)
+
+export const INITIAL_LIVES = 3
+export const MAX_STAMINA = 10
 
 export const tirednessEffects = [
   { color: 'gold', cooldown: 500 },
@@ -111,22 +129,4 @@ export const projectileTypes = {
     onHit: { type: 'Hug friend', points: 300 },
     onDeflect: { type: 'Hit friend', points: -1000 }
   }
-}
-
-export const add = item => state => [...state, item]
-
-export const remove = id => state => (id === undefined ? state.slice(0, -1) : state.filter(item => item.id !== id))
-
-export const tween = (min, max, progress, inverse) => (inverse ? Math.abs(1 - progress) : progress) * (max - min) + min
-
-export const ascendingBy = key => (a, b) => {
-  const valueA = a[key] || 0
-  const valueB = b[key] || 0
-  return valueA < valueB ? -1 : valueA > valueB ? 1 : 0
-}
-
-export const descendingBy = key => (a, b) => {
-  const valueA = a[key] || 0
-  const valueB = b[key] || 0
-  return valueA < valueB ? 1 : valueA > valueB ? -1 : 0
 }

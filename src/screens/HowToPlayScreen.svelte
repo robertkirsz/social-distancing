@@ -27,7 +27,7 @@
         <CloseButton on:click={() => screens.close('HOW TO PLAY')} style="margin-left: 16px;" />
       </h3>
 
-      <p>
+      <p class="marginTop3">
         You're trying to stay socialy distant, but all around you are these people who just don't care. Look at them,
         they're not even wearing a mask... 🙄
         <br />
@@ -70,11 +70,10 @@
         </div>
       </div>
 
-      <p>Once you lost all your lives, the game's over ☠️</p>
-
       <p>Keep an eye on your stamina, don't wave your fists too much or you'll get exhausted!</p>
-
       <StaminaBar value={stamina} />
+
+      <p>Once you lost all your lives, the game's over ☠️</p>
     </div>
   </section>
 </div>

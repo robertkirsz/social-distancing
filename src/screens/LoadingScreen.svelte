@@ -2,8 +2,8 @@
   import { fade } from 'svelte/transition'
 </script>
 
-<div transition:fade class="screen frost">
-  <h2>
+<div transition:fade class="screen frost itemsCenter">
+  <h2 class="flex">
     <span>L</span>
     <span>o</span>
     <span>a</span>
@@ -15,9 +15,8 @@
 </div>
 
 <style>
-  h2 {
-    display: flex;
-    margin: auto;
+  div {
+    z-index: 80;
   }
 
   span {

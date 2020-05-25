@@ -10,26 +10,22 @@
   $: isLoading = $requests.authStateChange || $requests.signIn || $requests.signOut || $screens.includes('LOADING')
 </script>
 
-{#if isLoading}
-  <LoadingScreen />
+{#if $screens.includes('GAME OVER')}
+  <GameOverScreen />
 {/if}
 
 {#if $screens.includes('MENU')}
-  <MenuScreen>
-    {#if $screens.includes('HOW TO PLAY')}
-      <HowToPlayScreen />
-    {/if}
-
-    {#if $screens.includes('RANKING')}
-      <RankingScreen />
-    {/if}
-  </MenuScreen>
+  <MenuScreen />
 {/if}
 
-{#if !$screens.includes('MENU') && $screens.includes('HOW TO PLAY')}
+{#if $screens.includes('HOW TO PLAY')}
   <HowToPlayScreen />
 {/if}
 
-{#if $screens.includes('GAME OVER')}
-  <GameOverScreen />
+{#if $screens.includes('RANKING')}
+  <RankingScreen />
+{/if}
+
+{#if isLoading}
+  <LoadingScreen />
 {/if}

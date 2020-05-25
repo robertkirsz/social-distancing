@@ -45,6 +45,14 @@
     <pre>errors: {JSON.stringify($errors, null, 2)}</pre>
     <pre>screens: {JSON.stringify($screens, null, 2)}</pre>
 
+    <div class="rowLeft">
+      <button on:click={() => screens.toggle('LOADING')}>LOADING</button>
+      <button on:click={() => screens.toggle('MENU')}>MENU</button>
+      <button on:click={() => screens.toggle('HOW TO PLAY')}>HOW TO PLAY</button>
+      <button on:click={() => screens.toggle('RANKING')}>RANKING</button>
+      <button on:click={() => screens.toggle('GAME OVER')}>GAME OVER</button>
+    </div>
+
     <div class="column itemsStart">
       <div class="rowLeft">
         <div class="throwing-block">
@@ -70,7 +78,6 @@
       <button on:click={projectiles.toggleAutoDeflect}>Auto-deflect</button>
 
       <div class="rowLeft">
-
         <button on:click={() => lives.update(v => v + 1)}>Life +1</button>
         <button on:click={() => lives.update(v => v - 1)}>Life -1</button>
       </div>
@@ -83,6 +90,7 @@
       <button on:click={$isInvincible ? effects.deactivate('Invincibility') : effects.activate('Invincibility')}>
         Invincible
       </button>
+
       <button on:click={() => errors.show(uuidv4(), { code: 'Foo', message: 'Lorem ipsum' })}>Throw error</button>
 
       <form on:submit={handleSubmit}>
@@ -106,6 +114,10 @@
     left: 8px;
     pointer-events: none;
     z-index: 100;
+  }
+
+  aside > pre {
+    pointer-events: none;
   }
 
   aside > *,

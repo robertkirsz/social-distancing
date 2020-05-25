@@ -1,7 +1,7 @@
 <script>
   import { onMount } from 'svelte'
   import initializeFirebase from 'database'
-  import { hand, session, isExhausted, player } from 'store'
+  import { hand, session, isExhausted, player, screens } from 'store'
   import Intro from 'components/Intro'
   import Lives from 'components/Lives'
   import Score from 'components/Score'
@@ -32,6 +32,11 @@
     }
   }
 
+  $: if ($player) {
+    console.log('HAVE PLAYER', 'played already?', localStorage.getItem('Seen manual'))
+    // screens.open('HOW TO PLAY')
+  }
+
   onMount(() => {
     initializeFirebase()
     session.addAuthenticationListener()
@@ -48,6 +53,7 @@
 
 <Errors />
 <Screens />
+<MenuButton />
 
 <main>
   {#if $player}
@@ -61,7 +67,6 @@
     <TouchArea />
 
     <GameControlButton />
-    <MenuButton />
   {:else}
     <Intro />
   {/if}

@@ -4,7 +4,7 @@
   $: isOpened = $screens.includes('MENU')
 
   function toggleMenu() {
-    isOpened ? screens.closeAll() : screens.open('MENU')
+    isOpened ? screens.close(['MENU', 'HOW TO PLAY', 'RANKING']) : screens.open('MENU')
   }
 </script>
 

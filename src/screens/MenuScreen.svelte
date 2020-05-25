@@ -5,14 +5,16 @@
   import Version from 'components/Version'
 </script>
 
-<div transition:fade class="screen frost itemsCenter">
+<div transition:fade class="screen frost itemsCenter dots">
   <LogoutButton />
 
   <slot />
 
-  <div class="columnTop">
-    <button on:click={() => screens.open('RANKING')}>Ranking</button>
-    <button on:click={() => screens.open('HOW TO PLAY')}>How to play</button>
+  <div class="column itemsCenter">
+    <button class="primary" on:click={() => screens.open('RANKING')} data-text="Ranking">Ranking</button>
+    <button class="primary marginTop2" on:click={() => screens.open('HOW TO PLAY')} data-text="How to play">
+      How to play
+    </button>
   </div>
 
   <Version />
