@@ -28,7 +28,8 @@
     display: flex;
     margin: 4px;
     padding: 8px;
-    background: #ff3e00;
+    background: tomato;
+    border-radius: 4px;
     color: white;
   }
 

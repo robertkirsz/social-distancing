@@ -4,13 +4,13 @@
 
 <div transition:fade class="screen frost itemsCenter">
   <h2 class="flex">
-    <span>L</span>
-    <span>o</span>
-    <span>a</span>
-    <span>d</span>
-    <span>i</span>
-    <span>n</span>
-    <span>g</span>
+    <span class="nice invert fluid" data-text="L">L</span>
+    <span class="nice invert fluid" data-text="o">o</span>
+    <span class="nice invert fluid" data-text="a">a</span>
+    <span class="nice invert fluid" data-text="d">d</span>
+    <span class="nice invert fluid" data-text="i">i</span>
+    <span class="nice invert fluid" data-text="n">n</span>
+    <span class="nice invert fluid" data-text="g">g</span>
   </h2>
 </div>
 
@@ -19,7 +19,7 @@
     z-index: 80;
   }
 
-  span {
+  span::after {
     animation-name: animation;
     animation-duration: 0.7s;
     animation-iteration-count: infinite;
@@ -27,31 +27,31 @@
     animation-fill-mode: both;
   }
 
-  span:nth-child(1) {
+  span:nth-child(1)::after {
     animation-delay: 0.1s;
   }
 
-  span:nth-child(2) {
+  span:nth-child(2)::after {
     animation-delay: 0.2s;
   }
 
-  span:nth-child(3) {
+  span:nth-child(3)::after {
     animation-delay: 0.3s;
   }
 
-  span:nth-child(4) {
+  span:nth-child(4)::after {
     animation-delay: 0.4s;
   }
 
-  span:nth-child(5) {
+  span:nth-child(5)::after {
     animation-delay: 0.5s;
   }
 
-  span:nth-child(6) {
+  span:nth-child(6)::after {
     animation-delay: 0.6s;
   }
 
-  span:nth-child(7) {
+  span:nth-child(7)::after {
     animation-delay: 0.7s;
   }
 

@@ -21,7 +21,7 @@
 
 <div class="screen column itemsCenter justifyCenter">
   <section transition:fade>
-    <div class="columnTop">
+    <div class="column">
       <h3 class="flex justifyBetween">
         How to keep social distance
         <CloseButton on:click={() => screens.close('HOW TO PLAY')} style="margin-left: 16px;" />
@@ -29,14 +29,23 @@
 
       <p class="marginTop3">
         You're trying to stay socialy distant, but all around you are these people who just don't care. Look at them,
-        they're not even wearing a mask... 🙄
-        <br />
-        They're irresponsible and deserve a solid smack!
+        they're running around, not even wearing their masks... 🤦‍ They're irresponsible and deserve a solid smack! 🤜
       </p>
 
-      <p>Use arrow keys to throw punches at them. If you're on mobile, touch the area around your avatar.</p>
+      <div class="rowLeft itemsCenter marginTop2" style="line-height: 1.2">
+        <div class="column itemsCenter">
+          ⬆️
+          <div class="flex">⬅️⬇️➡️</div>
+        </div>
 
-      <div class="columnTop">
+        <p>
+          Use arrow keys to throw punches at them.
+          <br />
+          If you're on mobile, touch the area around your avatar.
+        </p>
+      </div>
+
+      <div class="marginTop2">
         <div class="rowLeft itemsCenter wrap">
           <div class="flex itemsCenter">
             <span class="emoji">{randomStranger}</span>
@@ -70,10 +79,12 @@
         </div>
       </div>
 
-      <p>Keep an eye on your stamina, don't wave your fists too much or you'll get exhausted!</p>
-      <StaminaBar value={stamina} />
+      <div class="columnTop marginTop2">
+        <p>Keep an eye on your stamina, don't wave your fists too much or you'll get exhausted!</p>
+        <StaminaBar value={stamina} />
+      </div>
 
-      <p>Once you lost all your lives, the game's over ☠️</p>
+      <p class="marginTop2">Once you lost all your lives, the game's over ☠️</p>
     </div>
   </section>
 </div>
@@ -81,23 +92,19 @@
 <style>
   section {
     margin: 0 auto;
-    border-radius: 50px;
-    background: #eeeeee;
-    box-shadow: 20px 20px 60px #cacaca, -20px -20px 60px #ffffff;
+    border-radius: 25px;
+    background: white;
     overflow: auto;
+    border: 3px solid pink;
   }
 
   section > div {
     width: 100%;
     max-width: 800px;
-    padding: 32px;
+    padding: 24px;
   }
 
   @media (max-width: 425px) {
-    section {
-      border-radius: 25px;
-    }
-
     section > div {
       padding: 16px;
     }

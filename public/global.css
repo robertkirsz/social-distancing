@@ -15,8 +15,8 @@ body {
   background: #eeeeee;
 
   color: #333;
-  font-size: 18px;
-  font-family: sans-serif;
+  font-size: 16px;
+  font-family: 'Roboto', sans-serif;
 }
 
 @media (max-width: 425px) {
@@ -38,7 +38,7 @@ p { margin: 0; }
 
 h1, h2, h3 {
   margin: 0;
-  color: #ff3e00;
+  color: pink;
   font-weight: 100;
   line-height: 1;
 }
@@ -51,7 +51,7 @@ h1, h2, h3 {
   position: relative;
   color: pink;
   font-family: 'Bungee', cursive;
-  font-size: bold;
+  font-weight: bold;
   text-shadow: 2px 2px tomato;
 }
 
@@ -67,8 +67,15 @@ h1, h2, h3 {
 
   color: powderblue;
   font-family: 'Bungee Hairline', cursive;
-  font-size: bold;
   text-shadow: 1px 1px tomato;
+}
+
+.nice.invert {
+  color: powderblue;
+}
+
+.nice.invert::after {
+  color: pink;
 }
 
 
@@ -113,27 +120,28 @@ button {
 
 button.primary {
   position: relative;
-  padding: 0 24px;
+  padding: 2px 24px;
 
   background: powderblue;
-  box-shadow: 3px 3px 0 tomato;
+  box-shadow: 3px 3px tomato;
 
   outline: none;
   border: none;
-  border-radius: 4px;
+  border-radius: 6px;
 
   color: pink;
-  font-size: 32px;
+  font-size: 40px;
   font-weight: bold;
   font-family: 'Bungee', cursive;
-  text-shadow: 1px 1px tomato;
+  text-shadow: 2px 2px tomato;
 
   transition: 0.15s;
 }
 
 button.primary:active {
   transform: translateY(2px);
-  box-shadow: 1px 1px 0 tomato;
+  box-shadow: 1px 1px 2px tomato;
+  text-shadow: 1px 1px 2px tomato;
 }
 
 button.primary::after {
@@ -141,9 +149,9 @@ button.primary::after {
   display: block;
 
   position: absolute;
-  top: 0;
+  top: 2px;
   right: 24px;
-  bottom: 0;
+  bottom: 2px;
   left: 24px;
 
   color: powderblue;
@@ -225,24 +233,24 @@ button.primary::after {
 
 .marginTop { margin-top: 8px; }
 .marginTop2 { margin-top: 16px; }
-.marginTop2 { margin-top: 24px; }
+.marginTop3 { margin-top: 24px; }
 .marginTop4 { margin-top: 32px; }
 .marginTop5 { margin-top: 40px; }
 
 .marginRight { margin-right: 8px; }
 .marginRight2 { margin-right: 16px; }
-.marginRight2 { margin-right: 24px; }
+.marginRight3 { margin-right: 24px; }
 .marginRight4 { margin-right: 32px; }
 .marginRight5 { margin-right: 40px; }
 
 .marginBottom { margin-bottom: 8px; }
 .marginBottom2 { margin-bottom: 16px; }
-.marginBottom2 { margin-bottom: 24px; }
+.marginBottom3 { margin-bottom: 24px; }
 .marginBottom4 { margin-bottom: 32px; }
 .marginBottom5 { margin-bottom: 40px; }
 
 .marginLeft { margin-left: 8px; }
 .marginLeft2 { margin-left: 16px; }
-.marginLeft2 { margin-left: 24px; }
+.marginLeft3 { margin-left: 24px; }
 .marginLeft4 { margin-left: 32px; }
 .marginLeft5 { margin-left: 40px; }

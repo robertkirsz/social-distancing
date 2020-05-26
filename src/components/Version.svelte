@@ -10,6 +10,7 @@
     left: 8px;
     bottom: 8px;
     z-index: 70;
+    font-size: 12px;
     opacity: 0.5;
   }
 </style>

@@ -11,12 +11,12 @@
     justify-content: center;
     align-items: center;
     color: inherit;
-    width: 25px;
-    height: 25px;
+    width: 22px;
+    height: 22px;
     padding: 0;
     position: relative;
     background: none;
-    border: 2px solid currentColor;
+    border: 3px solid currentColor;
     border-radius: 50px;
     outline: none;
     cursor: pointer;

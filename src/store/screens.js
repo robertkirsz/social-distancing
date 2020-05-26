@@ -1,6 +1,6 @@
 import { writable, get } from 'svelte/store'
 
-const { subscribe, set, update } = writable([])
+const { subscribe, set, update } = writable(['HOW TO PLAY'])
 
 const screens = {
   subscribe,
