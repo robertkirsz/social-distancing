@@ -1,6 +1,7 @@
 <script>
+  import { fade } from 'svelte/transition'
   import { INITIAL_LIVES } from 'stuff'
-  import { lives, score, gameIsRunning, gameIsOver } from 'store'
+  import { screens, session, lives, score, gameIsRunning, gameIsOver } from 'store'
 
   function handleClick() {
     if ($gameIsOver) {
@@ -14,14 +15,21 @@
   }
 </script>
 
-<button on:click={handleClick}>
-  {$gameIsOver ? 'Restart' : $gameIsRunning ? 'Stop' : 'Start'}
-</button>
+{#if !$gameIsRunning}
+  <div class="columnTop itemsCenter" transition:fade>
+    <button class="primary marginBottom2" on:click={handleClick} data-text="Start">Start</button>
+    <button class="primary small" on:click={() => screens.open('RANKING')} data-text="Ranking">Ranking</button>
+    <button class="primary small" on:click={() => screens.open('HOW TO PLAY')} data-text="How to play">
+      How to play
+    </button>
+    <button class="primary small" on:click={session.signOut} data-text="Log out">Log out</button>
+  </div>
+{/if}
 
 <style>
-  button {
+  div {
     position: absolute;
-    top: 40px;
+    bottom: 40px;
     left: 50%;
     transform: translateX(-50%);
   }

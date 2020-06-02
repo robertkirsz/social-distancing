@@ -108,7 +108,6 @@ export default {
 
     if (!playerData || get(requests).signOut) return
 
-    screens.close('MENU')
     errors.hide('signOut')
     requests.start('signOut')
 

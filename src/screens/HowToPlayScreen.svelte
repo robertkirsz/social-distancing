@@ -39,7 +39,7 @@
           <div class="flex">⬅️⬇️➡️</div>
         </div>
 
-        <p>Use arrow keys to throw punches at them.</p>
+        <p>Use arrow keys to punch</p>
       </div>
 
       <div>

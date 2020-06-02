@@ -47,7 +47,6 @@
 
     <div class="rowLeft">
       <button on:click={() => screens.toggle('LOADING')}>LOADING</button>
-      <button on:click={() => screens.toggle('MENU')}>MENU</button>
       <button on:click={() => screens.toggle('HOW TO PLAY')}>HOW TO PLAY</button>
       <button on:click={() => screens.toggle('RANKING')}>RANKING</button>
       <button on:click={() => screens.toggle('GAME OVER')}>GAME OVER</button>

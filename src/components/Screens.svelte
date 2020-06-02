@@ -4,7 +4,6 @@
   import LoadingScreen from 'screens/LoadingScreen'
   import GameOverScreen from 'screens/GameOverScreen'
   import HowToPlayScreen from 'screens/HowToPlayScreen'
-  import MenuScreen from 'screens/MenuScreen'
   import RankingScreen from 'screens/RankingScreen'
 
   $: isLoading = $requests.authStateChange || $requests.signIn || $requests.signOut || $screens.includes('LOADING')
@@ -12,10 +11,6 @@
 
 {#if $screens.includes('GAME OVER')}
   <GameOverScreen />
-{/if}
-
-{#if $screens.includes('MENU')}
-  <MenuScreen />
 {/if}
 
 {#if $screens.includes('HOW TO PLAY')}

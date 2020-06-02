@@ -12,7 +12,6 @@
   import Screens from 'components/Screens'
   import DevTools from 'components/DevTools'
   import TouchArea from 'components/TouchArea'
-  import MenuButton from 'components/MenuButton'
   import Projectiles from 'components/Projectiles'
   import GameControlButton from 'components/GameControlButton'
 
@@ -53,7 +52,6 @@
 
 <Errors />
 <Screens />
-<MenuButton />
 
 <main>
   {#if $player}
