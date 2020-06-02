@@ -1,11 +1,10 @@
 import { v4 as uuidv4 } from 'uuid'
 import { writable, get } from 'svelte/store'
 import lives from 'store/lives'
-import player from 'store/player'
 import score, { scoreLabels } from 'store/score'
 import shields, { hasShield } from 'store/shields'
 import hand from 'store/hand'
-import { isInvincible } from 'store/effects'
+import effects, { isInvincible } from 'store/effects'
 import { add, remove, coordinates, randomItem, randomNumber, projectileTypes } from 'stuff'
 
 const { subscribe, set, update } = writable([])
@@ -20,8 +19,10 @@ const actionHandler = ({ type, ...parameters }) => {
     }
 
     case 'Remove life': {
+      if (get(lives) <= 0) return
       const { id, amount } = parameters
-      player.hit(amount)
+      lives.update(state => state - amount)
+      effects.activate('Invincibility', { duration: 1500 })
       projectiles.remove(id)
       break
     }
