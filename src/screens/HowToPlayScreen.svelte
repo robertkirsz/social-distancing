@@ -21,7 +21,7 @@
 
 <div class="screen column itemsCenter justifyCenter">
   <section transition:fade>
-    <div class="columnTop">
+    <div class="columnTop2">
       <div class="rowLeft justifyBetween">
         <h3 class="nice flex justifyBetween" data-text="How to play">How to play</h3>
         <CloseButton style="color: pink;" on:click={() => screens.close('HOW TO PLAY')} />
