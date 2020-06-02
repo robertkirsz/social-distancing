@@ -21,31 +21,28 @@
 
 <div class="screen column itemsCenter justifyCenter">
   <section transition:fade>
-    <div class="column">
-      <h3 class="flex justifyBetween">
-        How to keep social distance
-        <CloseButton on:click={() => screens.close('HOW TO PLAY')} style="margin-left: 16px;" />
-      </h3>
+    <div class="columnTop">
+      <div class="rowLeft justifyBetween">
+        <h3 class="nice flex justifyBetween" data-text="How to play">How to play</h3>
+        <CloseButton style="color: pink;" on:click={() => screens.close('HOW TO PLAY')} />
+      </div>
 
-      <p class="marginTop3">
-        You're trying to stay socialy distant, but all around you are these people who just don't care. Look at them,
-        they're running around, not even wearing their masks... 🤦‍ They're irresponsible and deserve a solid smack! 🤜
+      <p>
+        You're trying to stay socialy distant, but all around you are these people who just don't care.
+        <br />
+        They're irresponsible and deserve a solid smack! 🤜
       </p>
 
-      <div class="rowLeft itemsCenter marginTop2" style="line-height: 1.2">
+      <div class="rowLeft itemsCenter" style="line-height: 1.2">
         <div class="column itemsCenter">
           ⬆️
           <div class="flex">⬅️⬇️➡️</div>
         </div>
 
-        <p>
-          Use arrow keys to throw punches at them.
-          <br />
-          If you're on mobile, touch the area around your avatar.
-        </p>
+        <p>Use arrow keys to throw punches at them.</p>
       </div>
 
-      <div class="marginTop2">
+      <div>
         <div class="rowLeft itemsCenter wrap">
           <div class="flex itemsCenter">
             <span class="emoji">{randomStranger}</span>
@@ -79,12 +76,12 @@
         </div>
       </div>
 
-      <div class="columnTop marginTop2">
+      <div class="columnTop">
         <p>Keep an eye on your stamina, don't wave your fists too much or you'll get exhausted!</p>
         <StaminaBar value={stamina} />
       </div>
 
-      <p class="marginTop2">Once you lost all your lives, the game's over ☠️</p>
+      <p>Once you lost all your lives, the game's over ☠️</p>
     </div>
   </section>
 </div>
@@ -111,7 +108,9 @@
   }
 
   .emoji {
-    font-size: 2em;
+    width: 1.5em;
     margin-right: 8px;
+    font-size: 2em;
+    text-align: center;
   }
 </style>
