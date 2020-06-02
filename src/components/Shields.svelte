@@ -33,7 +33,7 @@
     position: absolute;
     width: 16vw;
     height: 16vw;
-    z-index: 30;
+    z-index: 1;
   }
 
   span {

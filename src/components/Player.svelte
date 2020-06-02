@@ -53,8 +53,8 @@
 
   {#if $player}
     <img class:shake src={$player.photoUrl} alt="Avatar" />
-    <span class="one-up-heart" class:active={oneUpHeart}>💖</span>
-    <span class="broken-heart" class:active={brokenHeart}>💔</span>
+    <span class="one-up-heart emoji" class:active={oneUpHeart}>💖</span>
+    <span class="broken-heart emoji" class:active={brokenHeart}>💔</span>
   {/if}
 </div>
 
@@ -209,6 +209,7 @@
     font-size: 50px;
     opacity: 0;
     pointer-events: none;
+    z-index: 2;
   }
 
   .one-up-heart.active {

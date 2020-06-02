@@ -5,7 +5,7 @@
 
 <div>
   {#each Array($lives) as live}
-    <span transition:fade>❤️</span>
+    <span class="emoji" transition:fade>❤️</span>
   {/each}
 </div>
 

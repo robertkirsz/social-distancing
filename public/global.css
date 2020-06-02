@@ -207,6 +207,10 @@ button.primary::after {
   box-shadow: 5px 5px pink;
 }
 
+.emoji {
+  font-family: apple color emoji,segoe ui emoji,noto color emoji,android emoji,emojisymbols,emojione mozilla,twemoji mozilla,segoe ui symbol;
+}
+
 @media (max-width: 425px) {
   .screen {
     padding: 8px;

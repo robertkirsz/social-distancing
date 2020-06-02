@@ -34,7 +34,7 @@
       </p>
 
       <div class="rowLeft itemsCenter" style="line-height: 1.2">
-        <div class="column itemsCenter">
+        <div class="column itemsCenter emoji">
           ⬆️
           <div class="flex">⬅️⬇️➡️</div>
         </div>
@@ -42,10 +42,10 @@
         <p>Use arrow keys to punch</p>
       </div>
 
-      <div>
+      <div class="columnTop">
         <div class="rowLeft itemsCenter wrap">
           <div class="flex itemsCenter">
-            <span class="emoji">{randomStranger}</span>
+            <span class="emoji icon">{randomStranger}</span>
             Strangers:
           </div>
           <span>Smack 'em right in the face!</span>
@@ -53,7 +53,7 @@
 
         <div class="rowLeft itemsCenter wrap">
           <div class="flex itemsCenter">
-            <span class="emoji">{randomFriend}</span>
+            <span class="emoji icon">{randomFriend}</span>
             Loved ones:
           </div>
           <span>Hug them (DON'T punch them!)</span>
@@ -61,7 +61,7 @@
 
         <div class="rowLeft itemsCenter wrap">
           <div class="flex itemsCenter">
-            <span class="emoji">{projectileTypes.Life.emoji}</span>
+            <span class="emoji icon">{projectileTypes.Life.emoji}</span>
             Heart:
           </div>
           <span>Grab it for an extra life (or punch it for extra points)</span>
@@ -69,7 +69,7 @@
 
         <div class="rowLeft itemsCenter wrap">
           <div class="flex itemsCenter">
-            <span class="emoji">{projectileTypes.Shield.emoji}</span>
+            <span class="emoji icon">{projectileTypes.Shield.emoji}</span>
             Shield:
           </div>
           <span>Gives you protection from strangers (or points if you punch it)</span>
@@ -81,7 +81,10 @@
         <StaminaBar value={stamina} />
       </div>
 
-      <p>Once you lost all your lives, the game's over ☠️</p>
+      <p>
+        Once you lost all your lives, the game's over
+        <span class="emoji">☠️</span>
+      </p>
     </div>
   </section>
 </div>
@@ -107,7 +110,7 @@
     }
   }
 
-  .emoji {
+  .icon {
     width: 1.5em;
     margin-right: 8px;
     font-size: 2em;

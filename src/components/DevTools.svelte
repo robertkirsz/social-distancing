@@ -68,7 +68,7 @@
 
         <div class="columnTop">
           <button on:click={() => projectiles.throw('right', 'Life')} class="emoji">💖</button>
-          <button on:click={() => projectiles.throw('right', 'Shield')} class="emoji">🛡</button>
+          <button on:click={() => projectiles.throw('right', 'Shield')} class="emoji">🛡️</button>
           <button on:click={() => projectiles.throw('right', 'Friend')} class="emoji">👩‍❤️‍👨</button>
         </div>
       </div>
