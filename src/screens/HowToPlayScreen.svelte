@@ -19,8 +19,8 @@
   }, 1500)
 </script>
 
-<div class="screen column itemsCenter justifyCenter">
-  <section transition:fade>
+<div class="screen dots alternate column itemsCenter justifyCenter" transition:fade>
+  <section class="shadow">
     <div class="columnTop2">
       <div class="rowLeft justifyBetween">
         <h3 class="nice flex justifyBetween" data-text="How to play">How to play</h3>

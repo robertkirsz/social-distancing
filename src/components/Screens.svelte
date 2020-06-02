@@ -6,7 +6,7 @@
   import HowToPlayScreen from 'screens/HowToPlayScreen'
   import RankingScreen from 'screens/RankingScreen'
 
-  $: isLoading = $requests.authStateChange || $requests.signIn || $requests.signOut || $screens.includes('LOADING')
+  $: isLoading = $requests.authStateChange || $requests.signIn || $screens.includes('LOADING')
 </script>
 
 {#if $screens.includes('GAME OVER')}

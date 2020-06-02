@@ -4,7 +4,7 @@
   function playAgain() {}
 </script>
 
-<div transition:fade class="screen listTop">
+<div transition:fade class="screen dots listTop">
   <h1>Game Over</h1>
   <button class="primary" on:click={playAgain}>Play again</button>
 </div>

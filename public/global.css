@@ -164,15 +164,6 @@ button.primary::after {
   pointer-events: none;
 }
 
-.dots {
-  background-image:
-    radial-gradient(pink 10%, transparent 10%),
-    radial-gradient(powderblue 10%, transparent 10%);
-
-  background-size: 20px 20px;
-  background-position: 0 0, 10px 10px;
-}
-
 *:disabled {
   opacity: 0.5;
   pointer-events: none;
@@ -195,6 +186,25 @@ button.primary::after {
   bottom: 0;
   left: 0;
   z-index: 60;
+}
+
+.dots {
+  background-image:
+    radial-gradient(pink 10%, transparent 10%),
+    radial-gradient(powderblue 10%, transparent 10%);
+
+  background-size: 20px 20px;
+  background-position: 0 0, 10px 10px;
+}
+
+.dots.alternate {
+  background-image:
+    radial-gradient(powderblue 10%, transparent 10%),
+    radial-gradient(pink 10%, transparent 10%);
+}
+
+.shadow {
+  box-shadow: 5px 5px pink;
 }
 
 @media (max-width: 425px) {
