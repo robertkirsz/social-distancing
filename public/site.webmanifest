@@ -1,7 +1,7 @@
 {
   "name": "Social Distancing: The Game",
   "short_name": "Social Distancing: The Game",
-  "start_url": ".",
+  "description": "A game where you try to stay socially distant",
   "icons": [
     {
       "src": "/android-chrome-144x144.png",
@@ -9,7 +9,8 @@
       "type": "image/png"
     }
   ],
+  "start_url": ".",
+  "display": "standalone",
   "theme_color": "#b0e0e6",
-  "background_color": "#b0e0e6",
-  "display": "standalone"
+  "background_color": "#b0e0e6"
 }
