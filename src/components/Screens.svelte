@@ -1,10 +1,11 @@
 <script>
   import { fade } from 'svelte/transition'
   import { screens, requests } from 'store'
+  import AuthorScreen from 'screens/AuthorScreen'
   import LoadingScreen from 'screens/LoadingScreen'
+  import RankingScreen from 'screens/RankingScreen'
   import GameOverScreen from 'screens/GameOverScreen'
   import HowToPlayScreen from 'screens/HowToPlayScreen'
-  import RankingScreen from 'screens/RankingScreen'
 
   $: isLoading = $requests.authStateChange || $requests.signIn || $screens.includes('LOADING')
 </script>
@@ -19,6 +20,10 @@
 
 {#if $screens.includes('RANKING')}
   <RankingScreen />
+{/if}
+
+{#if $screens.includes('AUTHOR')}
+  <AuthorScreen />
 {/if}
 
 {#if isLoading}
