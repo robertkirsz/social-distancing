@@ -1,5 +1,5 @@
 <script>
-  import { hand, player, isInvincible, isExhausted, lives } from 'store'
+  import { hand, player, isInvincible, isExhausted, lives, gameIsOver, gameIsRunning } from 'store'
 
   const stuff = [
     { direction: 'up', rotation: 0, emoji: '✊', emojiRotation: 0 },
@@ -25,12 +25,12 @@
   let previousLives = null
 
   lives.subscribe(value => {
-    if (previousLives !== null && value < previousLives) {
+    if ($gameIsRunning && previousLives !== null && value < previousLives) {
       shake = true
       brokenHeart = true
     }
 
-    if (previousLives !== null && value > previousLives) {
+    if ($gameIsRunning && previousLives !== null && value > previousLives) {
       oneUpHeart = true
     }
 
@@ -52,7 +52,7 @@
   {/each}
 
   {#if $player}
-    <img class:shake src={$player.photoUrl} alt="Avatar" />
+    <img class:shake class:game-is-over={$gameIsOver} src={$player.photoUrl} alt="Avatar" />
     <span class="one-up-heart emoji" class:active={oneUpHeart}>💖</span>
     <span class="broken-heart emoji" class:active={brokenHeart}>💔</span>
   {/if}
@@ -201,6 +201,10 @@
     object-fit: cover;
     border-radius: 50%;
     transition: filter 0.3s;
+  }
+
+  img.game-is-over {
+    filter: grayscale(1);
   }
 
   .one-up-heart,

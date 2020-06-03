@@ -1,7 +1,7 @@
 <script>
   import { onMount } from 'svelte'
   import initializeFirebase from 'database'
-  import { hand, session, isExhausted, player, screens } from 'store'
+  import { hand, session, isExhausted, player, screens, gameIsOver } from 'store'
   import Intro from 'components/Intro'
   import Lives from 'components/Lives'
   import Score from 'components/Score'
@@ -17,7 +17,7 @@
 
   function keyListener(method) {
     return function(event) {
-      if ($isExhausted) {
+      if ($isExhausted || $gameIsOver) {
         hand.reset()
         return
       }
@@ -29,11 +29,6 @@
       event.preventDefault()
       hand[method](event.key)
     }
-  }
-
-  $: if ($player) {
-    console.log('HAVE PLAYER', 'played already?', localStorage.getItem('Seen manual'))
-    // screens.open('HOW TO PLAY')
   }
 
   onMount(() => {
