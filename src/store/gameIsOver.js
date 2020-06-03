@@ -23,7 +23,6 @@ gameIsOver.subscribe(async isOver => {
 
     database.update(`players/${currentPlayerId}`, dataToUpdate)
   } else if (isOver === false) {
-    console.log('Play Again')
     lives.set(INITIAL_LIVES)
     score.set(0)
     screens.close('GAME OVER')
@@ -31,9 +30,7 @@ gameIsOver.subscribe(async isOver => {
 })
 
 lives.subscribe(value => {
-  if (value <= 0) {
-    gameIsOver.set(true)
-  }
+  if (value <= 0) gameIsOver.set(true)
 })
 
 export default gameIsOver
