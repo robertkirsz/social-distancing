@@ -1,16 +1,14 @@
 <script>
   import { fade } from 'svelte/transition'
   import { errors } from 'store'
-
-  // TODO: nicer UI
-  // TODO: do not show elements underneath loading screens when user loads from the beginning becasue he was loaded in previous session
+  import CloseButton from 'components/CloseButton'
 </script>
 
 <aside>
   {#each $errors as { id, code, message } (id)}
-    <div transition:fade>
+    <div class="listLeft itemsCenter" transition:fade>
       <span>Error: {message || code || id}</span>
-      <button on:click={() => errors.hide(id)}>x</button>
+      <CloseButton on:click={() => errors.hide(id)} style="width: 14px; height: 14px;" />
     </div>
   {/each}
 </aside>
@@ -30,21 +28,13 @@
   div {
     display: flex;
     margin: 4px;
-    padding: 8px;
+    padding: 8px 8px 8px 16px;
     background: tomato;
-    border-radius: 4px;
-    color: white;
+    border-radius: 6px;
+    color: #eee;
   }
 
-  button {
-    background: none;
-    border: none;
-    outline: none;
-    margin-left: 8px;
-    padding: 0px 5px;
-    color: white;
-    font-size: 18px;
-    line-height: 1;
-    cursor: pointer;
+  span {
+    font-size: 20px;
   }
 </style>

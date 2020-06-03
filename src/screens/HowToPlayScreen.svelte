@@ -27,87 +27,88 @@
         <CloseButton style="color: pink;" on:click={() => screens.close('HOW TO PLAY')} />
       </div>
 
-      <p>
-        You're trying to stay socialy distant, but all around you are these people who just don't care.
-        <br />
-        They're irresponsible and deserve a solid smack! 🤜
-      </p>
+      <div class="content-wrapper columnTop2">
+        <p>
+          You're trying to stay socialy distant, but all around you are these people who just don't care.
+          <br />
+          They're irresponsible and deserve a solid smack! 🤜
+        </p>
 
-      <div class="rowLeft itemsCenter" style="line-height: 1.2">
-        <div class="column itemsCenter emoji">
-          ⬆️
-          <div class="flex">⬅️⬇️➡️</div>
+        <div class="rowLeft itemsCenter" style="line-height: 1.2">
+          <div class="column itemsCenter emoji">
+            ⬆️
+            <div class="flex">⬅️⬇️➡️</div>
+          </div>
+
+          <p>Use arrow keys to punch</p>
         </div>
 
-        <p>Use arrow keys to punch</p>
+        <div class="columnTop">
+          <div class="rowLeft itemsCenter wrap">
+            <div class="flex itemsCenter">
+              <span class="emoji icon">{randomStranger}</span>
+              Strangers:
+            </div>
+            <span>Smack 'em right in the face!</span>
+          </div>
+
+          <div class="rowLeft itemsCenter wrap">
+            <div class="flex itemsCenter">
+              <span class="emoji icon">{randomFriend}</span>
+              Loved ones:
+            </div>
+            <span>Hug them (DON'T punch them!)</span>
+          </div>
+
+          <div class="rowLeft itemsCenter wrap">
+            <div class="flex itemsCenter">
+              <span class="emoji icon">{projectileTypes.Life.emoji}</span>
+              Heart:
+            </div>
+            <span>Grab it for an extra life (or punch it for extra points)</span>
+          </div>
+
+          <div class="rowLeft itemsCenter wrap">
+            <div class="flex itemsCenter">
+              <span class="emoji icon">{projectileTypes.Shield.emoji}</span>
+              Shield:
+            </div>
+            <span>Gives you protection from strangers (or points if you punch it)</span>
+          </div>
+        </div>
+
+        <div class="columnTop">
+          <p>Keep an eye on your stamina, don't wave your fists too much or you'll get exhausted!</p>
+          <StaminaBar value={stamina} />
+        </div>
+
+        <p>
+          Once you lost all your lives, the game's over
+          <span class="emoji">☠️</span>
+        </p>
       </div>
-
-      <div class="columnTop">
-        <div class="rowLeft itemsCenter wrap">
-          <div class="flex itemsCenter">
-            <span class="emoji icon">{randomStranger}</span>
-            Strangers:
-          </div>
-          <span>Smack 'em right in the face!</span>
-        </div>
-
-        <div class="rowLeft itemsCenter wrap">
-          <div class="flex itemsCenter">
-            <span class="emoji icon">{randomFriend}</span>
-            Loved ones:
-          </div>
-          <span>Hug them (DON'T punch them!)</span>
-        </div>
-
-        <div class="rowLeft itemsCenter wrap">
-          <div class="flex itemsCenter">
-            <span class="emoji icon">{projectileTypes.Life.emoji}</span>
-            Heart:
-          </div>
-          <span>Grab it for an extra life (or punch it for extra points)</span>
-        </div>
-
-        <div class="rowLeft itemsCenter wrap">
-          <div class="flex itemsCenter">
-            <span class="emoji icon">{projectileTypes.Shield.emoji}</span>
-            Shield:
-          </div>
-          <span>Gives you protection from strangers (or points if you punch it)</span>
-        </div>
-      </div>
-
-      <div class="columnTop">
-        <p>Keep an eye on your stamina, don't wave your fists too much or you'll get exhausted!</p>
-        <StaminaBar value={stamina} />
-      </div>
-
-      <p>
-        Once you lost all your lives, the game's over
-        <span class="emoji">☠️</span>
-      </p>
     </div>
   </section>
 </div>
 
 <style>
   section {
+    max-width: 100%;
+    max-height: 95vh;
     margin: 0 auto;
     border-radius: 25px;
-    background: white;
-    overflow: auto;
+    background: #eee;
     border: 3px solid pink;
   }
 
   section > div {
-    width: 100%;
-    max-width: 800px;
-    padding: 24px;
+    height: 100%;
+    padding: 16px;
   }
 
-  @media (max-width: 425px) {
-    section > div {
-      padding: 16px;
-    }
+  .content-wrapper {
+    flex: 1;
+    overflow: auto;
   }
 
   .icon {

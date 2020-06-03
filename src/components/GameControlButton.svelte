@@ -19,7 +19,5 @@
   div {
     position: absolute;
     bottom: 40px;
-    left: 50%;
-    transform: translateX(-50%);
   }
 </style>
