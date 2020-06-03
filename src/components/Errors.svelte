@@ -1,6 +1,9 @@
 <script>
   import { fade } from 'svelte/transition'
   import { errors } from 'store'
+
+  // TODO: nicer UI
+  // TODO: do not show elements underneath loading screens when user loads from the beginning becasue he was loaded in previous session
 </script>
 
 <aside>
