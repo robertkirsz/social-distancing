@@ -2,11 +2,12 @@
   import { onMount } from 'svelte'
   import { fade } from 'svelte/transition'
   import { get } from 'database'
-  import { screens } from 'store'
+  import { screens, player } from 'store'
   import { descendingBy } from 'stuff'
   import CloseButton from 'components/CloseButton'
 
   let players = null
+  const playerId = $player.id
 
   onMount(async () => {
     players = Object.values(await get('players'))
@@ -27,47 +28,7 @@
         <div class="content-wrapper">
           <table>
             {#each players as player, index (player.id)}
-              <tr>
-                <td>{index + 1}</td>
-                <td>
-                  <img src={player.photoUrl} width="40" height="40" alt={`${player.name} photo`} />
-                </td>
-                <td>{player.name}</td>
-                <td colspan="2">{player.socialDistancingScore || 0}</td>
-              </tr>
-            {/each}
-            {#each players as player, index (player.id)}
-              <tr>
-                <td>{index + 1}</td>
-                <td>
-                  <img src={player.photoUrl} width="40" height="40" alt={`${player.name} photo`} />
-                </td>
-                <td>{player.name}</td>
-                <td colspan="2">{player.socialDistancingScore || 0}</td>
-              </tr>
-            {/each}
-            {#each players as player, index (player.id)}
-              <tr>
-                <td>{index + 1}</td>
-                <td>
-                  <img src={player.photoUrl} width="40" height="40" alt={`${player.name} photo`} />
-                </td>
-                <td>{player.name}</td>
-                <td colspan="2">{player.socialDistancingScore || 0}</td>
-              </tr>
-            {/each}
-            {#each players as player, index (player.id)}
-              <tr>
-                <td>{index + 1}</td>
-                <td>
-                  <img src={player.photoUrl} width="40" height="40" alt={`${player.name} photo`} />
-                </td>
-                <td>{player.name}</td>
-                <td colspan="2">{player.socialDistancingScore || 0}</td>
-              </tr>
-            {/each}
-            {#each players as player, index (player.id)}
-              <tr>
+              <tr class:current-player={player.id === playerId}>
                 <td>{index + 1}</td>
                 <td>
                   <img src={player.photoUrl} width="40" height="40" alt={`${player.name} photo`} />
@@ -104,7 +65,11 @@
   }
 
   table {
-    border-spacing: 5px;
+    border-collapse: collapse;
+  }
+
+  td {
+    padding: 5px;
   }
 
   td:first-child,
@@ -122,5 +87,18 @@
   img {
     border-radius: 50%;
     object-fit: cover;
+    vertical-align: middle;
+  }
+
+  tr.current-player {
+    background: #f7d8dd;
+  }
+
+  tr.current-player td:first-child {
+    border-radius: 6px 0 0 6px;
+  }
+
+  tr.current-player td:last-child {
+    border-radius: 0 6px 6px 0;
   }
 </style>
