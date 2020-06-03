@@ -294,6 +294,8 @@ button.secondary::after {
 .columnTop4 > *:not(:first-child) { margin-top: 32px; }
 .columnTop5 > *:not(:first-child) { margin-top: 40px; }
 
+.marginTopAuto { margin-top: auto; }
+
 .marginTop { margin-top: 8px; }
 .marginTop2 { margin-top: 16px; }
 .marginTop3 { margin-top: 24px; }
