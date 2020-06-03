@@ -2,9 +2,11 @@ import { writable, get } from 'svelte/store'
 import screens from 'store/screens'
 import score from 'store/score'
 import player from 'store/player'
+import lives from 'store/lives'
 import * as database from 'database'
+import { INITIAL_LIVES } from 'stuff'
 
-const gameIsOver = writable(false)
+const gameIsOver = writable()
 
 gameIsOver.subscribe(async isOver => {
   if (isOver) {
@@ -20,6 +22,17 @@ gameIsOver.subscribe(async isOver => {
     if (currentScore === undefined || newScore > currentScore) dataToUpdate.socialDistancingScore = newScore
 
     database.update(`players/${currentPlayerId}`, dataToUpdate)
+  } else if (isOver === false) {
+    console.log('Play Again')
+    lives.set(INITIAL_LIVES)
+    score.set(0)
+    screens.close('GAME OVER')
+  }
+})
+
+lives.subscribe(value => {
+  if (value <= 0) {
+    gameIsOver.set(true)
   }
 })
 
