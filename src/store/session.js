@@ -5,7 +5,6 @@ import 'firebase/auth'
 import * as database from 'database'
 import player from 'store/player'
 import errors from 'store/errors'
-import screens from 'store/screens'
 import storage from 'store/storage'
 import requests from 'store/requests'
 import appIsReady from 'store/appIsReady'
@@ -21,7 +20,8 @@ export default {
         const loggedInManually = authData.providerData[0].providerId === 'password'
 
         // Don't let non-Monedo users in
-        if (!loggedInManually && !['monedo', 'kreditech'].includes(domain)) {
+        // TODO: remove gmail
+        if (!loggedInManually && !['gmail', 'monedo', 'kreditech'].includes(domain)) {
           database.signOut()
           firebase.auth().currentUser.delete()
           requests.stop('authStateChange')
@@ -118,7 +118,6 @@ export default {
 
     database
       .signOut()
-      // TODO: Don't know if needed, we do saveToLocalStorage('signedIn', false) in addAuthenticationListener signOut case
       .then(storage.clear)
       .catch(error => {
         errors.show('signOut', error)

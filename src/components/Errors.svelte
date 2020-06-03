@@ -6,7 +6,7 @@
 
 <aside>
   {#each $errors as { id, code, message } (id)}
-    <div class="listLeft itemsCenter" transition:fade>
+    <div class="rowLeft itemsCenter" transition:fade>
       <span>Error: {message || code || id}</span>
       <CloseButton on:click={() => errors.hide(id)} style="width: 14px; height: 14px;" />
     </div>

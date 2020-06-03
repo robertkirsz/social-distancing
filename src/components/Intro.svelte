@@ -4,7 +4,7 @@
 </script>
 
 <div class="columnTop5 itemsCenter justifyCenter">
-  <div in:fade={{ delay: 1000 }} class="column itemsCenter listTop3">
+  <div in:fade={{ delay: 1000 }} class="columnTop3 itemsCenter">
     <h2 class="center fluid nice" data-text="Social Distancing">
       Social
       <br />
