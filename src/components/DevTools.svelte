@@ -12,10 +12,12 @@
     scoreLabels,
     screens,
     session,
-    shields
+    shields,
+    gameIsRunning,
+    gameIsOver
   } from 'store'
 
-  let isVisible = false
+  let isVisible = localStorage.getItem('devToolsVisible') === 'true'
 
   let email = `${uuidv4()}@mock.com`
   let password = '123456'
@@ -24,10 +26,20 @@
     event.preventDefault()
     session.manualSignIn(email, password)
   }
+
+  function openDevTools() {
+    isVisible = true
+    localStorage.setItem('devToolsVisible', true)
+  }
+
+  function closeDevTools() {
+    isVisible = false
+    localStorage.setItem('devToolsVisible', false)
+  }
 </script>
 
 {#if !isVisible}
-  <button class="toggle" on:click={() => (isVisible = true)}>Devtools</button>
+  <button class="toggle" on:click={openDevTools}>Devtools</button>
 {/if}
 
 {#if isVisible}
@@ -44,6 +56,9 @@
     </pre>
     <pre>errors: {JSON.stringify($errors, null, 2)}</pre>
     <pre>screens: {JSON.stringify($screens, null, 2)}</pre>
+
+    <pre class="clickable" on:click={() => gameIsRunning.update(state => !state)}>gameIsRunning: {$gameIsRunning}</pre>
+    <pre class="clickable" on:click={() => gameIsOver.update(state => !state)}>gameIsOver: {$gameIsOver}</pre>
 
     <div class="rowLeft">
       <button on:click={() => screens.toggle('LOADING')}>LOADING</button>
@@ -99,7 +114,7 @@
       </form>
     </div>
 
-    <button on:click={() => (isVisible = false)}>x</button>
+    <button on:click={closeDevTools}>x</button>
   </aside>
 {/if}
 
@@ -117,6 +132,11 @@
 
   aside > pre {
     pointer-events: none;
+  }
+
+  aside .clickable {
+    pointer-events: all;
+    cursor: pointer;
   }
 
   aside > *,
