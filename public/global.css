@@ -115,6 +115,7 @@ a:visited {
 button {
   font-size: inherit;
   cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
 }
 
 button.primary {
@@ -149,7 +150,35 @@ button.primary:active {
   text-shadow: 1px 1px 2px tomato;
 }
 
-button.primary::after {
+button.secondary {
+  position: relative;
+  padding: 2px 24px;
+
+  background: none;
+  outline: none;
+  border: none;
+
+  color: pink;
+  font-size: 40px;
+  font-weight: bold;
+  font-family: 'Bungee', cursive;
+  text-shadow: 2px 2px tomato;
+
+  transition: 0.15s;
+}
+
+button.secondary.small {
+  font-size: 20px;
+  text-shadow: 1px 1px tomato;
+}
+
+button.secondary:active {
+  transform: translateY(2px);
+  text-shadow: 1px 1px 2px tomato;
+}
+
+button.primary::after,
+button.secondary::after {
   content: attr(data-text);
   display: block;
 
@@ -253,29 +282,17 @@ button.primary::after {
 .selfBaseline { align-self: baseline; }
 .selfStretch { align-self: stretch; }
 
-.listLeft > *:not(:first-child), .rowLeft > *:not(:first-child) { margin-left: 8px; }
-.listLeft2 > *:not(:first-child), .rowLeft2 > *:not(:first-child) { margin-left: 16px; }
-.listLeft3 > *:not(:first-child), .rowLeft3 > *:not(:first-child) { margin-left: 24px; }
-.listLeft4 > *:not(:first-child), .rowLeft4 > *:not(:first-child) { margin-left: 32px; }
-.listLeft5 > *:not(:first-child), .rowLeft5 > *:not(:first-child) { margin-left: 40px; }
+.rowLeft > *:not(:first-child) { margin-left: 8px; }
+.rowLeft2 > *:not(:first-child) { margin-left: 16px; }
+.rowLeft3 > *:not(:first-child) { margin-left: 24px; }
+.rowLeft4 > *:not(:first-child) { margin-left: 32px; }
+.rowLeft5 > *:not(:first-child) { margin-left: 40px; }
 
-.listRight > *:not(:last-child), .rowRight > *:not(:last-child) { margin-right: 8px; }
-.listRight2 > *:not(:last-child), .rowRight2 > *:not(:last-child) { margin-right: 16px; }
-.listRight3 > *:not(:last-child), .rowRight3 > *:not(:last-child) { margin-right: 24px; }
-.listRight4 > *:not(:last-child), .rowRight4 > *:not(:last-child) { margin-right: 32px; }
-.listRight5 > *:not(:last-child), .rowRight5 > *:not(:last-child) { margin-right: 40px; }
-
-.listTop > *:not(:first-child), .columnTop > *:not(:first-child) { margin-top: 8px; }
-.listTop3 > *:not(:first-child), .columnTop2 > *:not(:first-child) { margin-top: 16px; }
-.listTop4 > *:not(:first-child), .columnTop3 > *:not(:first-child) { margin-top: 24px; }
-.listTop5 > *:not(:first-child), .columnTop4 > *:not(:first-child) { margin-top: 32px; }
-.listTop6 > *:not(:first-child), .columnTop5 > *:not(:first-child) { margin-top: 40px; }
-
-.listBottom > *:not(:last-child), .columnBottom > *:not(:last-child) { margin-bottom: 8px; }
-.listBottom2 > *:not(:last-child), .columnBottom2 > *:not(:last-child) { margin-bottom: 16px; }
-.listBottom3 > *:not(:last-child), .columnBottom3 > *:not(:last-child) { margin-bottom: 24px; }
-.listBottom4 > *:not(:last-child), .columnBottom4 > *:not(:last-child) { margin-bottom: 32px; }
-.listBottom5 > *:not(:last-child), .columnBottom5 > *:not(:last-child) { margin-bottom: 40px; }
+.columnTop > *:not(:first-child) { margin-top: 8px; }
+.columnTop2 > *:not(:first-child) { margin-top: 16px; }
+.columnTop3 > *:not(:first-child) { margin-top: 24px; }
+.columnTop4 > *:not(:first-child) { margin-top: 32px; }
+.columnTop5 > *:not(:first-child) { margin-top: 40px; }
 
 .marginTop { margin-top: 8px; }
 .marginTop2 { margin-top: 16px; }
