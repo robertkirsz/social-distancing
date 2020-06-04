@@ -6,7 +6,11 @@
   let rankingPlace
 
   players.subscribe(value => {
-    rankingPlace = withSuffix(players.findRankingPlace(player.getId()))
+    const place = players.findRankingPlace(player.getId())
+
+    if (place > 0) {
+      rankingPlace = withSuffix(place)
+    }
   })
 </script>
 
@@ -19,10 +23,12 @@
       <span>points</span>
     </h3>
 
-    <h3 class="rowLeft2 fluid marginTop3" style="white-space: nowrap;">
-      <span>You are</span>
-      <span class="nice" data-text={rankingPlace}>{rankingPlace}</span>
-    </h3>
+    {#if rankingPlace}
+      <h3 class="rowLeft2 fluid marginTop3" style="white-space: nowrap;">
+        <span>You are</span>
+        <span class="nice" data-text={rankingPlace}>{rankingPlace}</span>
+      </h3>
+    {/if}
 
     <button class="secondary small marginTop3" on:click={() => screens.open('RANKING')} data-text="See ranking">
       See ranking

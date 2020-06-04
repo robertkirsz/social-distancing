@@ -6,7 +6,7 @@ const player = {
   subscribe,
   set,
   getId() {
-    return get(player).id
+    return (get(player) || {}).id
   }
 }
 
