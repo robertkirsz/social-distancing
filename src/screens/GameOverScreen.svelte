@@ -1,6 +1,13 @@
 <script>
   import { fade } from 'svelte/transition'
-  import { screens, gameIsOver, score } from 'store'
+  import { screens, gameIsOver, score, player, players } from 'store'
+  import { withSuffix } from 'stuff'
+
+  let rankingPlace
+
+  players.subscribe(value => {
+    rankingPlace = withSuffix(players.findRankingPlace(player.getId()))
+  })
 </script>
 
 <div in:fade={{ delay: 1000 }} out:fade={{ duration: 200 }} class="screen dots columnTop itemsCenter justifyCenter">
@@ -10,6 +17,11 @@
     <h3 class="rowLeft2 fluid marginTop3" style="white-space: nowrap;">
       <span class="nice" data-text={$score}>{$score}</span>
       <span>points</span>
+    </h3>
+
+    <h3 class="rowLeft2 fluid marginTop3" style="white-space: nowrap;">
+      <span>You are</span>
+      <span class="nice" data-text={rankingPlace}>{rankingPlace}</span>
     </h3>
 
     <button class="secondary small marginTop3" on:click={() => screens.open('RANKING')} data-text="See ranking">

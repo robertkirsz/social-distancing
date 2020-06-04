@@ -1,5 +1,13 @@
-import { writable } from 'svelte/store'
+import { writable, get } from 'svelte/store'
 
 const { subscribe, set } = writable(null)
 
-export default { subscribe, set }
+const player = {
+  subscribe,
+  set,
+  getId() {
+    return get(player).id
+  }
+}
+
+export default player

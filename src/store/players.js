@@ -7,7 +7,10 @@ const { subscribe, set } = writable([])
 const players = {
   subscribe,
   find(id) {
-    get(players).find(player => player.id === id)
+    return get(players).find(player => player.id === id)
+  },
+  findRankingPlace(id) {
+    return get(players).findIndex(player => player.id === id) + 1
   },
   addListener() {
     database.addValueListener('players', data => {
@@ -19,7 +22,6 @@ const players = {
     })
   },
   removeListener() {
-    console.log('removeListener:')
     set([])
     database.removeListener('players', 'value')
   }

@@ -13,7 +13,7 @@ gameIsOver.subscribe(async isOver => {
   if (isOver) {
     screens.open('GAME OVER')
 
-    const currentPlayerId = get(player).id
+    const currentPlayerId = player.getId()
     const currentPlayer = players.find(currentPlayerId)
     const currentScore = currentPlayer.socialDistancingScore
     const newScore = get(score)

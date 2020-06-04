@@ -1,5 +1,8 @@
 {
-  "extends": ["standard", "prettier"],
+  "extends": [
+    "standard",
+    "prettier"
+  ],
   "parserOptions": {
     "ecmaVersion": 2020,
     "sourceType": "module"
@@ -8,10 +11,15 @@
     "es6": true,
     "browser": true
   },
-  "plugins": ["svelte3","prettier"],
+  "plugins": [
+    "svelte3",
+    "prettier"
+  ],
   "overrides": [
     {
-      "files": ["**/*.svelte"],
+      "files": [
+        "**/*.svelte"
+      ],
       "processor": "svelte3/svelte3"
     }
   ],
@@ -19,11 +27,15 @@
     "semi": "warn",
     "quotes": "warn",
     "no-unused-vars": "warn",
-    "space-before-function-paren": ["warn", "never"],
+    "space-before-function-paren": [
+      "warn",
+      "never"
+    ],
     "space-before-blocks": "warn",
     "import/first": "off",
     "object-curly-newline": "warn",
     "object-property-newline": "warn",
-    "prettier/prettier": "error"
+    "prettier/prettier": "error",
+    "no-sparse-arrays": "off"
   }
 }

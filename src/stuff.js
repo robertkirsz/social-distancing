@@ -25,6 +25,8 @@ export function clamp(num, min, max) {
   return num <= min ? min : num >= max ? max : num
 }
 
+export const withSuffix = value => value + [, 'st', 'nd', 'rd'][(value / 10) % 10 ^ 1 && value % 10] || 'th'
+
 export const add = item => state => [...state, item]
 
 export const remove = id => state => (id === undefined ? state.slice(0, -1) : state.filter(item => item.id !== id))
