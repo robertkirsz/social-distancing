@@ -3,6 +3,7 @@ import screens from 'store/screens'
 import score from 'store/score'
 import player from 'store/player'
 import lives from 'store/lives'
+import players from 'store/players'
 import * as database from 'database'
 import { INITIAL_LIVES } from 'stuff'
 
@@ -12,9 +13,8 @@ gameIsOver.subscribe(async isOver => {
   if (isOver) {
     screens.open('GAME OVER')
 
-    const players = Object.values(await database.get('players'))
     const currentPlayerId = get(player).id
-    const currentPlayer = players.find(({ id }) => id === currentPlayerId)
+    const currentPlayer = players.find(currentPlayerId)
     const currentScore = currentPlayer.socialDistancingScore
     const newScore = get(score)
     const dataToUpdate = { socialDistancingTimesPlayed: (currentPlayer.socialDistancingTimesPlayed || 0) + 1 }

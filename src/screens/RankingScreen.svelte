@@ -2,46 +2,37 @@
   import { onMount } from 'svelte'
   import { fade } from 'svelte/transition'
   import { get } from 'database'
-  import { screens, player } from 'store'
+  import { screens, player, players } from 'store'
   import { descendingBy } from 'stuff'
   import CloseButton from 'components/CloseButton'
 
-  let players = null
   const playerId = $player.id
-
-  onMount(async () => {
-    players = Object.values(await get('players'))
-      .filter(({ socialDistancingScore }) => socialDistancingScore !== undefined)
-      .sort(descendingBy('socialDistancingScore'))
-  })
 </script>
 
 <div class="screen dots alternate column itemsCenter justifyCenter" transition:fade>
-  {#if players}
-    <section class="shadow column" transition:fade>
-      <div class="columnTop2">
-        <div class="rowLeft justifyBetween marginLeft marginRight">
-          <h3 class="nice flex justifyBetween" data-text="Ranking">Ranking</h3>
-          <CloseButton style="color: pink;" on:click={() => screens.close('RANKING')} />
-        </div>
-
-        <div class="content-wrapper">
-          <table>
-            {#each players as player, index (player.id)}
-              <tr class:current-player={player.id === playerId}>
-                <td>{index + 1}</td>
-                <td>
-                  <img src={player.photoUrl} width="40" height="40" alt={`${player.name} photo`} />
-                </td>
-                <td>{player.name}</td>
-                <td colspan="2">{player.socialDistancingScore || 0}</td>
-              </tr>
-            {/each}
-          </table>
-        </div>
+  <section class="shadow column">
+    <div class="columnTop2">
+      <div class="rowLeft justifyBetween marginLeft marginRight">
+        <h3 class="nice flex justifyBetween" data-text="Ranking">Ranking</h3>
+        <CloseButton style="color: pink;" on:click={() => screens.close('RANKING')} />
       </div>
-    </section>
-  {/if}
+
+      <div class="content-wrapper">
+        <table>
+          {#each $players as player, index (player.id)}
+            <tr class:current-player={player.id === playerId}>
+              <td>{index + 1}</td>
+              <td>
+                <img src={player.photoUrl} width="40" height="40" alt={`${player.name} photo`} />
+              </td>
+              <td>{player.name}</td>
+              <td colspan="2">{player.socialDistancingScore || 0}</td>
+            </tr>
+          {/each}
+        </table>
+      </div>
+    </div>
+  </section>
 </div>
 
 <style>
