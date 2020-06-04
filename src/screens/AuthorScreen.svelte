@@ -13,7 +13,10 @@
       </div>
 
       <div class="columnTop2 itemsCenter">
-        <img src="author.png" alt="Author" />
+        <a href="slack://user?team=T029TTLEV&id=UCK9Y5UUQ" target="_blank" rel="noreferrer noopener">
+          <img src="author.png" alt="Author" />
+        </a>
+
         <span>
           <span class="emoji">☝️</span>
           That him
@@ -44,5 +47,6 @@
     height: 100px;
     border-radius: 50%;
     object-fit: cover;
+    cursor: pointer;
   }
 </style>

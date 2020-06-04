@@ -83,7 +83,7 @@
         </div>
 
         <p>
-          Once you lost all your lives, the game's over
+          Once you lose all your lives, the game's over
           <span class="emoji">☠️</span>
         </p>
       </div>
