@@ -7,7 +7,7 @@
 <style>
   span {
     position: absolute;
-    left: 8px;
+    right: 8px;
     bottom: 8px;
     z-index: 70;
     font-size: 12px;

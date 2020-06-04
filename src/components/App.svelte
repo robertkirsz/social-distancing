@@ -10,13 +10,14 @@
   import Shields from 'components/Shields'
   import Stamina from 'components/Stamina'
   import Screens from 'components/Screens'
+  import Version from 'components/Version'
   import DevTools from 'components/DevTools'
   import TouchArea from 'components/TouchArea'
   import Projectiles from 'components/Projectiles'
   import GameControlButton from 'components/GameControlButton'
 
   function keyListener(method) {
-    return function (event) {
+    return function(event) {
       if ($isExhausted || $gameIsOver) {
         hand.reset()
         return
@@ -60,6 +61,7 @@
     <TouchArea />
 
     <GameControlButton />
+    <Version />
   {:else}
     <Intro />
   {/if}
