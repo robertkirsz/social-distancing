@@ -8,6 +8,7 @@ import errors from 'store/errors'
 import storage from 'store/storage'
 import requests from 'store/requests'
 import appIsReady from 'store/appIsReady'
+import players from 'store/players'
 
 export default {
   addAuthenticationListener() {
@@ -66,16 +67,10 @@ export default {
           errors.show('updateUserInAddAuthenticationListener', error)
         })
 
+        players.addListener()
         storage.save('signedIn', true)
         player.set(playerData)
         requests.stop('signIn')
-      }
-
-      // If user is signing out...
-      if (!authData && get(player) !== null) {
-        storage.save('signedIn', false)
-        player.set(null)
-        requests.stop('signOut')
       }
 
       appIsReady.set(true)
@@ -109,6 +104,7 @@ export default {
     if (!playerData || get(requests).signOut) return
 
     player.set(null)
+    players.removeListener()
     errors.hide('signOut')
     requests.start('signOut')
 
@@ -116,12 +112,12 @@ export default {
       .update(`players/${playerData.id}`, { ...playerData, isOnline: false })
       .catch(error => errors.show('updateUserInSignOut', error))
 
-    database
+    await database
       .signOut()
       .then(storage.clear)
-      .catch(error => {
-        errors.show('signOut', error)
-        requests.stop('signOut')
-      })
+      .catch(error => errors.show('signOut', error))
+
+    storage.save('signedIn', false)
+    requests.stop('signOut')
   }
 }

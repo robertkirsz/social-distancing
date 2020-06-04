@@ -11,10 +11,12 @@
     projectiles,
     scoreLabels,
     screens,
+    players,
     session,
     shields,
     gameIsRunning,
-    gameIsOver
+    gameIsOver,
+    requests
   } from 'store'
 
   let isVisible = localStorage.getItem('devToolsVisible') === 'true'
@@ -45,13 +47,23 @@
 {#if isVisible}
   <aside>
     <pre>effects: {JSON.stringify($effects, null, 2)}</pre>
-    <pre>
-      projectiles: {JSON.stringify($projectiles.map(({ type, emoji, direction }) => ({
-          type,
-          emoji,
-          direction
-        })), null, 2)}
-    </pre>
+
+    <div style="max-height: 200px; overflow: auto;">
+      <pre>
+        projectiles: {JSON.stringify($projectiles.map(({ type, emoji, direction }) => ({
+            type,
+            emoji,
+            direction
+          })), null, 2)}
+      </pre>
+    </div>
+
+    <div style="max-height: 200px; overflow: auto;">
+      <pre>
+        players: {JSON.stringify($players.map(({ name, socialDistancingScore, socialDistancingTimesPlayed }) => ({ name, socialDistancingScore, socialDistancingTimesPlayed })), null, 2)}
+      </pre>
+    </div>
+
     <pre>shields: {JSON.stringify($shields, null, 2)}</pre>
     <pre>scoreLabels: {JSON.stringify($scoreLabels, null, 2)}</pre>
     <pre>hasShield: {$hasShield}</pre>
@@ -60,6 +72,7 @@
     </pre>
     <pre>errors: {JSON.stringify($errors, null, 2)}</pre>
     <pre>screens: {JSON.stringify($screens, null, 2)}</pre>
+    <pre>requests: {JSON.stringify($requests, null, 2)}</pre>
 
     <pre class="clickable" on:click={() => gameIsRunning.update(state => !state)}>gameIsRunning: {$gameIsRunning}</pre>
     <pre class="clickable" on:click={() => gameIsOver.update(state => !state)}>gameIsOver: {$gameIsOver}</pre>
