@@ -6,6 +6,7 @@ import shields, { hasShield } from 'store/shields'
 import hand from 'store/hand'
 import effects, { isInvincible } from 'store/effects'
 import { add, remove, coordinates, randomItem, randomNumber, projectileTypes } from 'stuff'
+import { randomPunch, oneUpSound } from 'sounds'
 
 const { subscribe, set, update } = writable([])
 
@@ -15,6 +16,7 @@ const actionHandler = ({ type, ...parameters }) => {
       const { id, amount } = parameters
       lives.update(state => state + amount)
       projectiles.remove(id)
+      oneUpSound.play()
       break
     }
 
@@ -58,6 +60,7 @@ const actionHandler = ({ type, ...parameters }) => {
       score.update(points)
       scoreLabels.show(points, direction, bonus)
       projectiles.remove(id, 'deflect')
+      randomPunch().play()
       break
     }
 
