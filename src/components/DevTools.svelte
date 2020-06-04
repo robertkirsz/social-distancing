@@ -46,7 +46,11 @@
   <aside>
     <pre>effects: {JSON.stringify($effects, null, 2)}</pre>
     <pre>
-      projectiles: {JSON.stringify($projectiles.map(({ type, emoji, direction }) => ({ type, emoji, direction })), null, 2)}
+      projectiles: {JSON.stringify($projectiles.map(({ type, emoji, direction }) => ({
+          type,
+          emoji,
+          direction
+        })), null, 2)}
     </pre>
     <pre>shields: {JSON.stringify($shields, null, 2)}</pre>
     <pre>scoreLabels: {JSON.stringify($scoreLabels, null, 2)}</pre>
@@ -92,8 +96,8 @@
       <button on:click={projectiles.toggleAutoDeflect}>Auto-deflect</button>
 
       <div class="rowLeft">
-        <button on:click={() => lives.update(v => v + 1)}>Life +1</button>
-        <button on:click={() => lives.update(v => v - 1)}>Life -1</button>
+        <button on:click={() => lives.add()}>Life +1</button>
+        <button on:click={() => lives.remove()}>Life -1</button>
       </div>
 
       <div class="rowLeft">

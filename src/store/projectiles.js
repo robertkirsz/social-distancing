@@ -6,7 +6,7 @@ import shields, { hasShield } from 'store/shields'
 import hand from 'store/hand'
 import effects, { isInvincible } from 'store/effects'
 import { add, remove, coordinates, randomItem, randomNumber, projectileTypes } from 'stuff'
-import { randomPunch, oneUpSound } from 'sounds'
+import { randomPunch, randomStrongPunch, lifeUpSound, lifeDownSound } from 'sounds'
 
 const { subscribe, set, update } = writable([])
 
@@ -14,18 +14,19 @@ const actionHandler = ({ type, ...parameters }) => {
   switch (type) {
     case 'Add life': {
       const { id, amount } = parameters
-      lives.update(state => state + amount)
+      lives.add(amount)
       projectiles.remove(id)
-      oneUpSound.play()
+      lifeUpSound.play()
       break
     }
 
     case 'Remove life': {
       if (get(lives) <= 0) return
       const { id, amount } = parameters
-      lives.update(state => state - amount)
+      lives.remove(amount)
       effects.activate('Invincibility', { duration: 1500 })
       projectiles.remove(id)
+      lifeDownSound.play()
       break
     }
 
@@ -34,6 +35,7 @@ const actionHandler = ({ type, ...parameters }) => {
       score.update(points)
       scoreLabels.show(points)
       projectiles.remove(id, 'deflect')
+      randomPunch().play()
       break
     }
 
@@ -49,6 +51,7 @@ const actionHandler = ({ type, ...parameters }) => {
       score.update(points)
       scoreLabels.show(points)
       projectiles.remove(id, 'deflect')
+      randomPunch().play()
       break
     }
 
@@ -60,7 +63,7 @@ const actionHandler = ({ type, ...parameters }) => {
       score.update(points)
       scoreLabels.show(points, direction, bonus)
       projectiles.remove(id, 'deflect')
-      randomPunch().play()
+      bonus ? randomStrongPunch().play() : randomPunch().play()
       break
     }
 
@@ -77,6 +80,7 @@ const actionHandler = ({ type, ...parameters }) => {
       score.update(points)
       scoreLabels.show(points, direction)
       projectiles.remove(id, 'deflect')
+      randomStrongPunch().play()
       break
     }
 

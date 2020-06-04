@@ -1,6 +1,7 @@
 import { v4 as uuidv4 } from 'uuid'
 import { writable, derived } from 'svelte/store'
 import { add, remove, randomItem } from 'stuff'
+import { addShieldSound, removeShieldSound } from 'sounds'
 
 const { subscribe, update } = writable([])
 
@@ -11,9 +12,11 @@ function Shield({ id = uuidv4(), color = randomItem(['#A2F7B5', '#7CEAA7', '#5DD
 const shields = {
   subscribe,
   create() {
+    addShieldSound.play()
     update(add(new Shield()))
   },
   destroy() {
+    removeShieldSound.play()
     update(remove())
   }
 }
