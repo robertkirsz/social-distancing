@@ -50,21 +50,21 @@
 
     <div style="max-height: 200px; overflow: auto;">
       <pre>
-        projectiles: {JSON.stringify( $projectiles.map(({ type, emoji, direction }) => ({
+        projectiles: {JSON.stringify($projectiles.map(({ type, emoji, direction }) => ({
             type,
             emoji,
             direction
-          })), null, 2 )}
+          })), null, 2)}
       </pre>
     </div>
 
     <div style="max-height: 200px; overflow: auto;">
       <pre>
-        players: {JSON.stringify( $players.map(({ name, socialDistancingScore, socialDistancingTimesPlayed }) => ({
+        players: {JSON.stringify($players.map(({ name, socialDistancingScore, socialDistancingTimesPlayed }) => ({
             name,
             socialDistancingScore,
             socialDistancingTimesPlayed
-          })), null, 2 )}
+          })), null, 2)}
       </pre>
     </div>
 
@@ -102,11 +102,11 @@
           <button on:click={() => projectiles.throw('down-right')} />
         </div>
 
-        <div class="columnTop">
+        <!-- <div class="columnTop">
           <button on:click={() => projectiles.throw('right', 'Life')} class="emoji">💖</button>
           <button on:click={() => projectiles.throw('right', 'Shield')} class="emoji">🛡️</button>
           <button on:click={() => projectiles.throw('right', 'Friend')} class="emoji">👩‍❤️‍👨</button>
-        </div>
+        </div> -->
       </div>
 
       <button on:click={projectiles.reset}>Reset projectiles</button>
@@ -127,6 +127,7 @@
       </button>
 
       <button on:click={() => errors.show(uuidv4(), { code: 'Foo', message: 'Lorem ipsum' })}>Throw error</button>
+      <button on:click={randomizeColors}>Colors</button>
 
       <form on:submit={handleSubmit}>
         <input bind:value={email} placeholder="Email" />
