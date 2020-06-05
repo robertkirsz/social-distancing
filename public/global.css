@@ -1,3 +1,10 @@
+:root {
+  --background: #eee;
+  --primary: pink;
+  --secondary: powderblue;
+  --shadow: tomato;
+}
+
 html,
 body {
   position: relative;
@@ -12,7 +19,7 @@ body {
   padding: 0;
   box-sizing: border-box;
 
-  background: #eee;
+  background: var(--background);
 
   color: #333;
   font-size: 16px;
@@ -38,7 +45,7 @@ p { margin: 0; }
 
 h1, h2, h3 {
   margin: 0;
-  color: pink;
+  color: var(--primary);
   font-weight: 100;
   line-height: 0.9;
 }
@@ -49,25 +56,20 @@ h1, h2, h3 {
 
 .nice {
   position: relative;
-  color: pink;
   font-family: 'Bungee', cursive;
   font-weight: bold;
-  text-shadow: 2px 2px tomato;
+  text-shadow: 2px 2px var(--shadow);
+  transition: 0.2s;
 }
 
 .nice::after {
   content: attr(data-text);
   display: block;
-
   position: absolute;
   top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-
   color: powderblue;
   font-family: 'Bungee Hairline', cursive;
-  text-shadow: 1px 1px tomato;
+  text-shadow: 1px 1px var(--shadow);
 }
 
 .nice.invert {
@@ -75,7 +77,7 @@ h1, h2, h3 {
 }
 
 .nice.invert::after {
-  color: pink;
+  color: var(--primary);
 }
 
 h1 {
@@ -87,14 +89,14 @@ h1 {
 
 h2 {
   font-size: 50px;
-  --scaler: 8vw;
+  --scaler: 10vw;
   --minFontSize: 50px;
   --maxFontSize: 100px;
 }
 
 h3 {
   font-size: 40px;
-  --scaler: 6vw;
+  --scaler: 10vw;
   --minFontSize: 40px;
   --maxFontSize: 80px;
 }
@@ -123,31 +125,31 @@ button.primary {
   padding: 2px 24px;
 
   background: powderblue;
-  box-shadow: 3px 3px tomato;
+  box-shadow: 3px 3px var(--shadow);
 
   outline: none;
   border: none;
   border-radius: 6px;
 
-  color: pink;
+  color: var(--primary);
   font-size: 40px;
   font-weight: bold;
   font-family: 'Bungee', cursive;
-  text-shadow: 2px 2px tomato;
+  text-shadow: 2px 2px var(--shadow);
 
   transition: 0.15s;
 }
 
 button.primary.small {
   font-size: 20px;
-  text-shadow: 1px 1px tomato;
-  box-shadow: 2px 2px tomato;
+  text-shadow: 1px 1px var(--shadow);
+  box-shadow: 2px 2px var(--shadow);
 }
 
 button.primary:active {
   transform: translateY(2px);
-  box-shadow: 1px 1px 2px tomato;
-  text-shadow: 1px 1px 2px tomato;
+  box-shadow: 1px 1px 2px var(--shadow);
+  text-shadow: 1px 1px 2px var(--shadow);
 }
 
 button.secondary {
@@ -158,23 +160,23 @@ button.secondary {
   outline: none;
   border: none;
 
-  color: pink;
+  color: var(--primary);
   font-size: 40px;
   font-weight: bold;
   font-family: 'Bungee', cursive;
-  text-shadow: 2px 2px tomato;
+  text-shadow: 2px 2px var(--shadow);
 
   transition: 0.15s;
 }
 
 button.secondary.small {
   font-size: 20px;
-  text-shadow: 1px 1px tomato;
+  text-shadow: 1px 1px var(--shadow);
 }
 
 button.secondary:active {
   transform: translateY(2px);
-  text-shadow: 1px 1px 2px tomato;
+  text-shadow: 1px 1px 2px var(--shadow);
 }
 
 button.primary::after,
@@ -191,8 +193,9 @@ button.secondary::after {
   color: powderblue;
   font-family: 'Bungee Hairline', cursive;
   font-size: bold;
-  text-shadow: 1px 1px tomato;
+  text-shadow: 1px 1px var(--shadow);
   pointer-events: none;
+  transition: 0.2s;
 }
 
 *:disabled {
@@ -209,7 +212,7 @@ button.secondary::after {
   flex-direction: column;
   justify-content: center;
   padding: 16px;
-  background-color: #eee;
+  background-color: var(--background);
   position: absolute;
   top: 0;
   right: 0;
@@ -220,7 +223,7 @@ button.secondary::after {
 
 .dots {
   background-image:
-    radial-gradient(pink 10%, transparent 10%),
+    radial-gradient(var(--primary) 10%, transparent 10%),
     radial-gradient(powderblue 10%, transparent 10%);
 
   background-size: 20px 20px;
@@ -230,11 +233,11 @@ button.secondary::after {
 .dots.alternate {
   background-image:
     radial-gradient(powderblue 10%, transparent 10%),
-    radial-gradient(pink 10%, transparent 10%);
+    radial-gradient(var(--primary) 10%, transparent 10%);
 }
 
 .shadow {
-  box-shadow: 5px 5px pink;
+  box-shadow: 5px 5px var(--primary);
 }
 
 .emoji {
