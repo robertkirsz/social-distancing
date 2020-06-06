@@ -40,7 +40,7 @@
     padding: 8px;
     border-radius: 8px;
     border: 2px solid var(--primary);
-    background: rgba(255, 255, 255, 0.75);
+    background: rgba(255, 255, 255, 0.85);
     transition-property: border-color, box-shadow;
     transition-duration: var(--transition);
   }

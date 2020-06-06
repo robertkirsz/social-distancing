@@ -1,4 +1,3 @@
-export { default as appIsReady } from 'store/appIsReady'
 export { default as effects, isInvincible } from 'store/effects'
 export { default as errors } from 'store/errors'
 export { default as gameIsOver } from 'store/gameIsOver'

@@ -18,7 +18,7 @@
   import GameControlButton from 'components/GameControlButton'
 
   function keyListener(method) {
-    return function(event) {
+    return function (event) {
       if ($isExhausted || $gameIsOver) {
         hand.reset()
         return
@@ -62,9 +62,11 @@
     <TouchArea />
 
     <GameControlButton />
+
     {#if !$gameIsOver && !$gameIsRunning}
       <Menu />
     {/if}
+
     <Version />
   {:else}
     <Intro />
