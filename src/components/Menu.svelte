@@ -11,13 +11,13 @@
   }
 </script>
 
-<div class="wrapper column itemsEnd">
+<div class="wrapper column itemsEnd" transition:fade>
   {#if isMenuOpened}
     <div class="menu shadow column" transition:fade>
       <button class="secondary small" on:click={toggleColors} data-text="Change colors">Change colors</button>
       <button class="secondary small" on:click={resetColors} data-text="Reset colors">Reset colors</button>
-      <button class="secondary small" on:click={() => screens.open('RANKING')} data-text="Ranking">Ranking</button>
-      <button class="secondary small" on:click={() => screens.open('HOW TO PLAY')} data-text="How to play">
+      <button class="secondary small" on:click={() => screens.openOnly('RANKING')} data-text="Ranking">Ranking</button>
+      <button class="secondary small" on:click={() => screens.openOnly('HOW TO PLAY')} data-text="How to play">
         How to play
       </button>
       <button class="secondary small" on:click={session.signOut} data-text="Log out">Log out</button>

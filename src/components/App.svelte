@@ -1,7 +1,7 @@
 <script>
   import { onMount } from 'svelte'
   import initializeFirebase from 'database'
-  import { hand, session, isExhausted, player, screens, gameIsOver } from 'store'
+  import { hand, session, isExhausted, player, screens, gameIsRunning, gameIsOver } from 'store'
   import Menu from 'components/Menu'
   import Intro from 'components/Intro'
   import Lives from 'components/Lives'
@@ -18,7 +18,7 @@
   import GameControlButton from 'components/GameControlButton'
 
   function keyListener(method) {
-    return function (event) {
+    return function(event) {
       if ($isExhausted || $gameIsOver) {
         hand.reset()
         return
@@ -62,7 +62,9 @@
     <TouchArea />
 
     <GameControlButton />
-    <Menu />
+    {#if !$gameIsOver && !$gameIsRunning}
+      <Menu />
+    {/if}
     <Version />
   {:else}
     <Intro />

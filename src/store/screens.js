@@ -7,6 +7,9 @@ const screens = {
   open(name) {
     !get(screens).includes(name) && update(state => [...state, name])
   },
+  openOnly(name) {
+    set([name])
+  },
   close(names) {
     if (typeof names === 'string') {
       update(state => state.filter(item => item !== names))

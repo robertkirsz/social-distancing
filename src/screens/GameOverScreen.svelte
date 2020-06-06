@@ -24,9 +24,7 @@
       See ranking
     </button>
 
-    <button class="primary marginTopAuto" on:click={() => gameIsOver.set(false)} data-text="Play again">
-      Play again
-    </button>
+    <button class="primary marginTopAuto" on:click={() => gameIsOver.set(false)} data-text="Go back">Go back</button>
 
     <button class="secondary small marginTop2" on:click={() => screens.open('AUTHOR')} data-text="About the author">
       About the author
