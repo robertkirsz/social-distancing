@@ -9,6 +9,11 @@ import packageJson from './package.json'
 
 const production = !process.env.ROLLUP_WATCH
 
+console.log('-----------')
+console.log('env', process.env.FIREBASE_CONFIG)
+console.log(process.env.FIREBASE_CONFIG || JSON.stringify(require('./databaseConfig.json')))
+console.log('-----------')
+
 export default {
   input: 'src/main.js',
   output: {
@@ -50,7 +55,8 @@ export default {
     includePaths({ paths: ['src'], extensions: ['.js', '.svelte'] }),
     replace({
       __production__: production,
-      __version__: String(packageJson.version)
+      __version__: String(packageJson.version),
+      __firebaseConfig__: process.env.FIREBASE_CONFIG || JSON.stringify(require('./databaseConfig.json'))
     })
   ],
   watch: {

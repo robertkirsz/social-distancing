@@ -7,7 +7,6 @@ import player from 'store/player'
 import errors from 'store/errors'
 import storage from 'store/storage'
 import requests from 'store/requests'
-import appIsReady from 'store/appIsReady'
 import players from 'store/players'
 
 export default {
@@ -28,7 +27,6 @@ export default {
           requests.stop('authStateChange')
           requests.stop('signIn')
           errors.show('wrongEmailDomain', { message: 'You must log in using company email' })
-          appIsReady.set(true)
           return
         }
 
@@ -73,7 +71,6 @@ export default {
         requests.stop('signIn')
       }
 
-      appIsReady.set(true)
       requests.stop('authStateChange')
     })
   },
