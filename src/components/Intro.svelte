@@ -4,7 +4,8 @@
   import { session, screens } from 'store'
 
   onMount(() => {
-    document.body.className = 'dots animated'
+    document.body.className = 'dots animated bottom-right'
+
     return () => {
       document.body.className = 'dots'
     }

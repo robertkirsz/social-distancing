@@ -276,21 +276,6 @@ export function toggleColors() {
   })
 }
 
-function loadInitialPalette() {
-  console.log('loadInitialPalette')
-  const primary = localStorage.getItem('css-variable--primary')
-  const secondary = localStorage.getItem('css-variable--secondary')
-  const shadow = localStorage.getItem('css-variable--shadow')
-  const contrastText = localStorage.getItem('css-variable--contrast-text')
-
-  if (primary) root.style.setProperty('--primary', primary)
-  if (secondary) root.style.setProperty('--secondary', secondary)
-  if (shadow) root.style.setProperty('--shadow', shadow)
-  if (contrastText) root.style.setProperty('--contrast-text', contrastText)
-}
-
-loadInitialPalette()
-
 export function resetColors() {
   root.style.setProperty('--primary', 'pink')
   root.style.setProperty('--secondary', 'powderblue')

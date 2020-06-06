@@ -2,7 +2,7 @@
   import { fade } from 'svelte/transition'
 </script>
 
-<div class="screen dots alternate itemsCenter" transition:fade={{ duration: 150 }}>
+<div class="screen dots animated up itemsCenter" transition:fade={{ duration: 150 }}>
   <h2 class="flex">
     <span class="nice invert fluid" data-text="L">L</span>
     <span class="nice invert fluid" data-text="o">o</span>

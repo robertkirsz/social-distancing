@@ -246,15 +246,28 @@ button.secondary::after {
 }
 
 .dots.animated {
-  animation-name: moveDots;
   animation-timing-function: linear;
   animation-iteration-count: infinite;
   animation-duration: 1.5s;
 }
 
-@keyframes moveDots {
+.dots.animated.bottom-right {
+  animation-name: dotsBottomRight;
+}
+
+.dots.animated.up {
+  animation-name: dotsUp;
+}
+
+@keyframes dotsBottomRight {
   to {
     background-position: 20px 20px, 30px 30px;
+  }
+}
+
+@keyframes dotsUp {
+  to {
+    background-position: 0 -20px, 10px -10px;
   }
 }
 
