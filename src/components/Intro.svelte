@@ -1,6 +1,14 @@
 <script>
+  import { onMount } from 'svelte'
   import { fade } from 'svelte/transition'
   import { session, screens } from 'store'
+
+  onMount(() => {
+    document.body.className = 'dots animated'
+    return () => {
+      document.body.className = 'dots'
+    }
+  })
 </script>
 
 <div class="columnTop5 itemsCenter justifyCenter">
