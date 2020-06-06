@@ -13,6 +13,7 @@
   import Version from 'components/Version'
   import DevTools from 'components/DevTools'
   import TouchArea from 'components/TouchArea'
+  import ColorChange from 'components/ColorChange'
   import Projectiles from 'components/Projectiles'
   import GameControlButton from 'components/GameControlButton'
 
@@ -52,6 +53,7 @@
 <main>
   {#if $player}
     <Score />
+    <ColorChange />
     <Lives />
     <Stamina />
 

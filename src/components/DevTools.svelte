@@ -1,6 +1,5 @@
 <script>
   import { v4 as uuidv4 } from 'uuid'
-  import { randomItem, shuffleArray, palettes } from 'stuff'
 
   import {
     effects,
@@ -9,10 +8,12 @@
     isInvincible,
     lives,
     player,
+    socialDistancingPlayers,
     projectiles,
     scoreLabels,
     screens,
     players,
+    currentRank,
     session,
     shields,
     gameIsRunning,
@@ -39,30 +40,6 @@
     isVisible = false
     localStorage.setItem('devToolsVisible', false)
   }
-
-  function getContrastYIQ(hexcolor) {
-    hexcolor = hexcolor.replace('#', '')
-    var r = parseInt(hexcolor.substr(0, 2), 16)
-    var g = parseInt(hexcolor.substr(2, 2), 16)
-    var b = parseInt(hexcolor.substr(4, 2), 16)
-    var yiq = (r * 299 + g * 587 + b * 114) / 1000
-    return yiq >= 128 ? 'black' : 'white'
-  }
-
-  const root = document.documentElement
-  const variables = ['--primary', '--secondary', '--shadow']
-
-  function randomizeColors() {
-    const palette = [...randomItem(palettes)]
-    shuffleArray(palette)
-    variables.forEach(variable => {
-      const color = palette.pop()
-      if (variable === '--primary') {
-        root.style.setProperty('--contrast-text', getContrastYIQ(color))
-      }
-      root.style.setProperty(variable, color)
-    })
-  }
 </script>
 
 {#if !isVisible}
@@ -85,11 +62,13 @@
 
     <div style="max-height: 200px; overflow: auto;">
       <pre>
-        players: {JSON.stringify($players.map(({ name, socialDistancingScore, socialDistancingTimesPlayed }) => ({
-            name,
-            socialDistancingScore,
-            socialDistancingTimesPlayed
-          })), null, 2)}
+        players: {JSON.stringify($socialDistancingPlayers.map(
+            ({ name, socialDistancingScore, socialDistancingTimesPlayed }) => ({
+              name,
+              socialDistancingScore,
+              socialDistancingTimesPlayed
+            })
+          ), null, 2)}
       </pre>
     </div>
 
@@ -99,6 +78,7 @@
     <pre>
       player: {$player && JSON.stringify({ name: $player.name, email: $player.email, points: $player.socialDistancingScore, timesPlayed: $player.socialDistancingTimesPlayed }, null, 2)}
     </pre>
+    <pre>rank: {$currentRank}</pre>
     <pre>errors: {JSON.stringify($errors, null, 2)}</pre>
     <pre>screens: {JSON.stringify($screens, null, 2)}</pre>
     <pre>requests: {JSON.stringify($requests, null, 2)}</pre>
@@ -153,7 +133,6 @@
       </button>
 
       <button on:click={() => errors.show(uuidv4(), { code: 'Foo', message: 'Lorem ipsum' })}>Throw error</button>
-      <button on:click={randomizeColors}>Colors</button>
 
       <form on:submit={handleSubmit}>
         <input bind:value={email} placeholder="Email" />

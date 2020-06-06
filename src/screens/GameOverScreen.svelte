@@ -1,17 +1,7 @@
 <script>
   import { fade } from 'svelte/transition'
-  import { screens, gameIsOver, score, player, players } from 'store'
+  import { screens, gameIsOver, score, currentRank } from 'store'
   import { withSuffix } from 'stuff'
-
-  let rankingPlace
-
-  players.subscribe(value => {
-    const place = players.findRankingPlace(player.getId())
-
-    if (place > 0) {
-      rankingPlace = withSuffix(place)
-    }
-  })
 </script>
 
 <div in:fade={{ delay: 1000 }} out:fade={{ duration: 200 }} class="screen dots columnTop itemsCenter justifyCenter">
@@ -23,10 +13,10 @@
       <span>points</span>
     </h3>
 
-    {#if rankingPlace}
+    {#if $currentRank > 0}
       <h3 class="rowLeft2 fluid marginTop3" style="white-space: nowrap;">
         <span>You are</span>
-        <span class="nice" data-text={rankingPlace}>{rankingPlace}</span>
+        <span class="nice" data-text={withSuffix($currentRank)}>{withSuffix($currentRank)}</span>
       </h3>
     {/if}
 
