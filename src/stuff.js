@@ -140,7 +140,12 @@ export const projectileTypes = {
   }
 }
 
-export const palettes = [
+/* --- COLORS --- */
+
+const root = document.documentElement
+const variables = ['--primary', '--secondary', '--shadow']
+
+const palettes = [
   ['#69d2e7', '#a7dbd8', '#e0e4cc', '#f38630', '#fa6900'],
   ['#fe4365', '#fc9d9a', '#f9cdad', '#c8c8a9', '#83af9b'],
   ['#ecd078', '#d95b43', '#c02942', '#542437', '#53777a'],
@@ -242,3 +247,31 @@ export const palettes = [
   ['#73c8a9', '#dee1b6', '#e1b866', '#bd5532', '#373b44'],
   ['#805841', '#dcf7f3', '#fffcdd', '#ffd8d8', '#f5a2a2']
 ]
+
+function getContrastYIQ(hexcolor) {
+  hexcolor = hexcolor.replace('#', '')
+  var r = parseInt(hexcolor.substr(0, 2), 16)
+  var g = parseInt(hexcolor.substr(2, 2), 16)
+  var b = parseInt(hexcolor.substr(4, 2), 16)
+  var yiq = (r * 299 + g * 587 + b * 114) / 1000
+  return yiq >= 128 ? 'black' : 'white'
+}
+
+export function toggleColors() {
+  const palette = [...randomItem(palettes)]
+  shuffleArray(palette)
+  variables.forEach(variable => {
+    const color = palette.pop()
+    if (variable === '--primary') {
+      root.style.setProperty('--contrast-text', getContrastYIQ(color))
+    }
+    root.style.setProperty(variable, color)
+  })
+}
+
+export function resetColors() {
+  root.style.setProperty('--primary', 'pink')
+  root.style.setProperty('--secondary', 'powderblue')
+  root.style.setProperty('--shadow', 'tomato')
+  root.style.setProperty('--contrast-text', 'black')
+}

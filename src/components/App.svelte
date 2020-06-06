@@ -2,6 +2,7 @@
   import { onMount } from 'svelte'
   import initializeFirebase from 'database'
   import { hand, session, isExhausted, player, screens, gameIsOver } from 'store'
+  import Menu from 'components/Menu'
   import Intro from 'components/Intro'
   import Lives from 'components/Lives'
   import Score from 'components/Score'
@@ -13,12 +14,11 @@
   import Version from 'components/Version'
   import DevTools from 'components/DevTools'
   import TouchArea from 'components/TouchArea'
-  import ColorChange from 'components/ColorChange'
   import Projectiles from 'components/Projectiles'
   import GameControlButton from 'components/GameControlButton'
 
   function keyListener(method) {
-    return function(event) {
+    return function (event) {
       if ($isExhausted || $gameIsOver) {
         hand.reset()
         return
@@ -53,7 +53,6 @@
 <main>
   {#if $player}
     <Score />
-    <ColorChange />
     <Lives />
     <Stamina />
 
@@ -63,6 +62,7 @@
     <TouchArea />
 
     <GameControlButton />
+    <Menu />
     <Version />
   {:else}
     <Intro />

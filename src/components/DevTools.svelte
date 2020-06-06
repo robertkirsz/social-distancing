@@ -96,7 +96,7 @@
 
     <div class="column itemsStart">
       <div class="rowLeft">
-        <!-- <div class="throwing-block">
+        <div class="throwing-block">
           <button on:click={() => projectiles.throw('up-left')} />
           <button on:click={() => projectiles.throw('up')} />
           <button on:click={() => projectiles.throw('up-right')} />
@@ -106,13 +106,13 @@
           <button on:click={() => projectiles.throw('down-left')} />
           <button on:click={() => projectiles.throw('down')} />
           <button on:click={() => projectiles.throw('down-right')} />
-        </div> -->
+        </div>
 
-        <!-- <div class="columnTop">
+        <div class="columnTop">
           <button on:click={() => projectiles.throw('right', 'Life')} class="emoji">💖</button>
           <button on:click={() => projectiles.throw('right', 'Shield')} class="emoji">🛡️</button>
           <button on:click={() => projectiles.throw('right', 'Friend')} class="emoji">👩‍❤️‍👨</button>
-        </div> -->
+        </div>
       </div>
 
       <button on:click={projectiles.reset}>Reset projectiles</button>
@@ -201,10 +201,11 @@
   }
 
   .toggle {
-    position: absolute;
-    left: 8px;
-    bottom: 8px;
     font-size: 12px;
+    position: absolute;
+    left: 50%;
+    bottom: 8px;
     z-index: 100;
+    transform: translateX(-50%);
   }
 </style>
