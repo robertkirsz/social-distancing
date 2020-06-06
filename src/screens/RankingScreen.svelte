@@ -2,17 +2,15 @@
   import { onMount } from 'svelte'
   import { fade } from 'svelte/transition'
   import { get } from 'database'
-  import { screens, player, players } from 'store'
+  import { screens, playerId, socialDistancingPlayers } from 'store'
   import { descendingBy } from 'stuff'
   import Modal from 'components/Modal'
-
-  const playerId = player.getId()
 </script>
 
 <Modal heading="Ranking" onClose={() => screens.close('RANKING')}>
   <table>
-    {#each $players as player, index (player.id)}
-      <tr class:current-player={player.id === playerId}>
+    {#each $socialDistancingPlayers as player, index (player.id)}
+      <tr class:current-player={player.id === $playerId}>
         <td>{index + 1}</td>
         <td>
           <img src={player.photoUrl} width="40" height="40" alt={`${player.name} photo`} />
