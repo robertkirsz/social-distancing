@@ -1,5 +1,6 @@
 <script>
   import { v4 as uuidv4 } from 'uuid'
+  import { randomItem, shuffleArray, palettes } from 'stuff'
 
   import {
     effects,
@@ -37,6 +38,30 @@
   function closeDevTools() {
     isVisible = false
     localStorage.setItem('devToolsVisible', false)
+  }
+
+  function getContrastYIQ(hexcolor) {
+    hexcolor = hexcolor.replace('#', '')
+    var r = parseInt(hexcolor.substr(0, 2), 16)
+    var g = parseInt(hexcolor.substr(2, 2), 16)
+    var b = parseInt(hexcolor.substr(4, 2), 16)
+    var yiq = (r * 299 + g * 587 + b * 114) / 1000
+    return yiq >= 128 ? 'black' : 'white'
+  }
+
+  const root = document.documentElement
+  const variables = ['--primary', '--secondary', '--shadow']
+
+  function randomizeColors() {
+    const palette = [...randomItem(palettes)]
+    shuffleArray(palette)
+    variables.forEach(variable => {
+      const color = palette.pop()
+      if (variable === '--primary') {
+        root.style.setProperty('--contrast-text', getContrastYIQ(color))
+      }
+      root.style.setProperty(variable, color)
+    })
   }
 </script>
 
@@ -86,11 +111,12 @@
       <button on:click={() => screens.toggle('HOW TO PLAY')}>HOW TO PLAY</button>
       <button on:click={() => screens.toggle('RANKING')}>RANKING</button>
       <button on:click={() => screens.toggle('GAME OVER')}>GAME OVER</button>
+      <button on:click={() => screens.toggle('AUTHOR')}>AUTHOR</button>
     </div>
 
     <div class="column itemsStart">
       <div class="rowLeft">
-        <div class="throwing-block">
+        <!-- <div class="throwing-block">
           <button on:click={() => projectiles.throw('up-left')} />
           <button on:click={() => projectiles.throw('up')} />
           <button on:click={() => projectiles.throw('up-right')} />
@@ -100,7 +126,7 @@
           <button on:click={() => projectiles.throw('down-left')} />
           <button on:click={() => projectiles.throw('down')} />
           <button on:click={() => projectiles.throw('down-right')} />
-        </div>
+        </div> -->
 
         <!-- <div class="columnTop">
           <button on:click={() => projectiles.throw('right', 'Life')} class="emoji">💖</button>
@@ -200,5 +226,6 @@
     left: 8px;
     bottom: 8px;
     font-size: 12px;
+    z-index: 100;
   }
 </style>

@@ -3,6 +3,7 @@
   --primary: pink;
   --secondary: powderblue;
   --shadow: tomato;
+  --transition: 1.5s;
 }
 
 html,
@@ -47,7 +48,7 @@ h1, h2, h3 {
   margin: 0;
   color: var(--primary);
   font-weight: 100;
-  line-height: 0.9;
+  line-height: 1;
 }
 
 .fluid {
@@ -59,7 +60,8 @@ h1, h2, h3 {
   font-family: 'Bungee', cursive;
   font-weight: bold;
   text-shadow: 2px 2px var(--shadow);
-  transition: 0.2s;
+  transition-property: color, text-shadow;
+  transition-duration: var(--transition);
 }
 
 .nice::after {
@@ -67,13 +69,14 @@ h1, h2, h3 {
   display: block;
   position: absolute;
   top: 0;
-  color: powderblue;
+  color: var(--secondary);
   font-family: 'Bungee Hairline', cursive;
   text-shadow: 1px 1px var(--shadow);
+  transition: inherit;
 }
 
 .nice.invert {
-  color: powderblue;
+  color: var(--secondary);
 }
 
 .nice.invert::after {
@@ -124,7 +127,7 @@ button.primary {
   position: relative;
   padding: 2px 24px;
 
-  background: powderblue;
+  background: var(--secondary);
   box-shadow: 3px 3px var(--shadow);
 
   outline: none;
@@ -137,7 +140,8 @@ button.primary {
   font-family: 'Bungee', cursive;
   text-shadow: 2px 2px var(--shadow);
 
-  transition: 0.15s;
+  transition-property: color, background, box-shadow, text-shadow;
+  transition-duration: var(--transition);
 }
 
 button.primary.small {
@@ -190,12 +194,12 @@ button.secondary::after {
   bottom: 2px;
   left: 24px;
 
-  color: powderblue;
+  color: var(--secondary);
   font-family: 'Bungee Hairline', cursive;
   font-size: bold;
   text-shadow: 1px 1px var(--shadow);
   pointer-events: none;
-  transition: 0.2s;
+  transition: inherit;
 }
 
 *:disabled {
@@ -224,7 +228,7 @@ button.secondary::after {
 .dots {
   background-image:
     radial-gradient(var(--primary) 10%, transparent 10%),
-    radial-gradient(powderblue 10%, transparent 10%);
+    radial-gradient(var(--secondary) 10%, transparent 10%);
 
   background-size: 20px 20px;
   background-position: 0 0, 10px 10px;
@@ -232,8 +236,21 @@ button.secondary::after {
 
 .dots.alternate {
   background-image:
-    radial-gradient(powderblue 10%, transparent 10%),
+    radial-gradient(var(--secondary) 10%, transparent 10%),
     radial-gradient(var(--primary) 10%, transparent 10%);
+}
+
+.dots.animated {
+  animation-name: moveDots;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  animation-duration: 1.5s;
+}
+
+@keyframes moveDots {
+  to {
+    background-position: 20px 20px, 30px 30px;
+  }
 }
 
 .shadow {

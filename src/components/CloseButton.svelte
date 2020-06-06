@@ -11,23 +11,24 @@
     justify-content: center;
     align-items: center;
     color: inherit;
-    width: 22px;
-    height: 22px;
+    width: 20px;
+    height: 20px;
     padding: 0;
     position: relative;
     background: none;
-    border: 3px solid currentColor;
+    border: 3px solid;
     border-radius: 50px;
     outline: none;
     cursor: pointer;
     padding: 8px;
     box-sizing: content-box;
+    transition: color var(--transition);
   }
 
   @media (max-width: 425px) {
     button {
-      width: 14px;
-      height: 14px;
+      width: 12px;
+      height: 12px;
     }
   }
 
@@ -38,10 +39,10 @@
     width: 60%;
     height: 3px;
     position: absolute;
-    background: currentColor;
-    transition: 400ms;
+    background-color: currentColor;
     border-radius: 10px;
     pointer-events: none;
+    transition: transform 0.4s;
   }
 
   button::before {
