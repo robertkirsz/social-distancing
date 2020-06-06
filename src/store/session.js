@@ -48,8 +48,7 @@ export default {
             name: authData.displayName || emailSlug,
             email: authData.email,
             emailSlug,
-            // TODO:L remove kitten
-            photoUrl: authData.photoURL || 'http://placekitten.com/200/300',
+            photoUrl: authData.photoURL,
             ...template
           }
         }
