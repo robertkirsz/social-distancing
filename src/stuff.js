@@ -259,19 +259,45 @@ function getContrastYIQ(hexcolor) {
 
 export function toggleColors() {
   const palette = [...randomItem(palettes)]
+
   shuffleArray(palette)
+
   variables.forEach(variable => {
     const color = palette.pop()
+
     if (variable === '--primary') {
-      root.style.setProperty('--contrast-text', getContrastYIQ(color))
+      const textColor = getContrastYIQ(color)
+      root.style.setProperty('--contrast-text', textColor)
+      localStorage.setItem('css-variable--contrast-text', textColor)
     }
+
     root.style.setProperty(variable, color)
+    localStorage.setItem(`css-variable${variable}`, color)
   })
 }
+
+function loadInitialPalette() {
+  console.log('loadInitialPalette')
+  const primary = localStorage.getItem('css-variable--primary')
+  const secondary = localStorage.getItem('css-variable--secondary')
+  const shadow = localStorage.getItem('css-variable--shadow')
+  const contrastText = localStorage.getItem('css-variable--contrast-text')
+
+  if (primary) root.style.setProperty('--primary', primary)
+  if (secondary) root.style.setProperty('--secondary', secondary)
+  if (shadow) root.style.setProperty('--shadow', shadow)
+  if (contrastText) root.style.setProperty('--contrast-text', contrastText)
+}
+
+loadInitialPalette()
 
 export function resetColors() {
   root.style.setProperty('--primary', 'pink')
   root.style.setProperty('--secondary', 'powderblue')
   root.style.setProperty('--shadow', 'tomato')
   root.style.setProperty('--contrast-text', 'black')
+  localStorage.setItem('css-variable--primary', 'pink')
+  localStorage.setItem('css-variable--secondary', 'powderblue')
+  localStorage.setItem('css-variable--shadow', 'tomato')
+  localStorage.setItem('css-variable--contrast-text', 'black')
 }

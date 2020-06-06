@@ -52,23 +52,23 @@
 
     <div style="max-height: 200px; overflow: auto;">
       <pre>
-        projectiles: {JSON.stringify($projectiles.map(({ type, emoji, direction }) => ({
+        projectiles: {JSON.stringify( $projectiles.map(({ type, emoji, direction }) => ({
             type,
             emoji,
             direction
-          })), null, 2)}
+          })), null, 2 )}
       </pre>
     </div>
 
     <div style="max-height: 200px; overflow: auto;">
       <pre>
-        players: {JSON.stringify($socialDistancingPlayers.map(
+        players: {JSON.stringify( $socialDistancingPlayers.map(
             ({ name, socialDistancingScore, socialDistancingTimesPlayed }) => ({
               name,
               socialDistancingScore,
               socialDistancingTimesPlayed
             })
-          ), null, 2)}
+          ), null, 2 )}
       </pre>
     </div>
 
