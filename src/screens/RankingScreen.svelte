@@ -4,63 +4,35 @@
   import { get } from 'database'
   import { screens, player, players } from 'store'
   import { descendingBy } from 'stuff'
-  import CloseButton from 'components/CloseButton'
+  import Modal from 'components/Modal'
 
-  const playerId = $player.id
+  const playerId = player.getId()
 </script>
 
-<div class="screen dots alternate column itemsCenter justifyCenter" transition:fade>
-  <section class="shadow column">
-    <div class="columnTop2">
-      <div class="rowLeft justifyBetween marginLeft marginRight">
-        <h3 class="nice flex justifyBetween" data-text="Ranking">Ranking</h3>
-        <CloseButton style="color: pink;" on:click={() => screens.close('RANKING')} />
-      </div>
-
-      <div class="content-wrapper">
-        <table>
-          {#each $players as player, index (player.id)}
-            <tr class:current-player={player.id === playerId}>
-              <td>{index + 1}</td>
-              <td>
-                <img src={player.photoUrl} width="40" height="40" alt={`${player.name} photo`} />
-              </td>
-              <td>{player.name}</td>
-              <td colspan="2">{player.socialDistancingScore || 0}</td>
-            </tr>
-          {/each}
-        </table>
-      </div>
-    </div>
-  </section>
-</div>
+<Modal heading="Ranking" onClose={() => screens.close('RANKING')}>
+  <table>
+    {#each $players as player, index (player.id)}
+      <tr class:current-player={player.id === playerId}>
+        <td>{index + 1}</td>
+        <td>
+          <img src={player.photoUrl} width="40" height="40" alt={`${player.name} photo`} />
+        </td>
+        <td>{player.name}</td>
+        <td colspan="2">{player.socialDistancingScore || 0}</td>
+      </tr>
+    {/each}
+  </table>
+</Modal>
 
 <style>
-  section {
-    max-width: 100%;
-    max-height: 95vh;
-    margin: 0 auto;
-    border-radius: 25px;
-    background: #eee;
-    border: 3px solid pink;
-  }
-
-  section > div {
-    height: 100%;
-    padding: 16px 8px;
-  }
-
-  .content-wrapper {
-    flex: 1;
-    overflow: auto;
-  }
-
   table {
+    width: 100%;
     border-collapse: collapse;
   }
 
   td {
     padding: 5px;
+    transition: color var(--transition);
   }
 
   td:first-child,
@@ -82,7 +54,9 @@
   }
 
   tr.current-player {
-    background: #f7d8dd;
+    background: var(--primary);
+    color: var(--contrast-text);
+    transition: var(--transition);
   }
 
   tr.current-player td:first-child {

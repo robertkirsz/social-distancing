@@ -1,47 +1,23 @@
 <script>
   import { fade } from 'svelte/transition'
   import { screens } from 'store'
-  import CloseButton from 'components/CloseButton'
+  import Modal from 'components/Modal'
 </script>
 
-<div class="screen dots alternate column itemsCenter justifyCenter" transition:fade>
-  <section class="shadow column" transition:fade>
-    <div class="columnTop2">
-      <div class="rowLeft2 itemsCenter justifyBetween marginLeft marginRight">
-        <h3 class="nice flex justifyBetween" data-text="The author">The author</h3>
-        <CloseButton style="color: pink;" on:click={() => screens.close('AUTHOR')} />
-      </div>
+<Modal heading="The author" onClose={() => screens.close('AUTHOR')}>
+  <div class="columnTop2 itemsCenter">
+    <a href="slack://user?team=T029TTLEV&id=UCK9Y5UUQ" target="_blank" rel="noreferrer noopener">
+      <img src="author.png" alt="Author" />
+    </a>
 
-      <div class="columnTop2 itemsCenter">
-        <a href="slack://user?team=T029TTLEV&id=UCK9Y5UUQ" target="_blank" rel="noreferrer noopener">
-          <img src="author.png" alt="Author" />
-        </a>
-
-        <span>
-          <span class="emoji">☝️</span>
-          That him
-        </span>
-      </div>
-
-    </div>
-  </section>
-</div>
+    <span>
+      <span class="emoji">☝️</span>
+      That him
+    </span>
+  </div>
+</Modal>
 
 <style>
-  section {
-    max-width: 100%;
-    max-height: 95vh;
-    margin: 0 auto;
-    border-radius: 25px;
-    background: #eee;
-    border: 3px solid pink;
-  }
-
-  section > div {
-    height: 100%;
-    padding: 16px 8px;
-  }
-
   img {
     width: 100px;
     height: 100px;
