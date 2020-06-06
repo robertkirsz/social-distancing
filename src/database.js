@@ -2,8 +2,6 @@ import firebase from 'firebase/app'
 import 'firebase/auth'
 import 'firebase/database'
 
-console.log(JSON.parse('__firebaseConfig__'))
-
 const config = JSON.parse('__firebaseConfig__')
 
 export default () => firebase.initializeApp(config)

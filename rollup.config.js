@@ -9,11 +9,6 @@ import packageJson from './package.json'
 
 const production = !process.env.ROLLUP_WATCH
 
-console.log('-----------')
-console.log('env', process.env.FIREBASE_CONFIG)
-console.log(process.env.FIREBASE_CONFIG || JSON.stringify(require('./databaseConfig.json')))
-console.log('-----------')
-
 export default {
   input: 'src/main.js',
   output: {
