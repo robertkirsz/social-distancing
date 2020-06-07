@@ -36,11 +36,9 @@ const hand = {
     })
   },
   riseHand(direction) {
-    update(state => ({
-      ...state,
-      direction,
-      lastPressedTime: Date.now()
-    }))
+    const newState = { direction }
+    if (direction) newState.lastPressedTime = Date.now()
+    update(state => ({ ...state, ...newState }))
   },
   reset() {
     update(state => ({

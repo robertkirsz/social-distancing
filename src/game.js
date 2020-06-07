@@ -1,4 +1,4 @@
-import { projectiles, gameIsRunning } from 'store'
+import { projectiles, gameIsRunning, gameIsOver } from 'store'
 
 let game
 
@@ -6,9 +6,7 @@ gameIsRunning.subscribe(isRunning => {
   if (isRunning) {
     if (!game) game = new Game()
     game.start()
-  } else {
-    game && game.stop()
-  }
+  } else game && game.stop()
 })
 
 function Game() {
@@ -62,6 +60,7 @@ function Game() {
   function stop() {
     console.log('stop')
     projectiles.reset()
+    gameIsOver.set(true)
   }
 
   return { start, stop }
