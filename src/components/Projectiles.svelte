@@ -3,24 +3,6 @@
   import { gameIsRunning, projectiles } from 'store'
   import { randomNumber } from 'stuff'
   import Projectile from 'components/Projectile'
-
-  let timeout = null
-
-  function throwProjectile() {
-    timeout = setTimeout(() => {
-      projectiles.throw()
-      if ($gameIsRunning) throwProjectile()
-    }, randomNumber(1000, 2000))
-  }
-
-  gameIsRunning.subscribe(isRunning => {
-    if (isRunning) {
-      throwProjectile()
-    } else {
-      clearTimeout(timeout)
-      projectiles.reset()
-    }
-  })
 </script>
 
 <div>

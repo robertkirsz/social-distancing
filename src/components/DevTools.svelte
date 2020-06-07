@@ -52,23 +52,23 @@
 
     <div style="max-height: 200px; overflow: auto;">
       <pre>
-        projectiles: {JSON.stringify( $projectiles.map(({ type, emoji, direction }) => ({
+        projectiles: {JSON.stringify($projectiles.map(({ type, emoji, direction }) => ({
             type,
             emoji,
             direction
-          })), null, 2 )}
+          })), null, 2)}
       </pre>
     </div>
 
     <div style="max-height: 200px; overflow: auto;">
       <pre>
-        players: {JSON.stringify( $socialDistancingPlayers.map(
+        players: {JSON.stringify($socialDistancingPlayers.map(
             ({ name, socialDistancingScore, socialDistancingTimesPlayed }) => ({
               name,
               socialDistancingScore,
               socialDistancingTimesPlayed
             })
-          ), null, 2 )}
+          ), null, 2)}
       </pre>
     </div>
 
@@ -97,21 +97,21 @@
     <div class="column itemsStart">
       <div class="rowLeft">
         <div class="throwing-block">
-          <button on:click={() => projectiles.throw('up-left')} />
-          <button on:click={() => projectiles.throw('up')} />
-          <button on:click={() => projectiles.throw('up-right')} />
-          <button on:click={() => projectiles.throw('left')} />
+          <button on:click={() => projectiles.throw({ direction: 'up-left' })} />
+          <button on:click={() => projectiles.throw({ direction: 'up' })} />
+          <button on:click={() => projectiles.throw({ direction: 'up-right' })} />
+          <button on:click={() => projectiles.throw({ direction: 'left' })} />
           <button on:click={() => projectiles.throw()}>?</button>
-          <button on:click={() => projectiles.throw('right')} />
-          <button on:click={() => projectiles.throw('down-left')} />
-          <button on:click={() => projectiles.throw('down')} />
-          <button on:click={() => projectiles.throw('down-right')} />
+          <button on:click={() => projectiles.throw({ direction: 'right' })} />
+          <button on:click={() => projectiles.throw({ direction: 'down-left' })} />
+          <button on:click={() => projectiles.throw({ direction: 'down' })} />
+          <button on:click={() => projectiles.throw({ direction: 'down-right' })} />
         </div>
 
         <div class="columnTop">
-          <button on:click={() => projectiles.throw('right', 'Life')} class="emoji">💖</button>
-          <button on:click={() => projectiles.throw('right', 'Shield')} class="emoji">🛡️</button>
-          <button on:click={() => projectiles.throw('right', 'Friend')} class="emoji">👩‍❤️‍👨</button>
+          <button on:click={() => projectiles.throw({ direction: 'right', type: 'Life' })} class="emoji">💖</button>
+          <button on:click={() => projectiles.throw({ direction: 'right', type: 'Shield' })} class="emoji">🛡️</button>
+          <button on:click={() => projectiles.throw({ direction: 'right', type: 'Friend' })} class="emoji">👩‍❤️‍👨</button>
         </div>
       </div>
 

@@ -114,8 +114,8 @@ let autoDeflect = false
 
 const projectiles = {
   subscribe,
-  throw(direction, type) {
-    update(add(new Projectile({ direction, type })))
+  throw(projectile) {
+    update(add(new Projectile(projectile)))
   },
   land(id, type, direction, onHit, onDeflect) {
     if (autoDeflect || direction === get(hand).direction) {
