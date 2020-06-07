@@ -88,7 +88,7 @@
         // Projectiles that hit the player
         if (!landed && progress > 0.25 && progress < 0.45 && collides(node, player)) {
           landed = true
-          projectiles.land(id, type, direction, onHit, onDeflect)
+          projectiles.land({ id, type, direction, onHit, onDeflect })
         }
 
         // Projectiles that missed the player
@@ -127,9 +127,13 @@
   }
 
   onDestroy(createAnimatedClone)
+
+  function handleClick() {
+    projectiles.click({ id, direction, onDeflect })
+  }
 </script>
 
-<div bind:this={node} in:fly class={cn('outer-wrapper', type, direction)}>
+<div bind:this={node} in:fly class={cn('outer-wrapper', type, direction)} on:click={handleClick}>
   <div class="inner-wrapper">
     <div class="emoji">{emoji}</div>
   </div>

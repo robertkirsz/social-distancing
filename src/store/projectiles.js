@@ -117,7 +117,10 @@ const projectiles = {
   throw(projectile) {
     update(add(new Projectile(projectile)))
   },
-  land(id, type, direction, onHit, onDeflect) {
+  click({ id, direction, onDeflect }) {
+    actionHandler({ id, direction, ...onDeflect })
+  },
+  land({ id, type, direction, onHit, onDeflect }) {
     if (autoDeflect || direction === get(hand).direction) {
       actionHandler({ id, direction, ...onDeflect })
       return
