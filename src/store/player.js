@@ -2,10 +2,7 @@ import { writable, derived } from 'svelte/store'
 
 const { subscribe, set } = writable(null)
 
-const player = {
-  subscribe,
-  set
-}
+const player = { subscribe, set }
 
 export default player
 

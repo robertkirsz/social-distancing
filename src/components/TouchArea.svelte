@@ -1,7 +1,7 @@
 <script>
   import { hand, isExhausted, gameIsOver } from 'store'
 
-  const SIZE = 320
+  const SIZE = 200
   const UNIT = SIZE / 3
 
   function handleTouch(event) {
@@ -42,8 +42,13 @@
     display: flex;
     flex-wrap: wrap;
     position: absolute;
-    width: 320px;
-    height: 320px;
+    bottom: 70px;
+    width: 200px;
+    height: 200px;
     border-radius: 50%;
+    border: 1px solid;
+    background: black;
+    opacity: 0.2;
+    z-index: 9999;
   }
 </style>
