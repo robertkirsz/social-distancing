@@ -1,7 +1,5 @@
 <script>
-  import { linear } from 'svelte/easing'
-  import { gameIsRunning, projectiles } from 'store'
-  import { randomNumber } from 'stuff'
+  import { projectiles } from 'store'
   import Projectile from 'components/Projectile'
 </script>
 

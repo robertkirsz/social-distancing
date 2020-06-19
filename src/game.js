@@ -1,4 +1,4 @@
-import { projectiles, gameIsRunning, gameIsOver } from 'store'
+import { projectiles, gameIsRunning, gameIsWon, gameIsOver } from 'store'
 
 let game
 
@@ -63,6 +63,7 @@ function Game() {
     setTimeout(() => {
       console.log('Reached the last level')
       gameIsRunning.set(false)
+      gameIsWon.set(true)
     }, 3000)
   }
 

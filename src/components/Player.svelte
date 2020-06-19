@@ -1,5 +1,6 @@
 <script>
-  import { hand, player, isInvincible, isExhausted, lives, gameIsOver, gameIsRunning } from 'store'
+  import { fade } from 'svelte/transition'
+  import { hand, player, isInvincible, isExhausted, lives, gameIsWon, gameIsOver, gameIsRunning } from 'store'
 
   const stuff = [
     { direction: 'up', rotation: 0, emoji: '✊', emojiRotation: 0 },
@@ -52,9 +53,12 @@
   {/each}
 
   {#if $player}
-    <img class:shake class:game-is-over={$gameIsOver} src={$player.photoUrl} alt="Avatar" />
+    <img class:shake class:game-is-over={$gameIsOver && !$gameIsWon} src={$player.photoUrl} alt="Avatar" />
     <span class="one-up-heart emoji" class:active={oneUpHeart}>💖</span>
     <span class="broken-heart emoji" class:active={brokenHeart}>💔</span>
+    {#if $gameIsWon}
+      <span class="emoji crown" transition:fade>👑</span>
+    {/if}
   {/if}
 </div>
 
@@ -224,5 +228,12 @@
   .broken-heart.active {
     animation-name: brokenHeart;
     animation-duration: 1s;
+  }
+
+  .crown {
+    font-size: 7vw;
+    position: absolute;
+    top: -40%;
+    z-index: 1;
   }
 </style>
