@@ -1,5 +1,6 @@
 <script>
   import { fade } from 'svelte/transition'
+  import { Howler } from 'howler'
   import { session, screens } from 'store'
   import { toggleColors, resetColors } from 'stuff'
   import MenuButton from 'components/MenuButton'
@@ -9,6 +10,22 @@
   function toggleMenu() {
     isMenuOpened = !isMenuOpened
   }
+
+  let areSoundsDisabled = localStorage.getItem('soundsDisabled') === 'true'
+
+  $: soundButtonLabel = areSoundsDisabled ? 'Enable sounds' : 'Disable sounds'
+
+  $: if (areSoundsDisabled) {
+    Howler.mute(true)
+    localStorage.setItem('soundsDisabled', 'true')
+  } else {
+    Howler.mute(false)
+    localStorage.setItem('soundsDisabled', 'false')
+  }
+
+  function toggleSounds() {
+    areSoundsDisabled = !areSoundsDisabled
+  }
 </script>
 
 <div class="wrapper column itemsEnd" transition:fade>
@@ -16,6 +33,7 @@
     <div class="menu shadow column" transition:fade>
       <button class="secondary small" on:click={toggleColors} data-text="Change colors">Change colors</button>
       <button class="secondary small" on:click={resetColors} data-text="Reset colors">Reset colors</button>
+      <button class="secondary small" on:click={toggleSounds} data-text={soundButtonLabel}>{soundButtonLabel}</button>
       <button class="secondary small" on:click={() => screens.openOnly('RANKING')} data-text="Ranking">Ranking</button>
       <button class="secondary small" on:click={() => screens.openOnly('HOW TO PLAY')} data-text="How to play">
         How to play
