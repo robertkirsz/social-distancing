@@ -46,9 +46,6 @@
     width: 200px;
     height: 200px;
     border-radius: 50%;
-    border: 1px solid;
-    background: black;
-    opacity: 0.2;
     z-index: 9999;
   }
 </style>

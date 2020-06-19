@@ -13,9 +13,10 @@
   import Screens from 'components/Screens'
   import Version from 'components/Version'
   import DevTools from 'components/DevTools'
-  import TouchArea from 'components/TouchArea'
   import Projectiles from 'components/Projectiles'
   import GameControlButton from 'components/GameControlButton'
+  // Maybe in the future...
+  // import TouchArea from 'components/TouchArea'
 
   function keyListener(method) {
     return function(event) {
@@ -52,16 +53,14 @@
 
 <main>
   {#if $player}
-    <Score />
-    <Lives />
-    <Stamina />
-
     <Shields />
     <Player />
     <Projectiles />
 
     {#if $gameIsRunning}
-      <TouchArea />
+      <Score />
+      <Lives />
+      <Stamina />
     {/if}
 
     <GameControlButton />

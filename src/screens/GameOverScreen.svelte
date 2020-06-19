@@ -3,6 +3,7 @@
   import { fade } from 'svelte/transition'
   import { screens, gameIsOver, score, currentRank } from 'store'
   import { withSuffix } from 'stuff'
+  import Ranking from 'components/Ranking'
 
   // Get it once only so that it doesn't switch to zero when the game is restarted
   const points = get(score)
@@ -24,9 +25,9 @@
       </h3>
     {/if}
 
-    <button class="secondary small marginTop3" on:click={() => screens.open('RANKING')} data-text="See ranking">
-      See ranking
-    </button>
+    <div class="ranking-wrapper marginTop3">
+      <Ranking />
+    </div>
 
     <button class="primary marginTopAuto" on:click={() => gameIsOver.set(false)} data-text="Go back">Go back</button>
 
@@ -35,3 +36,14 @@
     </button>
   </div>
 </div>
+
+<style>
+  .ranking-wrapper {
+    min-width: 320px;
+    max-height: 300px;
+    padding: 4px;
+    background: rgba(255, 255, 255, 0.85);
+    border-radius: 6px;
+    overflow: auto;
+  }
+</style>
