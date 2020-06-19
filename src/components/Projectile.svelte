@@ -64,13 +64,13 @@
 
     // prettier-ignore
     if (
-      direction ===         'up' && projectileBottom >= playerTop    ||
-      direction ===       'down' && projectileTop    <= playerBottom ||
-      direction ===       'left' && projectileRight  >= playerLeft   ||
-      direction ===      'right' && projectileLeft   <= playerRight  ||
-      direction ===    'up-left' && projectileRight   + projectileDistanceToCorner >= playerLeft  + playerDistanceToCorner ||
-      direction ===   'up-right' && projectileLeft    - projectileDistanceToCorner <= playerRight - playerDistanceToCorner ||
-      direction ===  'down-left' && projectileRight   + projectileDistanceToCorner >= playerLeft  + playerDistanceToCorner ||
+      direction === 'up'         && projectileBottom >= playerTop    ||
+      direction === 'down'       && projectileTop    <= playerBottom ||
+      direction === 'left'       && projectileRight  >= playerLeft   ||
+      direction === 'right'      && projectileLeft   <= playerRight  ||
+      direction === 'up-left'    && projectileRight   + projectileDistanceToCorner >= playerLeft  + playerDistanceToCorner ||
+      direction === 'up-right'   && projectileLeft    - projectileDistanceToCorner <= playerRight - playerDistanceToCorner ||
+      direction === 'down-left'  && projectileRight   + projectileDistanceToCorner >= playerLeft  + playerDistanceToCorner ||
       direction === 'down-right' && projectileLeft    - projectileDistanceToCorner <= playerRight - playerDistanceToCorner
     ) return true
   }
