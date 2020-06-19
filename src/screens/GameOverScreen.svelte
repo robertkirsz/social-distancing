@@ -39,11 +39,11 @@
 
 <style>
   .ranking-wrapper {
-    min-width: 320px;
-    max-height: 300px;
-    padding: 4px;
-    background: rgba(255, 255, 255, 0.85);
-    border-radius: 6px;
+    min-width: 420px;
+    max-height: 275px;
     overflow: auto;
+    padding-bottom: 25px;
+    -webkit-mask-image: linear-gradient(to top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 1) 25px);
+    mask-image: linear-gradient(to top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 1) 25px);
   }
 </style>

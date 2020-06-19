@@ -84,8 +84,11 @@
 <style>
   table {
     width: 100%;
+    min-width: 300px;
     max-width: 480px;
     border-collapse: collapse;
+    border-radius: 6px;
+    background: rgba(255, 255, 255, 0.85);
   }
 
   tr.current-player {

@@ -148,10 +148,6 @@ button.primary.small {
   box-shadow: 2px 2px var(--shadow);
 }
 
-button.primary:active {
-  transform: scale(0.95);
-}
-
 button.secondary {
   position: relative;
   padding: 2px 24px;
@@ -176,16 +172,6 @@ button.primary,
 button.secondary {
   transition-property: transform, color, background-color, box-shadow, text-shadow;
   transition-duration: 0.2s, var(--transition);
-}
-
-button.primary:hover,
-button.secondary:hover {
-  transform: scale(0.98);
-}
-
-button.primary:active,
-button.secondary:active {
-  transform: scale(0.96);
 }
 
 button.primary::after,

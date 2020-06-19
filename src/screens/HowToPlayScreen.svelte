@@ -75,6 +75,8 @@
       <StaminaBar value={stamina} />
     </div>
 
+    <p>Try to survive all the waves</p>
+
     <p>
       Once you lose all your lives, the game's over
       <span class="emoji">☠️</span>
