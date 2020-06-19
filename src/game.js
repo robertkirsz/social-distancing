@@ -21,14 +21,14 @@ function Game() {
 
   const level3 = [
     { delay: 2000, type: 'Stranger', duration: 2000, direction: 'up' },
-    { delay: 400, type: 'Stranger', duration: 2000, direction: 'up-right' },
-    { delay: 400, type: 'Stranger', duration: 2000, direction: 'right' },
-    { delay: 400, type: 'Stranger', duration: 2000, direction: 'down-right' },
-    { delay: 400, type: 'Stranger', duration: 2000, direction: 'down' },
-    { delay: 400, type: 'Stranger', duration: 2000, direction: 'down-left' },
-    { delay: 400, type: 'Stranger', duration: 2000, direction: 'left' },
-    { delay: 400, type: 'Stranger', duration: 2000, direction: 'up-left' },
-    { delay: 400, type: 'Stranger', duration: 2000, direction: 'up' }
+    { delay: 600, type: 'Stranger', duration: 2000, direction: 'up-right' },
+    { delay: 600, type: 'Stranger', duration: 2000, direction: 'right' },
+    { delay: 600, type: 'Stranger', duration: 2000, direction: 'down-right' },
+    { delay: 600, type: 'Stranger', duration: 2000, direction: 'down' },
+    { delay: 600, type: 'Stranger', duration: 2000, direction: 'down-left' },
+    { delay: 600, type: 'Stranger', duration: 2000, direction: 'left' },
+    { delay: 600, type: 'Stranger', duration: 2000, direction: 'up-left' },
+    { delay: 600, type: 'Stranger', duration: 2000, direction: 'up' }
   ]
 
   const levels = [level1, level2, level3]
@@ -36,15 +36,17 @@ function Game() {
   function playLevel(level) {
     console.log('playLevel:', level)
     return new Promise(async resolve => {
+      if (!game) return resolve()
       for (const projectile of level) await delayedThrow(projectile)
       resolve()
     })
   }
 
   function delayedThrow({ delay, ...projectile }) {
-    console.log('delayedThrow:', projectile)
     return new Promise(resolve => {
       setTimeout(() => {
+        if (!game) return resolve()
+        console.log('delayedThrow:', projectile)
         projectiles.throw(projectile)
         resolve()
       }, delay)
@@ -53,14 +55,22 @@ function Game() {
 
   async function start() {
     console.log('start')
-    for (const level of levels) await playLevel(level)
-    setTimeout(() => gameIsRunning.set(false), 3000)
+    for (const level of levels) {
+      if (!game) return
+      await playLevel(level)
+    }
+
+    setTimeout(() => {
+      console.log('Reached the last level')
+      gameIsRunning.set(false)
+    }, 3000)
   }
 
   function stop() {
     console.log('stop')
     projectiles.reset()
     gameIsOver.set(true)
+    game = null
   }
 
   return { start, stop }
