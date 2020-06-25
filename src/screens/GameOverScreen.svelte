@@ -1,17 +1,19 @@
 <script>
   import { get } from 'svelte/store'
   import { fade } from 'svelte/transition'
-  import { screens, gameIsOver, score, currentRank } from 'store'
+  import { screens, gameIsWon, gameIsOver, score, currentRank } from 'store'
   import { withSuffix } from 'stuff'
   import Ranking from 'components/Ranking'
 
   // Get it once only so that it doesn't switch to zero when the game is restarted
   const points = get(score)
+
+  const header = $gameIsWon ? 'You won!' : 'Game over'
 </script>
 
 <div in:fade={{ delay: 1000 }} out:fade={{ duration: 200 }} class="screen dots columnTop itemsCenter justifyCenter">
   <div class="column itemsCenter" style="height: 100%; width: 100%;">
-    <h1 class="center fluid nice marginTopAuto" data-text="Game over">Game over</h1>
+    <h1 class="center fluid nice marginTopAuto" data-text={header}>{header}</h1>
 
     <h3 class="rowLeft2 fluid marginTop3" style="white-space: nowrap;">
       <span class="nice" data-text={points}>{points}</span>
