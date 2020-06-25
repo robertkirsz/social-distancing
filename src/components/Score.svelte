@@ -22,11 +22,7 @@
 
 <style>
   div {
-    position: absolute;
     font-size: 24px;
-    top: 8px;
-    right: 8px;
-    text-align: right;
   }
 
   span {

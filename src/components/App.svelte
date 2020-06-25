@@ -1,14 +1,12 @@
 <script>
   import { onMount } from 'svelte'
   import initializeFirebase from 'database'
-  import { hand, session, isExhausted, player, screens, gameIsRunning, gameIsOver } from 'store'
+  import { hand, session, isExhausted, player, screens, gameIsOver } from 'store'
   import Intro from 'components/Intro'
-  import Lives from 'components/Lives'
-  import Score from 'components/Score'
+  import Stats from 'components/Stats'
   import Errors from 'components/Errors'
   import Player from 'components/Player'
   import Shields from 'components/Shields'
-  import Stamina from 'components/Stamina'
   import Screens from 'components/Screens'
   import Version from 'components/Version'
   import DevTools from 'components/DevTools'
@@ -55,13 +53,7 @@
     <Shields />
     <Player />
     <Projectiles />
-
-    {#if $gameIsRunning}
-      <Score />
-      <Lives />
-      <Stamina />
-    {/if}
-
+    <Stats />
     <GameControlButton />
     <Version />
   {:else}
@@ -76,12 +68,10 @@
 <style>
   main {
     flex: 1;
-
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-
     overflow: hidden;
   }
 </style>

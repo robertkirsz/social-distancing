@@ -11,10 +11,7 @@
 
 <style>
   div {
-    position: absolute;
     font-size: 24px;
-    top: 8px;
-    left: 8px;
-    text-align: right;
+    min-height: 32px;
   }
 </style>
