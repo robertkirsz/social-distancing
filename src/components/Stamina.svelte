@@ -10,7 +10,7 @@
   let timeout = null
 
   hand.subscribe(({ lastPressedTime }) => {
-    if (lastPressedTime !== previousTime) {
+    if (previousTime && lastPressedTime !== previousTime) {
       clearTimeout(timeout)
       stamina.decrease()
       timeout = setTimeout(stamina.reset, tirednessEffects[tirednessLevel].cooldown)

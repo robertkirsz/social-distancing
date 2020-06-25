@@ -10,16 +10,12 @@ gameIsRunning.subscribe(isRunning => {
 })
 
 function Game() {
-  const level1 = [
+  const level = [
     { delay: 1000, type: 'Stranger', duration: 3000, direction: 'right' },
     { delay: 1000, type: 'Stranger', duration: 3000, direction: 'down' },
     { delay: 1000, type: 'Stranger', duration: 3000, direction: 'left' },
-    { delay: 1000, type: 'Stranger', duration: 3000, direction: 'up' }
-  ]
-
-  const level2 = [{ delay: 300, type: 'Friend', duration: 2000, direction: 'down-left' }]
-
-  const level3 = [
+    { delay: 1000, type: 'Stranger', duration: 3000, direction: 'up' },
+    { delay: 300, type: 'Friend', duration: 2000, direction: 'down-left' },
     { delay: 2000, type: 'Stranger', duration: 2000, direction: 'up' },
     { delay: 600, type: 'Stranger', duration: 2000, direction: 'up-right' },
     { delay: 600, type: 'Stranger', duration: 2000, direction: 'right' },
@@ -31,22 +27,11 @@ function Game() {
     { delay: 600, type: 'Stranger', duration: 2000, direction: 'up' }
   ]
 
-  const levels = [level1, level2, level3]
-
-  function playLevel(level) {
-    console.log('playLevel:', level)
-    return new Promise(async resolve => {
-      if (!game) return resolve()
-      for (const projectile of level) await delayedThrow(projectile)
-      resolve()
-    })
-  }
-
   function delayedThrow({ delay, ...projectile }) {
     return new Promise(resolve => {
       setTimeout(() => {
         if (!game) return resolve()
-        console.log('delayedThrow:', projectile)
+        console.log('throw:', projectile)
         projectiles.throw(projectile)
         resolve()
       }, delay)
@@ -55,13 +40,11 @@ function Game() {
 
   async function start() {
     console.log('start')
-    for (const level of levels) {
-      if (!game) return
-      await playLevel(level)
-    }
+    if (!game) return
+    for (const projectile of level) await delayedThrow(projectile)
 
     setTimeout(() => {
-      console.log('Reached the last level')
+      console.log('won')
       gameIsRunning.set(false)
       gameIsWon.set(true)
     }, 3000)
