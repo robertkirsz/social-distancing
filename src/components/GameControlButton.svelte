@@ -1,17 +1,22 @@
 <script>
   import { fade } from 'svelte/transition'
   import { gameIsRunning, gameIsOver } from 'store'
+  import Menu from 'components/Menu'
 </script>
 
 {#if !$gameIsRunning && !$gameIsOver}
-  <button class="primary marginBottom2" on:click={() => gameIsRunning.set(true)} transition:fade data-text="Start">
-    Start
-  </button>
+  <div class="wrapper" transition:fade>
+    <Menu />
+    <button class="primary marginLeft" on:click={() => gameIsRunning.set(true)} data-text="Start">Start</button>
+  </div>
 {/if}
 
 <style>
-  button {
+  .wrapper {
+    display: flex;
+    align-items: center;
     position: absolute;
     bottom: 40px;
+    transform: translateX(-24px);
   }
 </style>

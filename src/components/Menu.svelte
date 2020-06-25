@@ -28,7 +28,7 @@
   }
 </script>
 
-<div class="wrapper column itemsEnd" transition:fade>
+<div class="wrapper column itemsEnd">
   {#if isMenuOpened}
     <div class="menu shadow column" transition:fade>
       <button class="secondary small" on:click={toggleColors} data-text="Change colors">Change colors</button>
@@ -47,13 +47,13 @@
 
 <style>
   .wrapper {
-    position: absolute;
-    bottom: 8px;
-    right: 8px;
-    z-index: 70;
+    position: relative;
   }
 
   .menu {
+    position: absolute;
+    bottom: 100%;
+    min-width: 260px;
     margin: 0 8px 8px 0;
     padding: 8px;
     border-radius: 8px;

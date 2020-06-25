@@ -2,7 +2,6 @@
   import { onMount } from 'svelte'
   import initializeFirebase from 'database'
   import { hand, session, isExhausted, player, screens, gameIsRunning, gameIsOver } from 'store'
-  import Menu from 'components/Menu'
   import Intro from 'components/Intro'
   import Lives from 'components/Lives'
   import Score from 'components/Score'
@@ -64,11 +63,6 @@
     {/if}
 
     <GameControlButton />
-
-    {#if !$gameIsOver && !$gameIsRunning}
-      <Menu />
-    {/if}
-
     <Version />
   {:else}
     <Intro />
