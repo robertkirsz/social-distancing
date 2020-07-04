@@ -4,16 +4,17 @@
   import StaminaBar from 'components/StaminaBar'
 
   $: value = ($stamina / MAX_STAMINA) * 100
-  $: tirednessLevel = getTirednessLevel(value)
 
   let previousTime = 0
   let timeout = null
 
+  // TODO: Stamina should decrease faster
+
   hand.subscribe(({ lastPressedTime }) => {
-    if (previousTime && lastPressedTime !== previousTime) {
+    if (lastPressedTime !== previousTime) {
       clearTimeout(timeout)
       stamina.decrease()
-      timeout = setTimeout(stamina.reset, tirednessEffects[tirednessLevel].cooldown)
+      timeout = setTimeout(stamina.reset, tirednessEffects[getTirednessLevel(value)].cooldown)
       previousTime = lastPressedTime
     }
   })

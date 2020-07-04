@@ -51,12 +51,10 @@
 <Screens />
 
 <main>
-  <!-- {#if $gameIsRunning} -->
-  <Score />
-  <Lives />
-  <Stamina />
-  <!-- {/if} -->
   {#if $player}
+    <Score />
+    <Lives />
+    <Stamina />
     <Shields />
     <Player />
     <Projectiles />
