@@ -10,21 +10,22 @@ gameIsRunning.subscribe(isRunning => {
 })
 
 function Game() {
+  // prettier-ignore
   const level = [
-    { id: 0, delay: 1000, type: 'Stranger', duration: 3000, direction: 'right' },
-    { id: 1, delay: 1000, type: 'Stranger', duration: 3000, direction: 'down' },
-    { id: 2, delay: 1000, type: 'Stranger', duration: 3000, direction: 'left' },
-    { id: 3, delay: 1000, type: 'Stranger', duration: 3000, direction: 'up' },
-    { id: 4, delay: 300, type: 'Friend', duration: 2000, direction: 'down-left' },
-    { id: 5, delay: 2000, type: 'Stranger', duration: 2000, direction: 'up' },
-    { id: 6, delay: 600, type: 'Stranger', duration: 2000, direction: 'up-right' },
-    { id: 7, delay: 600, type: 'Stranger', duration: 2000, direction: 'right' },
-    { id: 8, delay: 600, type: 'Stranger', duration: 2000, direction: 'down-right' },
-    { id: 9, delay: 600, type: 'Stranger', duration: 2000, direction: 'down' },
-    { id: 10, delay: 600, type: 'Stranger', duration: 2000, direction: 'down-left' },
-    { id: 11, delay: 600, type: 'Stranger', duration: 2000, direction: 'left' },
-    { id: 12, delay: 600, type: 'Stranger', duration: 2000, direction: 'up-left' },
-    { id: 13, delay: 600, type: 'Stranger', duration: 2000, direction: 'up' }
+    { id: 0,  delay: 1000, type: 'Stranger', duration: 3000, direction: 'right' },
+    { id: 1,  delay: 1000, type: 'Stranger', duration: 3000, direction: 'down' },
+    { id: 2,  delay: 1000, type: 'Stranger', duration: 3000, direction: 'left' },
+    { id: 3,  delay: 1000, type: 'Stranger', duration: 3000, direction: 'up' },
+    { id: 4,  delay: 300,  type: 'Friend',   duration: 2000, direction: 'down-left' },
+    { id: 5,  delay: 2000, type: 'Stranger', duration: 2000, direction: 'up' },
+    { id: 6,  delay: 600,  type: 'Stranger', duration: 2000, direction: 'up-right' },
+    { id: 7,  delay: 600,  type: 'Stranger', duration: 2000, direction: 'right' },
+    { id: 8,  delay: 600,  type: 'Stranger', duration: 2000, direction: 'down-right' },
+    { id: 9,  delay: 600,  type: 'Stranger', duration: 2000, direction: 'down' },
+    { id: 10, delay: 600,  type: 'Stranger', duration: 2000, direction: 'down-left' },
+    { id: 11, delay: 600,  type: 'Stranger', duration: 2000, direction: 'left' },
+    { id: 12, delay: 600,  type: 'Stranger', duration: 2000, direction: 'up-left' },
+    { id: 13, delay: 600,  type: 'Stranger', duration: 2000, direction: 'up' }
   ]
 
   function delayedThrow({ delay, ...projectile }) {

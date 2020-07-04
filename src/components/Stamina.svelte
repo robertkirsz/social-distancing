@@ -19,4 +19,4 @@
   })
 </script>
 
-<StaminaBar {value} />
+<StaminaBar {value} style="position: absolute; top: 80px;" />

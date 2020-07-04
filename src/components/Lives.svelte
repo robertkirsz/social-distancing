@@ -11,7 +11,9 @@
 
 <style>
   div {
-    font-size: 24px;
+    position: absolute;
+    top: 40px;
     min-height: 32px;
+    font-size: 24px;
   }
 </style>

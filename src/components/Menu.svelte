@@ -30,7 +30,7 @@
 
 <div class="wrapper column itemsEnd">
   {#if isMenuOpened}
-    <div class="menu shadow column" transition:fade>
+    <div class="menu shadow column" transition:fade={{ duration: 200 }}>
       <button class="secondary small" on:click={toggleColors} data-text="Change colors">Change colors</button>
       <button class="secondary small" on:click={resetColors} data-text="Reset colors">Reset colors</button>
       <button class="secondary small" on:click={toggleSounds} data-text={soundButtonLabel}>{soundButtonLabel}</button>

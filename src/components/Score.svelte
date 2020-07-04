@@ -22,6 +22,8 @@
 
 <style>
   div {
+    position: absolute;
+    top: 8px;
     font-size: 24px;
   }
 
