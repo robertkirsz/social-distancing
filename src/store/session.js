@@ -73,16 +73,26 @@ export default {
       requests.stop('authStateChange')
     })
   },
-  signIn() {
+  signIn(provider) {
     if (get(player) || get(requests).signIn) return
 
     errors.hide('signIn')
     errors.hide('wrongEmailDomain')
     requests.start('signIn')
-    database.signIn().catch(error => {
-      errors.show('signIn', error)
-      requests.stop('signIn')
-    })
+
+    if (provider === 'google') {
+      database.signInGoogle().catch(error => {
+        errors.show('signIn', error)
+        requests.stop('signIn')
+      })
+    }
+    
+    if (provider === 'facebook') {
+      database.signInFacebook().catch(error => {
+        errors.show('signIn', error)
+        requests.stop('signIn')
+      })
+    }
   },
   manualSignIn(email, password) {
     if (get(player) || get(requests).signIn) return

@@ -45,7 +45,7 @@ body {
 
 p { margin: 0; }
 
-h1, h2, h3 {
+h1, h2, h3, h4 {
   margin: 0;
   color: var(--primary);
   font-weight: 100;
@@ -105,6 +105,13 @@ h3 {
   --maxFontSize: 80px;
 }
 
+h4 {
+  font-size: 30px;
+  --scaler: 10vw;
+  --minFontSize: 30px;
+  --maxFontSize: 60px;
+}
+
 a {
   color: rgb(0, 100, 200);
   text-decoration: none;
@@ -126,7 +133,7 @@ button {
 
 button.primary {
   position: relative;
-  padding: 2px 24px;
+  padding: 8px 24px;
 
   background-color: var(--secondary);
   box-shadow: 3px 3px var(--shadow);
@@ -136,9 +143,10 @@ button.primary {
   border-radius: 6px;
 
   color: var(--primary);
-  font-size: 40px;
+  font-size: 32px;
   font-weight: bold;
   font-family: 'Bungee', cursive;
+  line-height: 1;
   text-shadow: 2px 2px var(--shadow);
 }
 
@@ -150,16 +158,17 @@ button.primary.small {
 
 button.secondary {
   position: relative;
-  padding: 2px 24px;
+  padding: 8px 24px;
 
   background: none;
   outline: none;
   border: none;
 
   color: var(--primary);
-  font-size: 40px;
+  font-size: 32px;
   font-weight: bold;
   font-family: 'Bungee', cursive;
+  line-height: 1;
   text-shadow: 2px 2px var(--shadow);
 }
 
@@ -180,9 +189,9 @@ button.secondary::after {
   display: block;
 
   position: absolute;
-  top: 2px;
+  top: 8px;
   right: 24px;
-  bottom: 2px;
+  bottom: 8px;
   left: 24px;
 
   color: var(--secondary);
@@ -259,6 +268,10 @@ button.secondary::after {
 
 .shadow {
   box-shadow: 5px 5px var(--primary);
+}
+
+.textShadow {
+  text-shadow: 2px 2px var(--shadow);
 }
 
 .emoji {

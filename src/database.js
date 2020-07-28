@@ -48,10 +48,19 @@ export const addChildAddedListener = (path, callback) =>
 export const removeListener = (path, listener) => firebase.database().ref(path).off(listener)
 
 // ---------- AUTHENTICATION ----------
-const provider = new firebase.auth.GoogleAuthProvider()
-provider.addScope('profile')
-provider.addScope('email')
+export const signInGoogle = () => {
+  const provider = new firebase.auth.GoogleAuthProvider()
+  provider.addScope('profile')
+  provider.addScope('email')
+  return firebase.auth().signInWithPopup(provider)
+}
 
-export const signIn = () => firebase.auth().signInWithPopup(provider)
+export const signInFacebook = () => {
+  const provider = new firebase.auth.FacebookAuthProvider()
+  provider.addScope('profile')
+  provider.addScope('email')
+  return firebase.auth().signInWithPopup(provider)
+}
+
 export const manualSignIn = (email, password) => firebase.auth().createUserWithEmailAndPassword(email, password)
 export const signOut = () => firebase.auth().signOut()
