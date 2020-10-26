@@ -1,7 +1,6 @@
 <script>
   import { fade } from 'svelte/transition'
   import { screens, requests } from 'store'
-  import AuthorScreen from 'screens/AuthorScreen'
   import LoadingScreen from 'screens/LoadingScreen'
   import RankingScreen from 'screens/RankingScreen'
   import GameOverScreen from 'screens/GameOverScreen'
@@ -20,10 +19,6 @@
 
 {#if $screens.includes('RANKING')}
   <RankingScreen />
-{/if}
-
-{#if $screens.includes('AUTHOR')}
-  <AuthorScreen />
 {/if}
 
 {#if isLoading}

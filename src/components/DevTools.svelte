@@ -91,7 +91,6 @@
       <button on:click={() => screens.toggle('HOW TO PLAY')}>HOW TO PLAY</button>
       <button on:click={() => screens.toggle('RANKING')}>RANKING</button>
       <button on:click={() => screens.toggle('GAME OVER')}>GAME OVER</button>
-      <button on:click={() => screens.toggle('AUTHOR')}>AUTHOR</button>
     </div>
 
     <div class="column itemsStart">
