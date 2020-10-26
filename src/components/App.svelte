@@ -47,6 +47,7 @@
   })
 </script>
 
+<Version />
 <Errors />
 <Screens />
 
@@ -59,7 +60,6 @@
     <Player />
     <Projectiles />
     <GameControlButton />
-    <Version />
   {:else}
     <Intro />
   {/if}
