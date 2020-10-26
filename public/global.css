@@ -88,28 +88,28 @@ h1 {
   font-size: 60px;
   --scaler: 10vw;
   --minFontSize: 60px;
-  --maxFontSize: 120px;
+  --maxFontSize: 100px;
 }
 
 h2 {
   font-size: 50px;
   --scaler: 10vw;
   --minFontSize: 50px;
-  --maxFontSize: 100px;
+  --maxFontSize: 80px;
 }
 
 h3 {
   font-size: 40px;
   --scaler: 10vw;
   --minFontSize: 40px;
-  --maxFontSize: 80px;
+  --maxFontSize: 70px;
 }
 
 h4 {
   font-size: 30px;
   --scaler: 10vw;
   --minFontSize: 30px;
-  --maxFontSize: 60px;
+  --maxFontSize: 50px;
 }
 
 a {

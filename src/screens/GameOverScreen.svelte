@@ -17,12 +17,12 @@
 
     <h3 class="rowLeft2 fluid marginTop3" style="white-space: nowrap;">
       <span class="nice" data-text={points}>{points}</span>
-      <span>points</span>
+      <span class="textShadow">points</span>
     </h3>
 
     {#if $currentRank > 0}
       <h3 class="rowLeft2 fluid marginTop3" style="white-space: nowrap;">
-        <span>You are</span>
+        <span class="textShadow">You are</span>
         <span class="nice" data-text={withSuffix($currentRank)}>{withSuffix($currentRank)}</span>
       </h3>
     {/if}
