@@ -16,20 +16,6 @@ export default {
 
       // If user is signing in...
       if (authData && get(player) === null) {
-        const domain = authData.email.split('@').pop().split('.').slice(-2)[0]
-        const loggedInManually = authData.providerData[0].providerId === 'password'
-
-        // Don't let non-Monedo users in
-        // TODO: remove gmail
-        if (!loggedInManually && !['gmail', 'monedo', 'kreditech'].includes(domain)) {
-          database.signOut()
-          firebase.auth().currentUser.delete()
-          requests.stop('authStateChange')
-          requests.stop('signIn')
-          errors.show('wrongEmailDomain', { message: 'You must log in using company email' })
-          return
-        }
-
         // Try to find user's data in the database
         let playerData = await database.get(`players/${authData.uid}`)
 
@@ -77,7 +63,6 @@ export default {
     if (get(player) || get(requests).signIn) return
 
     errors.hide('signIn')
-    errors.hide('wrongEmailDomain')
     requests.start('signIn')
 
     if (provider === 'google') {
@@ -86,7 +71,7 @@ export default {
         requests.stop('signIn')
       })
     }
-    
+
     if (provider === 'facebook') {
       database.signInFacebook().catch(error => {
         errors.show('signIn', error)
