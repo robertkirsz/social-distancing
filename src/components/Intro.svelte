@@ -23,8 +23,9 @@
   </div>
 
   <div in:fade={{ delay: 2000 }} class="columnTop2 itemsCenter marginTopAuto marginBottom2">
-    <button class="primary" on:click={() => session.signIn('google')} data-text="Google">Google</button>
-    <button class="primary" on:click={() => session.signIn('facebook')} data-text="Facebook">Facebook</button>
+    <button class="primary" on:click={() => session.signIn('google')} data-text="Log in">Log in</button>
+    <!-- TODO: make Facebook login work, or get rid of it -->
+    <!-- <button class="primary" on:click={() => session.signIn('facebook')} data-text="Facebook">Facebook</button> -->
     <button class="secondary" on:click={() => screens.open('HOW TO PLAY')} data-text="How to play">How to play</button>
   </div>
 </div>

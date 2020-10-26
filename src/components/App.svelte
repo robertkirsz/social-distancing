@@ -56,8 +56,9 @@
     <Score />
     <Lives />
     <Stamina />
-    <Shields />
-    <Player />
+    <Player>
+      <Shields />
+    </Player>
     <Projectiles />
     <GameControlButton />
   {:else}

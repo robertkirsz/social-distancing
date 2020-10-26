@@ -278,12 +278,12 @@ export function toggleColors() {
 }
 
 export function resetColors() {
-  root.style.setProperty('--primary', 'pink')
-  root.style.setProperty('--secondary', 'powderblue')
-  root.style.setProperty('--shadow', 'tomato')
+  root.style.setProperty('--primary', '#d8d8d8')
+  root.style.setProperty('--secondary', ' #a4e8f1')
+  root.style.setProperty('--shadow', '#525252')
   root.style.setProperty('--contrast-text', 'black')
-  localStorage.setItem('css-variable--primary', 'pink')
-  localStorage.setItem('css-variable--secondary', 'powderblue')
-  localStorage.setItem('css-variable--shadow', 'tomato')
+  localStorage.setItem('css-variable--primary', '#d8d8d8')
+  localStorage.setItem('css-variable--secondary', ' #a4e8f1')
+  localStorage.setItem('css-variable--shadow', '#525252')
   localStorage.setItem('css-variable--contrast-text', 'black')
 }

@@ -1,8 +1,8 @@
 :root {
   --background: #eee;
-  --primary: pink;
-  --secondary: powderblue;
-  --shadow: tomato;
+  --primary: #d8d8d8;
+  --secondary: #a4e8f1;
+  --shadow: #525252;
   --contrast-text: black;
   --transition: 0.5s;
 }
@@ -186,7 +186,6 @@ button.secondary {
 button.primary::after,
 button.secondary::after {
   content: attr(data-text);
-  display: block;
 
   position: absolute;
   top: 8px;
@@ -196,7 +195,6 @@ button.secondary::after {
 
   color: var(--secondary);
   font-family: 'Bungee Hairline', cursive;
-  font-size: bold;
   text-shadow: 1px 1px var(--shadow);
   pointer-events: none;
   transition: inherit;

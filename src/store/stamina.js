@@ -5,7 +5,7 @@ const { subscribe, update, set } = writable(MAX_STAMINA)
 
 const stamina = {
   subscribe,
-  decrease(value = 1) {
+  decrease(value = 2) {
     update(state => clamp(state - value, 0, MAX_STAMINA))
   },
   reset() {

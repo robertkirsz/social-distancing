@@ -40,6 +40,13 @@
     isVisible = false
     localStorage.setItem('devToolsVisible', false)
   }
+
+  let previousPlayer = null
+
+  function togglePlayer() {
+    if ($player) previousPlayer = $player
+    player.set($player ? null : previousPlayer)
+  }
 </script>
 
 {#if !isVisible}
@@ -127,11 +134,15 @@
         <button on:click={shields.destroy}>Destroy shield</button>
       </div>
 
-      <button on:click={$isInvincible ? effects.deactivate('Invincibility') : effects.activate('Invincibility')}>
-        Invincible
-      </button>
+      <div class="rowLeft">
+        <button on:click={$isInvincible ? effects.deactivate('Invincibility') : effects.activate('Invincibility')}>
+          Invincible
+        </button>
 
-      <button on:click={() => errors.show(uuidv4(), { code: 'Foo', message: 'Lorem ipsum' })}>Throw error</button>
+        <button on:click={() => errors.show(uuidv4(), { code: 'Foo', message: 'Lorem ipsum' })}>Throw error</button>
+
+        <button on:click={togglePlayer}>Toggle player</button>
+      </div>
 
       <form on:submit={handleSubmit}>
         <input bind:value={email} placeholder="Email" />

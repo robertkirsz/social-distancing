@@ -31,9 +31,8 @@
     justify-content: center;
     align-items: center;
     position: absolute;
-    width: 16vw;
-    height: 16vw;
-    z-index: 1;
+    width: 100%;
+    height: 100%;
   }
 
   span {

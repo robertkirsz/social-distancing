@@ -43,6 +43,7 @@
   id="player"
   class:invincibility={$isInvincible}
   class:exhaustion={$isExhausted}
+  transition:fade
   on:animationend={handleAnimationEnd}>
   {#each stuff as item}
     <span class="hand-wrapper" style="transform: rotate({item.rotation}deg);">
@@ -52,17 +53,24 @@
     </span>
   {/each}
 
-  {#if $player}
-    <img class:shake class:game-is-over={$gameIsOver && !$gameIsWon} src={$player.photoUrl} alt="Avatar" />
-    <span class="one-up-heart emoji" class:active={oneUpHeart}>💖</span>
-    <span class="broken-heart emoji" class:active={brokenHeart}>💔</span>
-    {#if $gameIsWon}
-      <span class="emoji crown" transition:fade>👑</span>
-    {/if}
+  <slot />
+
+  <img class:shake class:game-is-over={$gameIsOver && !$gameIsWon} src={$player.photoUrl} alt="Avatar" />
+  <span class="one-up-heart emoji" class:active={oneUpHeart}>💖</span>
+  <span class="broken-heart emoji" class:active={brokenHeart}>💔</span>
+  {#if $gameIsWon}
+    <span class="emoji crown" transition:fade>👑</span>
   {/if}
 </div>
 
 <style>
+  #player {
+    position: absolute;
+    width: 16vw;
+    height: 16vw;
+    z-index: 1;
+  }
+
   @keyframes punch {
     0% {
       transform: translateY(0);
