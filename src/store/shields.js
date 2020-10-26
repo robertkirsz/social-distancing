@@ -1,6 +1,6 @@
 import { v4 as uuidv4 } from 'uuid'
 import { writable, derived } from 'svelte/store'
-import { add, remove, randomItem } from 'stuff'
+import { add, remove, randomItem, SHIELD_DURATION } from 'stuff'
 import { addShieldSound, removeShieldSound } from 'sounds'
 
 const { subscribe, update } = writable([])
@@ -14,6 +14,7 @@ const shields = {
   create() {
     addShieldSound.play()
     update(add(new Shield()))
+    setTimeout(shields.destroy, SHIELD_DURATION)
   },
   destroy() {
     removeShieldSound.play()

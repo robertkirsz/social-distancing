@@ -80,6 +80,7 @@ export const getTirednessLevel = value => (value <= 20 ? 2 : value <= 50 ? 1 : 0
 
 export const INITIAL_LIVES = 3
 export const MAX_STAMINA = 20
+export const SHIELD_DURATION = 7000
 
 export const tirednessEffects = [
   { color: 'gold', cooldown: 500 },

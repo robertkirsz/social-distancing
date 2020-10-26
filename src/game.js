@@ -16,7 +16,7 @@ function Game() {
     { id: 1,  delay: 1000, type: 'Stranger', duration: 3000, direction: 'down' },
     { id: 2,  delay: 1000, type: 'Stranger', duration: 3000, direction: 'left' },
     { id: 3,  delay: 1000, type: 'Stranger', duration: 3000, direction: 'up' },
-    { id: 4,  delay: 300,  type: 'Friend',   duration: 2000, direction: 'down-left' },
+    { id: 4,  delay: 500,  type: 'Friend',   duration: 2000, direction: 'down-left' },
     { id: 5,  delay: 2000, type: 'Stranger', duration: 2000, direction: 'up' },
     { id: 6,  delay: 600,  type: 'Stranger', duration: 2000, direction: 'up-right' },
     { id: 7,  delay: 600,  type: 'Stranger', duration: 2000, direction: 'right' },
@@ -32,7 +32,7 @@ function Game() {
     return new Promise(resolve => {
       setTimeout(() => {
         if (!game) return resolve()
-        console.log('throw:', projectile)
+        console.log(projectile)
         projectiles.throw(projectile)
         resolve()
       }, delay)
@@ -45,7 +45,6 @@ function Game() {
     console.log('start')
     for (const projectile of level) {
       if (!game) break
-      console.log(projectile.id)
       await delayedThrow(projectile)
     }
 
