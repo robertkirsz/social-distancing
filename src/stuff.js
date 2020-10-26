@@ -131,13 +131,13 @@ export const projectileTypes = {
     onHit: { type: 'Remove life', amount: 1 },
     onDeflect: duration => ({
       type: 'Hit stranger',
-      points: duration <= 2500 ? randomNumber(150, 220) : randomNumber(80, 150)
+      points: duration <= 2500 ? randomNumber(150, 220) : randomNumber(50, 100)
     })
   },
   Friend: {
     emoji: () => randomItem(friends),
     onHit: { type: 'Hug friend', points: 300 },
-    onDeflect: { type: 'Hit friend', points: -1000 }
+    onDeflect: { type: 'Hit friend', points: -600 }
   }
 }
 

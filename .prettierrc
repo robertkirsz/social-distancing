@@ -1,12 +1,18 @@
 {
-  "plugins": [
-    "prettier-plugin-svelte"
-  ],
   "trailingComma": "none",
   "printWidth": 120,
   "tabWidth": 2,
   "semi": false,
   "singleQuote": true,
   "arrowParens": "avoid",
-  "svelteSortOrder": "scripts-markup-styles"
+  "parser": "typescript",
+  "overrides": [
+    {
+      "files": "*.svelte",
+      "options": {
+        "svelteSortOrder": "scripts-markup-styles",
+        "plugins": ["prettier-plugin-svelte"]
+      }
+    }
+  ]
 }
