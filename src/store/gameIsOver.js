@@ -17,13 +17,13 @@ gameIsOver.subscribe(async isOver => {
     screens.open('GAME OVER')
 
     const currentPlayer = players.find(_playerId)
-    const currentScore = currentPlayer.socialDistancingScore
+    const currentScore = currentPlayer.score
     const newScore = get(score)
-    const dataToUpdate = { socialDistancingTimesPlayed: (currentPlayer.socialDistancingTimesPlayed || 0) + 1 }
+    const dataToUpdate = { timesPlayed: (currentPlayer.timesPlayed || 0) + 1 }
 
-    if (currentScore === undefined || newScore > currentScore) dataToUpdate.socialDistancingScore = newScore
+    if (currentScore === undefined || newScore > currentScore) dataToUpdate.score = newScore
 
-    database.update(`players/${_playerId}`, dataToUpdate)
+    database.update(`__baseUrl__/players/${_playerId}`, dataToUpdate)
   } else if (isOver === false) {
     lives.set(INITIAL_LIVES)
     score.set(0)

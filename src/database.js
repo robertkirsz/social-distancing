@@ -16,6 +16,7 @@ export const get = path =>
       .ref(path)
       .once('value')
       .then(snapshot => resolve(snapshot.val()))
+      .catch(reject)
   })
 
 export const set = (path, data) =>

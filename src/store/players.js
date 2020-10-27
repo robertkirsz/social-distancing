@@ -9,21 +9,19 @@ const players = {
   subscribe,
   find: id => get(players).find(player => player.id === id),
   addListener() {
-    database.addValueListener('players', data => {
-      set(Object.values(data).sort(descendingBy('socialDistancingScore')))
+    database.addValueListener('__baseUrl__/players', data => {
+      set(Object.values(data).sort(descendingBy('score')))
     })
   },
   removeListener() {
     set([])
-    database.removeListener('players', 'value')
+    database.removeListener('__baseUrl__/players', 'value')
   }
 }
 
 export default players
 
-export const socialDistancingPlayers = derived(players, $players =>
-  $players.filter(({ socialDistancingScore }) => socialDistancingScore !== undefined)
-)
+export const socialDistancingPlayers = derived(players, $players => $players.filter(({ score }) => score !== undefined))
 
 export const currentRank = derived(
   [socialDistancingPlayers, player],

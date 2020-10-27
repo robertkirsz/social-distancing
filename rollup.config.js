@@ -19,7 +19,7 @@ export default {
   },
   plugins: [
     svelte({
-      // enable run-time checks when not in production
+      // Enable run-time checks when not in production
       dev: !production,
       // we'll extract any component CSS out into
       // a separate file — better for performance
@@ -50,6 +50,7 @@ export default {
     includePaths({ paths: ['src'], extensions: ['.js', '.svelte'] }),
     replace({
       __production__: production,
+      __baseUrl__: 'social-distancing',
       __version__: String(packageJson.version),
       __firebaseConfig__: process.env.FIREBASE_CONFIG || JSON.stringify(require('./databaseConfig.json'))
     })

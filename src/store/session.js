@@ -17,25 +17,15 @@ export default {
       // If user is signing in...
       if (authData && get(player) === null) {
         // Try to find user's data in the database
-        let playerData = await database.get(`players/${authData.uid}`)
+        let playerData = await database.get(`__baseUrl__/players/${authData.uid}`)
 
         // If the data is not found, create it using data from the authentication object
         if (!playerData) {
-          const emailSlug = authData.email.split('@')[0].split('+')[0].replace(/[._-]/g, '')
-          const characterTemplates = await database.get('characterTemplates')
-
-          const template = {
-            ...characterTemplates.default,
-            ...characterTemplates[emailSlug]
-          }
-
           playerData = {
             id: authData.uid,
-            name: authData.displayName || emailSlug,
+            displayName: authData.displayName || authData.email,
             email: authData.email,
-            emailSlug,
-            photoUrl: authData.photoURL,
-            ...template
+            photoUrl: authData.photoURL
           }
         }
 
@@ -46,7 +36,7 @@ export default {
         }
 
         // Save the user data in the database with updated last login date
-        await database.update(`players/${playerData.id}`, playerData).catch(error => {
+        await database.update(`__baseUrl__/players/${playerData.id}`, playerData).catch(error => {
           errors.show('updateUserInAddAuthenticationListener', error)
         })
 
@@ -100,7 +90,7 @@ export default {
     requests.start('signOut')
 
     await database
-      .update(`players/${playerData.id}`, { ...playerData, isOnline: false })
+      .update(`__baseUrl__/players/${playerData.id}`, { ...playerData, isOnline: false })
       .catch(error => errors.show('updateUserInSignOut', error))
 
     await database

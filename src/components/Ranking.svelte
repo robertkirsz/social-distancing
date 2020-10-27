@@ -7,10 +7,10 @@
     <tr class:current-player={player.id === $playerId}>
       <td>{index + 1}</td>
       <td>
-        <img src={player.photoUrl} width="40" height="40" alt={`${player.name} photo`} />
+        <img src={player.photoUrl} width="40" height="40" alt={`${player.displayName} photo`} />
       </td>
-      <td>{player.name}</td>
-      <td colspan="2">{player.socialDistancingScore || 0}</td>
+      <td>{player.displayName}</td>
+      <td colspan="2">{player.score || 0}</td>
     </tr>
   {/each}
 </table>
