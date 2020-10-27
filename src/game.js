@@ -140,13 +140,13 @@ function Game() {
     { type: 'Shield', duration: 4000, delay: 700, direction: 'down' },
     3000,
     ...randomize(6, {
-      delay: () => randomNumber(700, 1100),
-      duration: () => randomNumber(1900, 2500)
+      delay: () => randomNumber(700, 1200),
+      duration: () => randomNumber(1900, 2400)
     }),
     3000,
     ...circle({
       clockwise: true,
-      delay: () => randomNumber(550, 650),
+      delay: () => randomNumber(600, 700),
       duration: () => randomNumber(1600, 1700)
     }),
     3000,
@@ -155,19 +155,19 @@ function Game() {
       duration: () => randomNumber(1900, 2500)
     }),
     3000,
-    { delay: 500, type: 'Stranger', duration: 1000, direction: 'left' },
-    { delay: 500, type: 'Stranger', duration: 1000, direction: 'right' },
+    { delay: 500, type: 'Stranger', duration: 1100, direction: 'left' },
+    { delay: 500, type: 'Stranger', duration: 1100, direction: 'right' },
     3000,
     ...circle({
       start: 'down',
       clockwise: false,
-      delay: () => randomNumber(500, 700),
-      duration: () => randomNumber(1500, 2200)
+      delay: () => randomNumber(600, 900),
+      duration: () => randomNumber(1600, 2200)
     }),
     2000,
     ...randomize(8, {
-      delay: () => randomNumber(500, 700),
-      duration: () => randomNumber(1500, 2200)
+      delay: () => randomNumber(500, 800),
+      duration: () => randomNumber(1500, 2100)
     }),
     2000,
     { type: 'Stranger', duration: 1000, delay: 600, direction: 'up' },
