@@ -22,9 +22,9 @@
 <Modal heading="How to play" onClose={() => screens.close('HOW TO PLAY')}>
   <div class="columnTop2">
     <p>
-      You're trying to stay socialy distant, but all around you are these people who just don't care.
+      You're trying to stay socially distant, but all around you are these people who just don't care.
       <br />
-      They're irresponsible and deserve a solid smack! 🤜
+      They're irresponsible and deserve a solid smack! 👊
     </p>
 
     <div class="rowLeft itemsCenter" style="line-height: 1.2">

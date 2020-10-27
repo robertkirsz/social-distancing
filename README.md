@@ -1,5 +1,7 @@
 # Social Distancing: The Game
 
+When you just want to punch some people 👊
+
 ### Configuration
 
 1. Create a new [Firebase](https://firebase.google.com/) project,
@@ -23,3 +25,11 @@
 npm ci
 npm run dev
 ```
+
+### Deployment
+
+```bash
+npm run build
+```
+
+Serve contents of `public` folder.
