@@ -119,25 +119,25 @@ export const projectileTypes = {
   Life: {
     emoji: '💖',
     onHit: { type: 'Add life', amount: 1 },
-    onDeflect: () => ({ type: 'Hit heart', points: randomNumber(250, 300) })
+    onDeflect: () => ({ type: 'Hit heart', points: randomNumber(120, 150) })
   },
   Shield: {
     emoji: '🛡',
     onHit: { type: 'Add shield' },
-    onDeflect: () => ({ type: 'Hit shield', points: randomNumber(150, 200) })
+    onDeflect: () => ({ type: 'Hit shield', points: randomNumber(75, 100) })
   },
   Stranger: {
     emoji: duration => (duration <= 2500 ? randomItem(runners) : randomItem(walkers)),
     onHit: { type: 'Remove life', amount: 1 },
     onDeflect: duration => ({
       type: 'Hit stranger',
-      points: duration <= 2500 ? randomNumber(150, 220) : randomNumber(50, 100)
+      points: duration <= 2500 ? randomNumber(75, 110) : randomNumber(25, 50)
     })
   },
   Friend: {
     emoji: () => randomItem(friends),
-    onHit: { type: 'Hug friend', points: 300 },
-    onDeflect: { type: 'Hit friend', points: -600 }
+    onHit: { type: 'Hug friend', points: 150 },
+    onDeflect: { type: 'Hit friend', points: -300 }
   }
 }
 
