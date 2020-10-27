@@ -13,12 +13,12 @@
 </script>
 
 <div class="columnTop5 itemsCenter justifyCenter" style="height: 100%;">
-  <div in:fade={{ delay: 1000 }} class="column itemsCenter" style="margin: auto 0;">
-    <h2 class="center fluid nice" data-text="Social Distancing">
+  <div in:fade={{ delay: 1000 }} class="columnTop itemsCenter" style="margin: auto 0;">
+    <h1 class="center fluid nice" data-text="Social Distancing" style="line-height: 0.9; --maxFontSize: 125px;">
       Social
       <br />
       Distancing
-    </h2>
+    </h1>
     <h3 class="center fluid nice" data-text="The Game">The Game</h3>
   </div>
 

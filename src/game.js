@@ -1,7 +1,7 @@
 import { projectiles, gameIsRunning, gameIsWon, gameIsOver } from 'store'
 import { coordinates, randomItem, randomNumber } from 'stuff'
 
-const debug = false
+const debug = true
 const log = (...args) => debug && console.log(...args)
 
 let game
@@ -30,7 +30,6 @@ function TypeGenerator(type, { amount, chance }, defaultType = 'Stranger') {
 function randomize(
   amount,
   {
-    type = 'Stranger',
     firstDelay = 1000,
     otherDelays = 1000,
     duration = 1500,
@@ -45,6 +44,7 @@ function randomize(
   }
 ) {
   log('randomize')
+
   const friendMaker = new TypeGenerator('Friend', { amount: numberOfFriends, chance: friendChance })
   const shieldMaker = new TypeGenerator('Shield', { amount: numberOfShields, chance: shieldChance })
   const lifeMaker = new TypeGenerator('Life', { amount: numberOfLives, chance: lifeChance })
@@ -53,10 +53,10 @@ function randomize(
     const previousElement = acc[index - 1] || {}
     const delay = index === 0 ? firstDelay : otherDelays
 
-    let _type = type
-    _type = friendMaker(_type)
-    _type = shieldMaker(_type)
-    _type = lifeMaker(_type)
+    let type = 'Stranger'
+    type = friendMaker(type)
+    type = shieldMaker(type)
+    type = lifeMaker(type)
 
     let direction = randomItem(directions)
     if (nonRepeatingDirections) {
@@ -66,7 +66,7 @@ function randomize(
     }
 
     const item = {
-      type: _type,
+      type,
       delay: typeof delay === 'function' ? delay() : delay,
       duration: typeof duration === 'function' ? duration() : duration,
       direction
@@ -78,15 +78,47 @@ function randomize(
   }, [])
 }
 
-function circle({ clockwise = true, firstDelay = 1000, otherDelays = 1000, duration = 1500 }) {
+function circle({
+  start = 'up',
+  endAtStart = true,
+  clockwise = true,
+  firstDelay = 1000,
+  otherDelays = 1000,
+  duration = 1500,
+  numberOfFriends = 0,
+  friendChance = 0.0,
+  numberOfLives = 0,
+  lifeChance = 0.0,
+  numberOfShields = 0,
+  shieldChance = 0.0
+}) {
   log('circle')
-  const directions = ['up', 'up-right', 'right', 'down-right', 'down', 'down-left', 'left', 'up-left', 'up']
+
+  function shiftDirections(start, endAtStart) {
+    const directions = ['up', 'up-right', 'right', 'down-right', 'down', 'down-left', 'left', 'up-left']
+    const index = directions.findIndex(direction => direction === start)
+    const before = directions.slice(0, index)
+    const after = directions.slice(index)
+    const glued = [...after, ...before]
+
+    return endAtStart ? [...glued, glued[0]] : glued
+  }
+
+  const directions = shiftDirections(start, endAtStart)
+  const friendMaker = new TypeGenerator('Friend', { amount: numberOfFriends, chance: friendChance })
+  const shieldMaker = new TypeGenerator('Shield', { amount: numberOfShields, chance: shieldChance })
+  const lifeMaker = new TypeGenerator('Life', { amount: numberOfLives, chance: lifeChance })
 
   return (clockwise ? directions : directions.reverse()).map((direction, index) => {
     const delay = index === 0 ? firstDelay : otherDelays
 
+    let type = 'Stranger'
+    type = friendMaker(type)
+    type = shieldMaker(type)
+    type = lifeMaker(type)
+
     const item = {
-      type: 'Stranger',
+      type,
       delay: typeof delay === 'function' ? delay() : delay,
       duration: typeof duration === 'function' ? duration() : duration,
       direction
@@ -117,7 +149,14 @@ function Game() {
       numberOfFriends: 2,
       friendChance: 0.3
     }),
-    ...circle({ clockwise: true, firstDelay: 2000, otherDelays: 600, duration: 1700 }),
+    ...circle({
+      clockwise: true,
+      firstDelay: 2000,
+      otherDelays: () => randomNumber(550, 650),
+      duration: () => randomNumber(1600, 1700),
+      numberOfFriends: 1,
+      friendChance: 0.2
+    }),
     ...randomize(10, {
       firstDelay: 1700,
       otherDelays: () => randomNumber(500, 600),
@@ -125,11 +164,21 @@ function Game() {
       numberOfFriends: 2,
       friendChance: 0.3
     }),
-    ...circle({ clockwise: false, firstDelay: 1500, otherDelays: 500, duration: 1500 }),
+    ...circle({
+      start: 'down',
+      clockwise: false,
+      firstDelay: 1500,
+      otherDelays: 500,
+      duration: 1500,
+      numberOfFriends: 1,
+      friendChance: 0.2
+    }),
     ...randomize(10, {
       firstDelay: 1000,
       otherDelays: () => randomNumber(400, 500),
-      duration: () => randomNumber(900, 1200)
+      duration: () => randomNumber(900, 1200),
+      numberOfFriends: 1,
+      friendChance: 0.2
     })
   ]
 
