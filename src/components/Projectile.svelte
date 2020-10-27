@@ -146,9 +146,9 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 5vw;
-    width: 7vw;
-    height: 7vw;
+    font-size: 5vmin;
+    width: 7vmin;
+    height: 7vmin;
     text-align: center;
     line-height: 1;
     position: absolute;
@@ -158,7 +158,7 @@
   }
 
   .outer-wrapper.Stranger {
-    font-size: 7vw;
+    font-size: 7vmin;
   }
 
   .up .inner-wrapper,
@@ -287,7 +287,7 @@
   :global(.hit-mark) {
     position: absolute;
     z-index: 21;
-    font-size: 4vw;
+    font-size: 4vmin;
     animation-name: hit;
     animation-duration: 0.3s;
   }

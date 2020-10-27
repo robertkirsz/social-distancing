@@ -66,10 +66,12 @@
 
 <style>
   #player {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 16vmin;
+    height: 16vmin;
     position: absolute;
-    width: 16vw;
-    height: 16vw;
-    z-index: 1;
   }
 
   @keyframes punch {
@@ -78,7 +80,7 @@
       opacity: 0;
     }
     100% {
-      transform: translateY(-8vw);
+      transform: translateY(-8vmin);
       opacity: 1;
     }
   }
@@ -169,7 +171,7 @@
     content: '💦';
     position: absolute;
     top: 15%;
-    font-size: 4vw;
+    font-size: 4vmin;
     z-index: 10;
   }
 
@@ -180,13 +182,6 @@
 
   .exhaustion::after {
     right: 10%;
-  }
-
-  div {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: relative;
   }
 
   .hand-wrapper {
@@ -201,16 +196,16 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 8vw;
-    height: 8vw;
-    font-size: 5vw;
+    width: 8vmin;
+    height: 8vmin;
+    font-size: 5vmin;
     opacity: 0;
   }
 
   img {
     display: block;
-    width: 16vw;
-    height: 16vw;
+    width: 100%;
+    height: 100%;
     object-fit: cover;
     border-radius: 50%;
     transition: filter 0.3s;
@@ -240,7 +235,7 @@
   }
 
   .crown {
-    font-size: 7vw;
+    font-size: 7vmin;
     position: absolute;
     top: -40%;
     z-index: 1;
