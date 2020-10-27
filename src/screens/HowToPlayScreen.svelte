@@ -40,33 +40,29 @@
       <div class="rowLeft itemsCenter wrap">
         <div class="flex itemsCenter">
           <span class="emoji icon">{randomStranger}</span>
-          Strangers:
+          <span>Strangers: Smack 'em right in the face!</span>
         </div>
-        <span>Smack 'em right in the face!</span>
       </div>
 
       <div class="rowLeft itemsCenter wrap">
         <div class="flex itemsCenter">
           <span class="emoji icon">{randomFriend}</span>
-          Loved ones:
+          <span>Loved ones: Hug them (DON'T punch them!)</span>
         </div>
-        <span>Hug them (DON'T punch them!)</span>
       </div>
 
       <div class="rowLeft itemsCenter wrap">
         <div class="flex itemsCenter">
           <span class="emoji icon">{projectileTypes.Life.emoji}</span>
-          Heart:
+          <span>Heart: Grab it for an extra life (or punch it for extra points)</span>
         </div>
-        <span>Grab it for an extra life (or punch it for extra points)</span>
       </div>
 
       <div class="rowLeft itemsCenter wrap">
         <div class="flex itemsCenter">
           <span class="emoji icon">{projectileTypes.Shield.emoji}</span>
-          Shield:
+          <span>Shield: Gives you protection from strangers (or points if you punch it)</span>
         </div>
-        <span>Gives you protection from strangers (or points if you punch it)</span>
       </div>
     </div>
 
@@ -86,6 +82,7 @@
 
 <style>
   .icon {
+    flex: none;
     width: 1.5em;
     margin-right: 8px;
     font-size: 2em;
