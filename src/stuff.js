@@ -12,6 +12,10 @@ export function range(value, min, max) {
   return value * (max - min) + min
 }
 
+export function sleep(time) {
+  return new Promise(resolve => setTimeout(resolve, time))
+}
+
 export function loopThrough(items) {
   let index = 0
 

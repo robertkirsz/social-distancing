@@ -1,7 +1,7 @@
 import { projectiles, gameIsRunning, gameIsWon, gameIsOver } from 'store'
-import { coordinates, randomItem, randomNumber } from 'stuff'
+import { coordinates, randomItem, randomNumber, sleep } from 'stuff'
 
-const debug = false
+const debug = true
 const log = (...args) => debug && console.log(...args)
 
 let game
@@ -30,17 +30,16 @@ function TypeGenerator(type, { amount, chance }, defaultType = 'Stranger') {
 function randomize(
   amount,
   {
-    firstDelay = 1000,
-    otherDelays = 1000,
+    delay = 1000,
     duration = 1500,
     directions = Object.keys(coordinates),
     nonRepeatingDirections = true,
-    numberOfFriends = 0,
-    friendChance = 0.0,
-    numberOfLives = 0,
-    lifeChance = 0.0,
-    numberOfShields = 0,
-    shieldChance = 0.0
+    numberOfFriends = 2,
+    friendChance = 0.25,
+    numberOfLives = 1,
+    lifeChance = 0.05,
+    numberOfShields = 1,
+    shieldChance = 0.1
   }
 ) {
   log('randomize')
@@ -51,7 +50,6 @@ function randomize(
 
   return [...Array(amount)].reduce((acc, _, index) => {
     const previousElement = acc[index - 1] || {}
-    const delay = index === 0 ? firstDelay : otherDelays
 
     let type = 'Stranger'
     type = friendMaker(type)
@@ -82,8 +80,7 @@ function circle({
   start = 'up',
   endAtStart = true,
   clockwise = true,
-  firstDelay = 1000,
-  otherDelays = 1000,
+  delay = 1000,
   duration = 1500,
   numberOfFriends = 2,
   friendChance = 0.25,
@@ -109,9 +106,7 @@ function circle({
   const shieldMaker = new TypeGenerator('Shield', { amount: numberOfShields, chance: shieldChance })
   const lifeMaker = new TypeGenerator('Life', { amount: numberOfLives, chance: lifeChance })
 
-  return (clockwise ? directions : directions.reverse()).map((direction, index) => {
-    const delay = index === 0 ? firstDelay : otherDelays
-
+  return (clockwise ? directions : directions.reverse()).map(direction => {
     let type = 'Stranger'
     type = friendMaker(type)
     type = shieldMaker(type)
@@ -132,74 +127,76 @@ function circle({
 
 function Game() {
   const levels = [
-    { delay: 1200, type: 'Stranger', duration: 4500, direction: 'right' },
-    { delay: 1200, type: 'Stranger', duration: 4500, direction: 'down' },
-    { delay: 1200, type: 'Stranger', duration: 4500, direction: 'left' },
-    { delay: 1200, type: 'Stranger', duration: 4500, direction: 'up' },
-    { delay: 1200, type: 'Friend', duration: 4500, direction: 'down' },
-    { delay: 4200, type: 'Stranger', duration: 3500, direction: 'up-right' },
-    { delay: 1000, type: 'Stranger', duration: 3500, direction: 'down-right' },
-    { delay: 1000, type: 'Stranger', duration: 3500, direction: 'down-left' },
-    { delay: 1000, type: 'Stranger', duration: 3500, direction: 'up-left' },
-    { delay: 1000, type: 'Shield', duration: 3500, direction: 'down' },
+    { type: 'Stranger', duration: 4500, delay: 1200, direction: 'right' },
+    { type: 'Stranger', duration: 4400, delay: 1200, direction: 'down' },
+    { type: 'Stranger', duration: 4300, delay: 1200, direction: 'left' },
+    { type: 'Stranger', duration: 4200, delay: 1200, direction: 'up' },
+    { type: 'Friend', duration: 4100, delay: 1200, direction: 'down' },
+    3000,
+    { type: 'Stranger', duration: 4000, delay: 1100, direction: 'up-right' },
+    { type: 'Stranger', duration: 4000, delay: 1000, direction: 'down-right' },
+    { type: 'Stranger', duration: 4000, delay: 900, direction: 'down-left' },
+    { type: 'Stranger', duration: 4000, delay: 800, direction: 'up-left' },
+    { type: 'Shield', duration: 4000, delay: 700, direction: 'down' },
+    3000,
     ...randomize(6, {
-      firstDelay: 3200,
-      otherDelays: () => randomNumber(700, 1100),
+      delay: () => randomNumber(700, 1100),
       duration: () => randomNumber(1900, 2500)
     }),
+    3000,
     ...circle({
       clockwise: true,
-      firstDelay: 2000,
-      otherDelays: () => randomNumber(550, 650),
+      delay: () => randomNumber(550, 650),
       duration: () => randomNumber(1600, 1700)
     }),
+    3000,
     ...randomize(6, {
-      firstDelay: 3200,
-      otherDelays: () => randomNumber(700, 1100),
+      delay: () => randomNumber(700, 1100),
       duration: () => randomNumber(1900, 2500)
     }),
+    3000,
     { delay: 500, type: 'Stranger', duration: 1000, direction: 'left' },
     { delay: 500, type: 'Stranger', duration: 1000, direction: 'right' },
+    3000,
     ...circle({
       start: 'down',
       clockwise: false,
-      firstDelay: 1500,
-      otherDelays: () => randomNumber(400, 500),
-      duration: () => randomNumber(1100, 1200)
+      delay: () => randomNumber(500, 700),
+      duration: () => randomNumber(1500, 2200)
     }),
+    2000,
     ...randomize(8, {
-      firstDelay: 1700,
-      otherDelays: () => randomNumber(500, 700),
-      duration: () => randomNumber(1500, 2100)
+      delay: () => randomNumber(500, 700),
+      duration: () => randomNumber(1500, 2200)
     }),
-    { delay: 1200, type: 'Stranger', duration: 1000, direction: 'up' },
-    { delay: 500, type: 'Stranger', duration: 1000, direction: 'down' },
-    { delay: 500, type: 'Stranger', duration: 1000, direction: 'left' },
-    { delay: 500, type: 'Stranger', duration: 1000, direction: 'right' },
+    2000,
+    { type: 'Stranger', duration: 1000, delay: 600, direction: 'up' },
+    { type: 'Stranger', duration: 1000, delay: 500, direction: 'down' },
+    { type: 'Stranger', duration: 1000, delay: 400, direction: 'left' },
+    { type: 'Stranger', duration: 1000, delay: 300, direction: 'right' },
+    2000,
     ...randomize(10, {
-      firstDelay: 1000,
-      otherDelays: () => randomNumber(400, 500),
+      delay: () => randomNumber(400, 500),
       duration: () => randomNumber(900, 1200)
     }),
-    { delay: 1200, type: 'Stranger', duration: 1000, direction: 'up' },
-    { delay: 500, type: 'Stranger', duration: 1000, direction: 'down' },
-    { delay: 500, type: 'Stranger', duration: 1000, direction: 'left' },
-    { delay: 500, type: 'Stranger', duration: 1000, direction: 'right' },
-    { delay: 500, type: 'Stranger', duration: 1000, direction: 'up-right' },
-    { delay: 500, type: 'Stranger', duration: 1000, direction: 'down-left' },
-    { delay: 500, type: 'Stranger', duration: 1000, direction: 'up-left' },
-    { delay: 500, type: 'Stranger', duration: 1000, direction: 'down-right' },
-    { delay: 500, type: 'Stranger', duration: 1000, direction: 'left' },
-    { delay: 500, type: 'Stranger', duration: 1000, direction: 'right' },
-    { delay: 500, type: 'Stranger', duration: 1000, direction: 'down' },
-    { delay: 500, type: 'Stranger', duration: 1000, direction: 'up' },
-    { delay: 500, type: 'Stranger', duration: 1000, direction: 'down-right' },
-    { delay: 500, type: 'Stranger', duration: 1000, direction: 'up-right' },
-    { delay: 500, type: 'Stranger', duration: 1000, direction: 'up-left' },
-    { delay: 500, type: 'Stranger', duration: 1000, direction: 'down-left' }
+    2000,
+    { type: 'Stranger', duration: 1000, delay: 500, direction: 'up' },
+    { type: 'Stranger', duration: 1000, delay: 500, direction: 'down' },
+    { type: 'Stranger', duration: 1000, delay: 500, direction: 'left' },
+    { type: 'Stranger', duration: 1000, delay: 500, direction: 'right' },
+    { type: 'Stranger', duration: 1000, delay: 500, direction: 'up-right' },
+    { type: 'Stranger', duration: 1000, delay: 500, direction: 'down-left' },
+    { type: 'Stranger', duration: 1000, delay: 500, direction: 'up-left' },
+    { type: 'Stranger', duration: 1000, delay: 500, direction: 'down-right' },
+    { type: 'Stranger', duration: 1000, delay: 500, direction: 'left' },
+    { type: 'Stranger', duration: 1000, delay: 500, direction: 'right' },
+    { type: 'Stranger', duration: 1000, delay: 500, direction: 'down' },
+    { type: 'Stranger', duration: 1000, delay: 500, direction: 'up' },
+    { type: 'Stranger', duration: 1000, delay: 500, direction: 'down-right' },
+    { type: 'Stranger', duration: 1000, delay: 500, direction: 'up-right' },
+    { type: 'Stranger', duration: 1000, delay: 500, direction: 'up-left' },
+    { type: 'Stranger', duration: 1000, delay: 500, direction: 'down-left' }
   ]
-
-  const levelsWithIds = levels.map((projectile, index) => ({ id: index, ...projectile }))
 
   function delayedThrow({ delay, ...projectile }) {
     return new Promise(resolve => {
@@ -212,9 +209,9 @@ function Game() {
   }
 
   async function start() {
-    for (const projectile of levelsWithIds) {
+    for (const projectile of levels) {
       if (!game) break
-      await delayedThrow(projectile)
+      await (typeof projectile === 'number' ? sleep(projectile) : delayedThrow(projectile))
     }
 
     setTimeout(() => {
