@@ -52,7 +52,7 @@
 
   .menu {
     position: absolute;
-    bottom: 100%;
+    bottom: 110%;
     min-width: 260px;
     margin: 0 8px 8px 0;
     padding: 8px;
@@ -61,5 +61,11 @@
     background: rgba(255, 255, 255, 0.85);
     transition-property: border-color, box-shadow;
     transition-duration: var(--transition);
+  }
+
+  @media (max-width: 720px) {
+    .menu {
+      left: 0;
+    }
   }
 </style>
