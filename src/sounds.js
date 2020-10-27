@@ -1,5 +1,7 @@
-import { Howl } from 'howler'
+import { Howl, Howler } from 'howler'
 import { randomItem } from 'stuff'
+
+Howler.volume(0.5)
 
 const punchSound1 = new Howl({ src: ['sounds/punch_1.mp3'] })
 const punchSound2 = new Howl({ src: ['sounds/punch_2.mp3'] })
