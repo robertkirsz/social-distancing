@@ -21,24 +21,22 @@
     requests
   } from 'store'
 
-  let isVisible = localStorage.getItem('devToolsVisible') === 'true'
-
-  let email = `${uuidv4()}@mock.com`
-  let password = '123456'
-
-  function handleSubmit(event) {
-    event.preventDefault()
-    session.manualSignIn(email, password)
-  }
+  let devToolsVisible = localStorage.getItem('devToolsVisible') === 'true'
+  let logsVisible = localStorage.getItem('logsVisible') === 'true'
 
   function openDevTools() {
-    isVisible = true
+    devToolsVisible = true
     localStorage.setItem('devToolsVisible', true)
   }
 
   function closeDevTools() {
-    isVisible = false
+    devToolsVisible = false
     localStorage.setItem('devToolsVisible', false)
+  }
+
+  function toggleLogs() {
+    logsVisible = !logsVisible
+    localStorage.setItem('logsVisible', logsVisible)
   }
 
   let previousPlayer = null
@@ -49,50 +47,54 @@
   }
 </script>
 
-{#if !isVisible}
+{#if !devToolsVisible}
   <button class="toggle" on:click={openDevTools}>Devtools</button>
 {/if}
 
-{#if isVisible}
+{#if devToolsVisible}
   <aside>
-    <pre>effects: {JSON.stringify($effects, null, 2)}</pre>
+    {#if logsVisible}
+      <pre>effects: {JSON.stringify($effects, null, 2)}</pre>
 
-    <div style="max-height: 200px; overflow: auto;">
+      <div style="max-height: 200px; overflow: auto;">
+        <pre>
+          projectiles: {JSON.stringify($projectiles.map(({ type, emoji, direction }) => ({
+              type,
+              emoji,
+              direction
+            })), null, 2)}
+        </pre>
+      </div>
+
+      <div style="max-height: 200px; overflow: auto;">
+        <pre>
+          players: {JSON.stringify($socialDistancingPlayers.map(
+              ({ displayName, score, timesPlayed, timesWon }) => ({
+                displayName,
+                score,
+                timesPlayed,
+                timesWon
+              })
+            ), null, 2)}
+        </pre>
+      </div>
+
+      <pre>shields: {JSON.stringify($shields, null, 2)}</pre>
+      <pre>scoreLabels: {JSON.stringify($scoreLabels, null, 2)}</pre>
+      <pre>hasShield: {$hasShield}</pre>
       <pre>
-        projectiles: {JSON.stringify($projectiles.map(({ type, emoji, direction }) => ({
-            type,
-            emoji,
-            direction
-          })), null, 2)}
+        player: {$player && JSON.stringify({ displayName: $player.displayName, email: $player.email, points: $player.score, timesPlayed: $player.timesPlayed, timesWon: $player.timesWon }, null, 2)}
       </pre>
-    </div>
+      <pre>ranking: {$currentRank}</pre>
+      <pre>errors: {JSON.stringify($errors, null, 2)}</pre>
+      <pre>screens: {JSON.stringify($screens, null, 2)}</pre>
+      <pre>requests: {JSON.stringify($requests, null, 2)}</pre>
 
-    <div style="max-height: 200px; overflow: auto;">
-      <pre>
-        players: {JSON.stringify($socialDistancingPlayers.map(
-            ({ displayName, score, timesPlayed, timesWon }) => ({
-              displayName,
-              score,
-              timesPlayed,
-              timesWon
-            })
-          ), null, 2)}
-      </pre>
-    </div>
+      <pre class="clickable" on:click={() => gameIsRunning.update(state => !state)}>gameIsRunning: {$gameIsRunning}</pre>
+      <pre class="clickable" on:click={() => gameIsOver.update(state => !state)}>gameIsOver: {$gameIsOver}</pre>
+    {/if}
 
-    <pre>shields: {JSON.stringify($shields, null, 2)}</pre>
-    <pre>scoreLabels: {JSON.stringify($scoreLabels, null, 2)}</pre>
-    <pre>hasShield: {$hasShield}</pre>
-    <pre>
-      player: {$player && JSON.stringify({ displayName: $player.displayName, email: $player.email, points: $player.score, timesPlayed: $player.timesPlayed, timesWon: $player.timesWon }, null, 2)}
-    </pre>
-    <pre>rank: {$currentRank}</pre>
-    <pre>errors: {JSON.stringify($errors, null, 2)}</pre>
-    <pre>screens: {JSON.stringify($screens, null, 2)}</pre>
-    <pre>requests: {JSON.stringify($requests, null, 2)}</pre>
-
-    <pre class="clickable" on:click={() => gameIsRunning.update(state => !state)}>gameIsRunning: {$gameIsRunning}</pre>
-    <pre class="clickable" on:click={() => gameIsOver.update(state => !state)}>gameIsOver: {$gameIsOver}</pre>
+    <button on:click={toggleLogs}>{logsVisible ? 'Hide logs' : 'Show logs'}</button>
 
     <div class="rowLeft">
       <button on:click={() => screens.toggle('LOADING')}>LOADING</button>
@@ -141,15 +143,8 @@
         </button>
 
         <button on:click={() => errors.show(uuidv4(), { code: 'Foo', message: 'Lorem ipsum' })}>Throw error</button>
-
         <button on:click={togglePlayer}>Toggle player</button>
       </div>
-
-      <form on:submit={handleSubmit}>
-        <input bind:value={email} placeholder="Email" />
-        <input bind:value={password} placeholder="Password" />
-        <button type="submit">Manual login</button>
-      </form>
     </div>
 
     <button on:click={closeDevTools}>x</button>
