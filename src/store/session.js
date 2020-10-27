@@ -69,16 +69,6 @@ export default {
       })
     }
   },
-  manualSignIn(email, password) {
-    if (get(player) || get(requests).signIn) return
-
-    errors.hide('signIn')
-    requests.start('signIn')
-    database.manualSignIn(email, password).catch(error => {
-      errors.show('signIn', error)
-      requests.stop('signIn')
-    })
-  },
   async signOut() {
     const playerData = get(player)
 

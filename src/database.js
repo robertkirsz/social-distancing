@@ -63,5 +63,4 @@ export const signInFacebook = () => {
   return firebase.auth().signInWithPopup(provider)
 }
 
-export const manualSignIn = (email, password) => firebase.auth().createUserWithEmailAndPassword(email, password)
 export const signOut = () => firebase.auth().signOut()
