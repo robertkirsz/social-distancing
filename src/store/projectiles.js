@@ -72,6 +72,7 @@ const actionHandler = ({ type, ...parameters }) => {
       score.update(points)
       scoreLabels.show(points, direction)
       projectiles.remove(id, 'hug')
+      lifeUpSound.play()
       break
     }
 

@@ -70,10 +70,11 @@
     <div style="max-height: 200px; overflow: auto;">
       <pre>
         players: {JSON.stringify($socialDistancingPlayers.map(
-            ({ displayName, score, timesPlayed }) => ({
+            ({ displayName, score, timesPlayed, timesWon }) => ({
               displayName,
               score,
-              timesPlayed
+              timesPlayed,
+              timesWon
             })
           ), null, 2)}
       </pre>
@@ -83,7 +84,7 @@
     <pre>scoreLabels: {JSON.stringify($scoreLabels, null, 2)}</pre>
     <pre>hasShield: {$hasShield}</pre>
     <pre>
-      player: {$player && JSON.stringify({ displayName: $player.displayName, email: $player.email, points: $player.score, timesPlayed: $player.timesPlayed }, null, 2)}
+      player: {$player && JSON.stringify({ displayName: $player.displayName, email: $player.email, points: $player.score, timesPlayed: $player.timesPlayed, timesWon: $player.timesWon }, null, 2)}
     </pre>
     <pre>rank: {$currentRank}</pre>
     <pre>errors: {JSON.stringify($errors, null, 2)}</pre>

@@ -85,12 +85,12 @@ function circle({
   firstDelay = 1000,
   otherDelays = 1000,
   duration = 1500,
-  numberOfFriends = 0,
-  friendChance = 0.0,
-  numberOfLives = 0,
-  lifeChance = 0.0,
-  numberOfShields = 0,
-  shieldChance = 0.0
+  numberOfFriends = 2,
+  friendChance = 0.25,
+  numberOfLives = 1,
+  lifeChance = 0.05,
+  numberOfShields = 1,
+  shieldChance = 0.1
 }) {
   log('circle')
 
@@ -144,42 +144,59 @@ function Game() {
     { delay: 1000, type: 'Shield', duration: 3500, direction: 'down' },
     ...randomize(6, {
       firstDelay: 3200,
-      otherDelays: () => randomNumber(800, 900),
-      duration: () => randomNumber(2000, 2100),
-      numberOfFriends: 2,
-      friendChance: 0.3
+      otherDelays: () => randomNumber(700, 1100),
+      duration: () => randomNumber(1900, 2500)
     }),
     ...circle({
       clockwise: true,
       firstDelay: 2000,
       otherDelays: () => randomNumber(550, 650),
-      duration: () => randomNumber(1600, 1700),
-      numberOfFriends: 1,
-      friendChance: 0.2
+      duration: () => randomNumber(1600, 1700)
     }),
-    ...randomize(10, {
-      firstDelay: 1700,
-      otherDelays: () => randomNumber(500, 600),
-      duration: () => randomNumber(1500, 1700),
-      numberOfFriends: 2,
-      friendChance: 0.3
+    ...randomize(6, {
+      firstDelay: 3200,
+      otherDelays: () => randomNumber(700, 1100),
+      duration: () => randomNumber(1900, 2500)
     }),
+    { delay: 500, type: 'Stranger', duration: 1000, direction: 'left' },
+    { delay: 500, type: 'Stranger', duration: 1000, direction: 'right' },
     ...circle({
       start: 'down',
       clockwise: false,
       firstDelay: 1500,
       otherDelays: () => randomNumber(400, 500),
-      duration: () => randomNumber(1100, 1200),
-      numberOfFriends: 1,
-      friendChance: 0.2
+      duration: () => randomNumber(1100, 1200)
     }),
+    ...randomize(8, {
+      firstDelay: 1700,
+      otherDelays: () => randomNumber(500, 700),
+      duration: () => randomNumber(1500, 2100)
+    }),
+    { delay: 1200, type: 'Stranger', duration: 1000, direction: 'up' },
+    { delay: 500, type: 'Stranger', duration: 1000, direction: 'down' },
+    { delay: 500, type: 'Stranger', duration: 1000, direction: 'left' },
+    { delay: 500, type: 'Stranger', duration: 1000, direction: 'right' },
     ...randomize(10, {
       firstDelay: 1000,
       otherDelays: () => randomNumber(400, 500),
-      duration: () => randomNumber(900, 1200),
-      numberOfFriends: 1,
-      friendChance: 0.2
-    })
+      duration: () => randomNumber(900, 1200)
+    }),
+    { delay: 1200, type: 'Stranger', duration: 1000, direction: 'up' },
+    { delay: 500, type: 'Stranger', duration: 1000, direction: 'down' },
+    { delay: 500, type: 'Stranger', duration: 1000, direction: 'left' },
+    { delay: 500, type: 'Stranger', duration: 1000, direction: 'right' },
+    { delay: 500, type: 'Stranger', duration: 1000, direction: 'up-right' },
+    { delay: 500, type: 'Stranger', duration: 1000, direction: 'down-left' },
+    { delay: 500, type: 'Stranger', duration: 1000, direction: 'up-left' },
+    { delay: 500, type: 'Stranger', duration: 1000, direction: 'down-right' },
+    { delay: 500, type: 'Stranger', duration: 1000, direction: 'left' },
+    { delay: 500, type: 'Stranger', duration: 1000, direction: 'right' },
+    { delay: 500, type: 'Stranger', duration: 1000, direction: 'down' },
+    { delay: 500, type: 'Stranger', duration: 1000, direction: 'up' },
+    { delay: 500, type: 'Stranger', duration: 1000, direction: 'down-right' },
+    { delay: 500, type: 'Stranger', duration: 1000, direction: 'up-right' },
+    { delay: 500, type: 'Stranger', duration: 1000, direction: 'up-left' },
+    { delay: 500, type: 'Stranger', duration: 1000, direction: 'down-left' }
   ]
 
   const levelsWithIds = levels.map((projectile, index) => ({ id: index, ...projectile }))

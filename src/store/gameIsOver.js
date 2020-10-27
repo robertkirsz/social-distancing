@@ -10,7 +10,7 @@ import gameIsWon from 'store/gameIsWon'
 
 const gameIsOver = writable(false)
 
-gameIsOver.subscribe(async isOver => {
+gameIsOver.subscribe(isOver => {
   const _playerId = get(playerId)
 
   if (isOver) {
