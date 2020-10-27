@@ -103,9 +103,20 @@
   let disableCloning = false
 
   function createAnimatedClone() {
-    if (animation !== 'deflect' || disableCloning) return
+    if (!['deflect', 'hug'].includes(animation) || disableCloning) return
 
     const { top, left } = node.getBoundingClientRect()
+
+    const hitMark = document.createElement('div')
+    hitMark.innerHTML = { deflect:'💥', hug: '✨' }[animation]
+    hitMark.className = 'hit-mark'
+    hitMark.style.top = `${top}px`
+    hitMark.style.left = `${left}px`
+    hitMark.addEventListener('animationend', hitMark.remove)
+    document.body.appendChild(hitMark)
+
+    // Don't do backflip when hugging
+    if (animation === 'hug') return
 
     const clone = node.cloneNode(true)
     clone.removeAttribute('style')
@@ -114,16 +125,7 @@
     clone.style.transform = 'none'
     clone.className += ` deflect`
     clone.addEventListener('animationend', clone.remove)
-
-    const hitMark = document.createElement('div')
-    hitMark.innerHTML = '💥'
-    hitMark.className = 'hit-mark'
-    hitMark.style.top = `${top}px`
-    hitMark.style.left = `${left}px`
-    hitMark.addEventListener('animationend', hitMark.remove)
-
     document.body.appendChild(clone)
-    document.body.appendChild(hitMark)
   }
 
   onDestroy(createAnimatedClone)

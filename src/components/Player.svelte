@@ -58,6 +58,7 @@
   <img class:shake class:game-is-over={$gameIsOver && !$gameIsWon} src={$player.photoUrl} alt="Avatar" />
   <span class="one-up-heart emoji" class:active={oneUpHeart}>💖</span>
   <span class="broken-heart emoji" class:active={brokenHeart}>💔</span>
+  
   {#if $gameIsWon}
     <span class="emoji crown" transition:fade>👑</span>
   {/if}

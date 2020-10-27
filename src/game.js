@@ -1,7 +1,7 @@
 import { projectiles, gameIsRunning, gameIsWon, gameIsOver } from 'store'
 import { coordinates, randomItem, randomNumber } from 'stuff'
 
-const debug = true
+const debug = false
 const log = (...args) => debug && console.log(...args)
 
 let game
@@ -132,18 +132,18 @@ function circle({
 
 function Game() {
   const levels = [
-    { delay: 1000, type: 'Stranger', duration: 4200, direction: 'right' },
-    { delay: 1000, type: 'Stranger', duration: 4200, direction: 'down' },
-    { delay: 1000, type: 'Stranger', duration: 4200, direction: 'left' },
-    { delay: 1000, type: 'Stranger', duration: 4200, direction: 'up' },
-    { delay: 1000, type: 'Friend', duration: 4200, direction: 'down' },
-    { delay: 3000, type: 'Stranger', duration: 3200, direction: 'up-right' },
-    { delay: 900, type: 'Stranger', duration: 3200, direction: 'down-right' },
-    { delay: 900, type: 'Stranger', duration: 3200, direction: 'down-left' },
-    { delay: 900, type: 'Stranger', duration: 3200, direction: 'up-left' },
-    { delay: 900, type: 'Shield', duration: 3200, direction: 'down' },
+    { delay: 1200, type: 'Stranger', duration: 4500, direction: 'right' },
+    { delay: 1200, type: 'Stranger', duration: 4500, direction: 'down' },
+    { delay: 1200, type: 'Stranger', duration: 4500, direction: 'left' },
+    { delay: 1200, type: 'Stranger', duration: 4500, direction: 'up' },
+    { delay: 1200, type: 'Friend', duration: 4500, direction: 'down' },
+    { delay: 4200, type: 'Stranger', duration: 3500, direction: 'up-right' },
+    { delay: 1000, type: 'Stranger', duration: 3500, direction: 'down-right' },
+    { delay: 1000, type: 'Stranger', duration: 3500, direction: 'down-left' },
+    { delay: 1000, type: 'Stranger', duration: 3500, direction: 'up-left' },
+    { delay: 1000, type: 'Shield', duration: 3500, direction: 'down' },
     ...randomize(6, {
-      firstDelay: 3000,
+      firstDelay: 3200,
       otherDelays: () => randomNumber(800, 900),
       duration: () => randomNumber(2000, 2100),
       numberOfFriends: 2,
@@ -168,8 +168,8 @@ function Game() {
       start: 'down',
       clockwise: false,
       firstDelay: 1500,
-      otherDelays: 500,
-      duration: 1500,
+      otherDelays: () => randomNumber(400, 500),
+      duration: () => randomNumber(1100, 1200),
       numberOfFriends: 1,
       friendChance: 0.2
     }),

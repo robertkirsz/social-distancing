@@ -71,7 +71,7 @@ const actionHandler = ({ type, ...parameters }) => {
       const { id, direction, points } = parameters
       score.update(points)
       scoreLabels.show(points, direction)
-      projectiles.remove(id)
+      projectiles.remove(id, 'hug')
       break
     }
 
