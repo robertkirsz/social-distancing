@@ -1,7 +1,7 @@
 import { randomNumber, coordinates, randomItem } from 'stuff'
 
 export default function Levels() {
-  const debug = true
+  const debug = false
   const log = (...args) => debug && console.log(...args)
 
   function TypeGenerator(type, { amount, chance }, defaultType = 'Stranger') {
@@ -117,7 +117,7 @@ export default function Levels() {
   }
 
   return [
-    { type: 'Stranger', duration: 4500, delay: 1200, direction: 'right' },
+    { type: 'Stranger', duration: 4500, delay: 2000, direction: 'right' },
     { type: 'Stranger', duration: 4400, delay: 1200, direction: 'down' },
     { type: 'Stranger', duration: 4300, delay: 1200, direction: 'left' },
     { type: 'Stranger', duration: 4200, delay: 1200, direction: 'up' },
@@ -127,47 +127,63 @@ export default function Levels() {
     { type: 'Stranger', duration: 4000, delay: 1000, direction: 'down-right' },
     { type: 'Stranger', duration: 4000, delay: 900, direction: 'down-left' },
     { type: 'Stranger', duration: 4000, delay: 800, direction: 'up-left' },
-    { type: 'Shield', duration: 4000, delay: 700, direction: 'down' },
+    { type: 'Shield', duration: 4000, delay: 900, direction: 'down' },
     3000,
-    ...randomize(6, {
-      delay: () => randomNumber(700, 1200),
-      duration: () => randomNumber(1900, 2400)
+    ...randomize(10, {
+      delay: () => randomNumber(700, 1700),
+      duration: () => randomNumber(2000, 4000)
     }),
+    3000,
+    { delay: 500, type: 'Stranger', duration: 1100, direction: 'down' },
+    { delay: 500, type: 'Stranger', duration: 1100, direction: 'up' },
     3000,
     ...circle({
-      clockwise: true,
-      delay: () => randomNumber(600, 700),
-      duration: () => randomNumber(1600, 1700)
-    }),
-    3000,
-    ...randomize(6, {
-      delay: () => randomNumber(700, 1100),
-      duration: () => randomNumber(1900, 2500)
+      delay: () => randomNumber(500, 1600),
+      duration: () => randomNumber(1800, 2500)
     }),
     3000,
     { delay: 500, type: 'Stranger', duration: 1100, direction: 'left' },
     { delay: 500, type: 'Stranger', duration: 1100, direction: 'right' },
     3000,
+    ...randomize(10, {
+      delay: () => randomNumber(700, 1100),
+      duration: () => randomNumber(1600, 2500)
+    }),
+    3000,
+    ...circle({
+      delay: () => randomNumber(200, 400),
+      duration: () => randomNumber(1300, 1600)
+    }),
+    2000,
+    { delay: 500, type: 'Stranger', duration: 1100, direction: 'down' },
+    { delay: 200, type: 'Stranger', duration: 1100, direction: 'up' },
+    { delay: 200, type: 'Friend', duration: 1100, direction: 'left' },
+    2000,
     ...circle({
       start: 'down',
       clockwise: false,
-      delay: () => randomNumber(600, 900),
+      delay: () => randomNumber(400, 600),
       duration: () => randomNumber(1600, 2200)
     }),
     2000,
-    ...randomize(8, {
+    ...randomize(10, {
       delay: () => randomNumber(500, 800),
       duration: () => randomNumber(1500, 2100)
     }),
     2000,
-    { type: 'Stranger', duration: 1000, delay: 600, direction: 'up' },
-    { type: 'Stranger', duration: 1000, delay: 500, direction: 'down' },
-    { type: 'Stranger', duration: 1000, delay: 400, direction: 'left' },
-    { type: 'Stranger', duration: 1000, delay: 300, direction: 'right' },
+    ...circle({
+      delay: () => randomNumber(500, 700),
+      duration: () => randomNumber(1200, 2000)
+    }),
     2000,
-    ...randomize(10, {
-      delay: () => randomNumber(400, 500),
-      duration: () => randomNumber(900, 1200)
+    { type: 'Stranger', duration: 1000, delay: 800, direction: 'up' },
+    { type: 'Stranger', duration: 1000, delay: 700, direction: 'down' },
+    { type: 'Stranger', duration: 1000, delay: 600, direction: 'left' },
+    { type: 'Stranger', duration: 1000, delay: 500, direction: 'right' },
+    2000,
+    ...randomize(15, {
+      delay: () => randomNumber(300, 1000),
+      duration: () => randomNumber(900, 3500)
     }),
     2000,
     { type: 'Stranger', duration: 1000, delay: 500, direction: 'up' },
