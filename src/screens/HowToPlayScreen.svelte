@@ -1,7 +1,6 @@
 <script>
-  import { fade } from 'svelte/transition'
   import { screens } from 'store'
-  import { walkers, runners, friends, projectileTypes, randomItem, loopThrough, onInterval, range } from 'stuff'
+  import { walkers, runners, friends, projectileTypes, randomItem, loopThrough, onInterval } from 'stuff'
   import Modal from 'components/Modal'
   import StaminaBar from 'components/StaminaBar'
 

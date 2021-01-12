@@ -1,5 +1,5 @@
 <script>
-  import { onMount, onDestroy, tick } from 'svelte'
+  import { onDestroy } from 'svelte'
   import { projectiles } from 'store'
   import cn from 'classnames'
 

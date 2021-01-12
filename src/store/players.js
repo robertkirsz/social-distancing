@@ -23,7 +23,7 @@ export default players
 
 export const socialDistancingPlayers = derived(players, $players => $players.filter(({ score }) => score !== undefined))
 
-export const currentRank = derived(
+export const ranking = derived(
   [socialDistancingPlayers, player],
   ([$socialDistancingPlayers, $player]) =>
     $socialDistancingPlayers.findIndex(player => player.id === ($player || {}).id) + 1

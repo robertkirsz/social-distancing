@@ -1,6 +1,5 @@
 <script>
   import { shields } from 'store'
-  import { fade } from 'svelte/transition'
   import { cubicOut } from 'svelte/easing'
   import { tween } from 'stuff'
 

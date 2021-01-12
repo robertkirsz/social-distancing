@@ -34,7 +34,7 @@
       <button class="secondary small" on:click={toggleColors} data-text="Change colors">Change colors</button>
       <button class="secondary small" on:click={resetColors} data-text="Reset colors">Reset colors</button>
       <button class="secondary small" on:click={toggleSounds} data-text={soundButtonLabel}>{soundButtonLabel}</button>
-      <button class="secondary small" on:click={() => screens.openOnly('RANKING')} data-text="Ranking">Ranking</button>
+      <button class="secondary small" on:click={() => screens.openOnly('LEADERBOARD')} data-text="Leaderboard">Leaderboard</button>
       <button class="secondary small" on:click={() => screens.openOnly('HOW TO PLAY')} data-text="How to play">
         How to play
       </button>

@@ -1,7 +1,3 @@
-<script>
-  import { session, screens } from 'store'
-</script>
-
 <span>__version__</span>
 
 <style>

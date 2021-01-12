@@ -12,9 +12,7 @@
     projectiles,
     scoreLabels,
     screens,
-    players,
-    currentRank,
-    session,
+    ranking,
     shields,
     gameIsRunning,
     gameIsOver,
@@ -85,7 +83,7 @@
       <pre>
         player: {$player && JSON.stringify({ displayName: $player.displayName, email: $player.email, points: $player.score, timesPlayed: $player.timesPlayed, timesWon: $player.timesWon }, null, 2)}
       </pre>
-      <pre>ranking: {$currentRank}</pre>
+      <pre>ranking: {$ranking}</pre>
       <pre>errors: {JSON.stringify($errors, null, 2)}</pre>
       <pre>screens: {JSON.stringify($screens, null, 2)}</pre>
       <pre>requests: {JSON.stringify($requests, null, 2)}</pre>
@@ -99,7 +97,7 @@
     <div class="rowLeft">
       <button on:click={() => screens.toggle('LOADING')}>LOADING</button>
       <button on:click={() => screens.toggle('HOW TO PLAY')}>HOW TO PLAY</button>
-      <button on:click={() => screens.toggle('RANKING')}>RANKING</button>
+      <button on:click={() => screens.toggle('LEADERBOARD')}>LEADERBOARD</button>
       <button on:click={() => screens.toggle('GAME OVER')}>GAME OVER</button>
     </div>
 

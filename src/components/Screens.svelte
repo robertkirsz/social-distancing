@@ -1,8 +1,7 @@
 <script>
-  import { fade } from 'svelte/transition'
   import { screens, requests } from 'store'
   import LoadingScreen from 'screens/LoadingScreen'
-  import RankingScreen from 'screens/RankingScreen'
+  import LeaderboardScreen from 'screens/LeaderboardScreen'
   import GameOverScreen from 'screens/GameOverScreen'
   import HowToPlayScreen from 'screens/HowToPlayScreen'
 
@@ -17,8 +16,8 @@
   <HowToPlayScreen />
 {/if}
 
-{#if $screens.includes('RANKING')}
-  <RankingScreen />
+{#if $screens.includes('LEADERBOARD')}
+  <LeaderboardScreen />
 {/if}
 
 {#if isLoading}

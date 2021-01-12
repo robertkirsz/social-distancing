@@ -1,9 +1,9 @@
 <script>
   import { get } from 'svelte/store'
   import { fade } from 'svelte/transition'
-  import { screens, gameIsWon, gameIsOver, score, currentRank } from 'store'
+  import { gameIsWon, gameIsOver, score, ranking } from 'store'
   import { withSuffix } from 'stuff'
-  import Ranking from 'components/Ranking'
+  import Leaderboard from 'components/Leaderboard' 
 
   // Get it once only so that it doesn't switch to zero when the game is restarted
   const points = get(score)
@@ -20,15 +20,15 @@
       <span class="textShadow">points</span>
     </h3>
 
-    {#if $currentRank > 0}
+    {#if $ranking > 0}
       <h3 class="rowLeft2 fluid marginTop3" style="white-space: nowrap;">
         <span class="textShadow">You are</span>
-        <span class="nice" data-text={withSuffix($currentRank)}>{withSuffix($currentRank)}</span>
+        <span class="nice" data-text={withSuffix($ranking)}>{withSuffix($ranking)}</span>
       </h3>
     {/if}
 
-    <div class="ranking-wrapper marginTop3">
-      <Ranking />
+    <div class="leaderboard-wrapper marginTop3">
+      <Leaderboard />
     </div>
 
     <button class="primary marginTopAuto" on:click={() => gameIsOver.set(false)} data-text="Go back">Go back</button>
@@ -36,7 +36,7 @@
 </div>
 
 <style>
-  .ranking-wrapper {
+  .leaderboard-wrapper {
     min-width: 420px;
     max-height: 275px;
     overflow: auto;
