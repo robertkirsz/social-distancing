@@ -23,13 +23,15 @@
     <p>
       You got vaccinated and are trying to stay socially distant, but all around you are those anti-vaxxers who just don't care.
       <br />
-      They're irresponsible and deserve a solid punch! 👊 <small>(turn your volume up to hear the juicy smack)</small>
+      They're irresponsible and deserve a solid punch! Turn your volume up to hear the juicy smack 👊
     </p>
 
     <div class="rowLeft itemsCenter" style="line-height: 1.2">
-      <div class="column itemsCenter emoji">
+      <div class="column itemsCenter emoji" style="gap: 6px;">
         ⬆️
-        <div class="flex">⬅️⬇️➡️</div>
+        <div class="flex" style="gap: 6px;">
+          <span>⬅️</span><span>⬇️</span><span>➡️</span>
+        </div>
       </div>
 
       <p>Use arrow keys to punch</p>
