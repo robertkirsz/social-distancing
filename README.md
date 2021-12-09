@@ -22,14 +22,14 @@ When you just want to punch some people 👊
 ### Development
 
 ```bash
-npm ci
-npm run dev
+yarn install
+yarn dev
 ```
 
 ### Deployment
 
 ```bash
-npm run build
+yarn build
 ```
 
-Serve contents of `public` folder.
+Serves contents of `public` folder.
