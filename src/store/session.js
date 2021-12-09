@@ -60,13 +60,6 @@ export default {
         requests.stop('signIn')
       })
     }
-
-    if (provider === 'facebook') {
-      database.signInFacebook().catch(error => {
-        errors.show('signIn', error)
-        requests.stop('signIn')
-      })
-    }
   },
   async signOut() {
     const playerData = get(player)

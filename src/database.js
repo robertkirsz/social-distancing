@@ -56,11 +56,4 @@ export const signInGoogle = () => {
   return firebase.auth().signInWithPopup(provider)
 }
 
-export const signInFacebook = () => {
-  const provider = new firebase.auth.FacebookAuthProvider()
-  provider.addScope('profile')
-  provider.addScope('email')
-  return firebase.auth().signInWithPopup(provider)
-}
-
 export const signOut = () => firebase.auth().signOut()
