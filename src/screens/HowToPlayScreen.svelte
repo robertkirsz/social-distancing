@@ -21,9 +21,9 @@
 <Modal heading="How to play" onClose={() => screens.close('HOW TO PLAY')}>
   <div class="columnTop2">
     <p>
-      You're trying to stay socially distant, but all around you are these people who just don't care.
+      You got vaccinated and are trying to stay socially distant, but all around you are those anti-vaxxers who just don't care.
       <br />
-      They're irresponsible and deserve a solid smack! 👊
+      They're irresponsible and deserve a solid punch! 👊 <small>(turn your volume up to hear the juicy smack)</small>
     </p>
 
     <div class="rowLeft itemsCenter" style="line-height: 1.2">
@@ -39,7 +39,7 @@
       <div class="rowLeft itemsCenter wrap">
         <div class="flex itemsCenter">
           <span class="emoji icon">{randomStranger}</span>
-          <span>Strangers: Smack 'em right in the face!</span>
+          <span>Anti-vaxxers: Smack 'em right in the face!</span>
         </div>
       </div>
 
