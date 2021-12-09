@@ -31,7 +31,6 @@ export default {
 
         playerData = {
           ...playerData,
-          isOnline: true,
           lastLogin: moment().format()
         }
 
@@ -78,10 +77,6 @@ export default {
     players.removeListener()
     errors.hide('signOut')
     requests.start('signOut')
-
-    await database
-      .update(`__baseUrl__/players/${playerData.id}`, { ...playerData, isOnline: false })
-      .catch(error => errors.show('updateUserInSignOut', error))
 
     await database
       .signOut()
